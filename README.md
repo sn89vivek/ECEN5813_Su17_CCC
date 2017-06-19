@@ -1,8 +1,10 @@
 # ECEN5813_Su17_CCC
 Project repository for course ECEN 5813, Summer 2017.
+
 [ECEN 5813 : Embedded Software Essentials](http://www.colorado.edu/graduateschool/distance-education/course-offerings/ecen-5813-principles-embedded-software)
 
 Project team: Robert Blazewicz &amp; Vivek Sankaranarayanan
+
 Team nickname: Crazy Crafty Coders
 
 ---
