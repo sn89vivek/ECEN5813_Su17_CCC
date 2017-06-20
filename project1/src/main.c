@@ -10,7 +10,15 @@
 
 #include "project.h"
 
+/**
+ * @brief Definintion for main function
+ * 
+ * @param None
+ * @return None
+ */
 void main()
-{
-
-}
+  {
+#ifdef PROJECT1
+  course1();
+#endif
+  }

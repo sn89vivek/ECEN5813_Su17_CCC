@@ -51,18 +51,34 @@ uint8_t *my_memcpy(uint8_t *src, uint8_t *dst, size_t length)
 
 /*---------------------------------------------------------------------------*/
 /**
- * @brief xxx
+ * @brief  The function my_memzset() takes a pointer to a memory location, a
+ *         length in bytes, a value and sets the memory to the specified value.
  *
- * @param  src - xxx
- * @param  length - xxx
- * @param  value - xxx
+ * @param  src - Source address of set operation
+ * @param  length - Number of bytes to set
+ * @param  value - Value to set the memory to
  *
  * @return NULL value indicates error condition
- * @return xxx
+ * @return Pointer to source
  */
 int8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
   {
-  return NULL;
+  uint8_t *result;
+
+  if (NULL == src || length <= 0) 
+    {
+    result = NULL;
+    } 
+  else 
+    {
+    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; ) 
+      {
+      *ptr1++ = value;
+      }
+    result = src;
+    }
+
+  return result;
   }
 
 /*---------------------------------------------------------------------------*/
@@ -70,7 +86,7 @@ int8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
  * @brief The function my_memzero() takes a pointer to a memory location, a
  *        length in bytes and zeros out all of the memory.
  *
- * @param  src - Source address of copy operation
+ * @param  src - Source address of set operation
  * @param  length - Number of bytes to zero out
  *
  * @return NULL value indicates error condition
@@ -98,17 +114,33 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
 
 /*---------------------------------------------------------------------------*/
 /**
- * @brief xxx
+ * @brief The function my_reverse() takes a pointer to a memory location, a
+ *        length in bytes and reverses the byte order in every memory location
  *
- * @param  src - xxx
- * @param  length - xxx
+ * @param  src - Source address for the reverse operation
+ * @param  length - Number of bytes to reverse
  *
  * @return NULL value indicates error condition
- * @return xxx
+ * @return Pointer to source
  */
 uint8_t *my_reverse(uint8_t *src, size_t length)
   {
-  return NULL;
+  uint8_t *result;
+
+  if (NULL == src || length <= 0) 
+    {
+    result = NULL;
+    } 
+    else 
+    {
+    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; ) 
+      {
+      *ptr1 = (((*ptr) & 0x0F) << 4) | ((*ptr) >> 4);
+      }
+    result = src;
+    }
+
+  return result;
   }
 
 /*---------------------------------------------------------------------------*/
@@ -140,13 +172,14 @@ int32_t *reserve_words(size_t length)
 
 /*---------------------------------------------------------------------------*/
 /**
- * @brief xxx
+ * @brief The function reserve_words() takes a length of words to allocate in
+ *        dynamic memory.
  *
- * @param  src - xxx
+ * @param  src - Source address for freeing
  *
- * @return xxx
+ * @return None
  */
 void free_words(uint32_t *src)
   {
-
+  free(src);
   }
