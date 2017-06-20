@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 #include "memory.h"
+#include "common_ccc.h"
 
 /*---------------------------------------------------------------------------*/
 /**
@@ -51,7 +52,7 @@ uint8_t *my_memcpy(uint8_t *src, uint8_t *dst, size_t length)
 
 /*---------------------------------------------------------------------------*/
 /**
- * @brief  The function my_memzset() takes a pointer to a memory location, a
+ * @brief  The function my_memset() takes a pointer to a memory location, a
  *         length in bytes, a value and sets the memory to the specified value.
  *
  * @param  src - Source address of set operation
@@ -115,7 +116,7 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
 /*---------------------------------------------------------------------------*/
 /**
  * @brief The function my_reverse() takes a pointer to a memory location, a
- *        length in bytes and reverses the byte order in every memory location
+ *        length in bytes and reverses the byte order in every memory location.
  *
  * @param  src - Source address for the reverse operation
  * @param  length - Number of bytes to reverse
@@ -131,7 +132,7 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
     {
     result = NULL;
     } 
-    else 
+  else 
     {
     for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; ) 
       {
@@ -172,14 +173,17 @@ int32_t *reserve_words(size_t length)
 
 /*---------------------------------------------------------------------------*/
 /**
- * @brief The function reserve_words() takes a length of words to allocate in
+ * @brief The function free_words() takes a length of words to allocate in
  *        dynamic memory.
  *
- * @param  src - Source address for freeing
+ * @param  src - Source address of allocated memory
  *
  * @return None
  */
 void free_words(uint32_t *src)
   {
-  free(src);
+  if (src != NULL)
+    {
+    free(src);
+    }
   }
