@@ -1,16 +1,48 @@
+/*-----------------------------------------------------------------------------
+ * ECEN-5813 Summer 2017
+ * Project 1
+ *
+ * Copyright (C) 2017 by Robert Blazewicz and Vivek Sankaranarayanan.
+ * All Rights Reserved. (This work is unpublished)
+ *---------------------------------------------------------------------------*/
 /**
  * @file debug.c
- * @brief Defintions for debugging related functions
- *
- * TODO
- *
- * @author Robert Blazewicz/Vivek Sankaranarayanan
+ * @author Robert Blazewicz
+ * @author Vivek Sankaranarayanan
  * @date June 19, 2017
+ * @brief Defintions for debugging related functions.
  */
 
+#include <stdio.h>
 #include "debug.h"
+#include "common_ccc.h"
 
+/*---------------------------------------------------------------------------*/
+/**
+ * @brief The function print_memory() takes a pointer to memory and prints the
+ *        hex output of bytes given a pointer to a memory location and a length
+ *        of bytes to print.
+ *
+ * @param  src - Start address of memory
+ * @param  length - Number of bytes to print
+ *
+ * @return None
+ */
 void print_memory(uint8_t *start, uint32_t length)
-{
+  {
+  const char8_t hex[16] =
+    {
+    '0', '1', '2', '3', '4', '5', '6', '7',
+    '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+    };
 
-}
+  if (src != NULL && length > 0) 
+    {
+    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; )
+      {
+      (void)fputc(hex + (*ptr >> 4), stderr);
+      (void)fputc(hex + (*ptr & 0x0F), stderr);
+      }
+    result = src;
+    }
+  }
