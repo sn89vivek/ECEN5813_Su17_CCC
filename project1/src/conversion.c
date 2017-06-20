@@ -27,5 +27,5 @@ int8_t big_to_little32(uint32_t * data, uint32_t length)
 
 int8_t little_to_big32(uint32_t * data, uint32_t length)
 {
-	return 0;
+  return 0;
 }
