@@ -1,6 +1,8 @@
 /**
  * @file memory.c 
- * @brief This file contains definition of memory manipulation functions
+ * @brief This file contains definitions for target independent memory manipulation functions
+ *
+ * TODO
  *
  * @author Robert Blazewicz/Vivek Sankaranarayanan
  * @date June 19, 2017
