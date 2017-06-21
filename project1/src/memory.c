@@ -43,9 +43,12 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
     }
   else
     {
-    for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ((ptr1 < end) && (ptr1 != ptr2)); )
+    for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ptr1 < end; )
       {
-      *ptr2++ = *ptr1++;
+      if(ptr1 != ptr2)
+        *ptr2 = *ptr1;
+      ptr2++;
+      ptr1++;
       }
     result = dst;
     }
