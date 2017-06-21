@@ -106,8 +106,10 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
     {
     for (uint32_t *ptr = data, *end = data + length; ptr < end; )
       {
-      *ptr = RSHIFT_3_BYTES(*ptr) | BYTE1(RSHIFT_BYTE(*ptr)) |
-             BYTE2(LSHIFT_BYTE(*ptr)) | BYTE3(LSHIFT_3_BYTES(*ptr));
+      *ptr = (RSHIFT_3_BYTES(*ptr)) | 
+             (BYTE1(RSHIFT_BYTE(*ptr))) |
+             (BYTE2(LSHIFT_BYTE(*ptr))) | 
+             (BYTE3(LSHIFT_3_BYTES(*ptr)));
       }
     result = SUCCESS;
     }

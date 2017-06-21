@@ -116,7 +116,7 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
 /*---------------------------------------------------------------------------*/
 /**
  * @brief The function my_reverse() takes a pointer to a memory location, a
- *        length in bytes and reverses the byte order in every memory location.
+ *        length in bytes and reverses the bytes in the specified memory range.
  *
  * @param  src - Source address for the reverse operation
  * @param  length - Number of bytes to reverse
@@ -127,6 +127,7 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
 uint8_t *my_reverse(uint8_t *src, size_t length)
   {
   uint8_t *result;
+  uint8_t swap;
 
   if (NULL == src || length <= 0) 
     {
@@ -134,9 +135,11 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
     } 
   else 
     {
-    for (uint8_t *ptr = src, *end = src + length; ptr < end; ) 
+    for (uint8_t *ptr = src, *end = src + (length-1); ptr < end; ) 
       {
-      *ptr = (((*ptr) & 0x0F) << 4) | ((*ptr) >> 4);
+      swap = *ptr;
+      *ptr++ = *end;
+      *end-- = swap;
       }
     result = src;
     }
