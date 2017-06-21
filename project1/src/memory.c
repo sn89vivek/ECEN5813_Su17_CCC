@@ -19,10 +19,48 @@
 
 /*---------------------------------------------------------------------------*/
 /**
+ * @brief The function my_memmove() takes two byte pointers (one source and
+ *        one destination) and a length of bytes to copy from the source
+ *        location to the destination.
+ *
+ * @note This function does not handles overlap of src and dst. Will exit copy
+ *       if src and dst overlap.
+ *
+ * @param  src - Source address
+ * @param  dst - Destination address
+ * @param  length - Number of bytes to copy
+ *
+ * @return NULL value indicates error condition
+ * @return Pointer to the destination on success
+ */
+uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
+  {
+  uint8_t *result;
+
+  if (NULL == src || NULL == dst || length <= 0)
+    {
+    result = NULL;
+    }
+  else
+    {
+    for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ((ptr1 < end) && (ptr1 != ptr2)); )
+      {
+      *ptr2++ = *ptr1++;
+      }
+    result = dst;
+    }
+
+  return result;
+  }
+
+/*---------------------------------------------------------------------------*/
+/**
  * @brief The function my_memcpy() takes two byte pointers (one source and
  *        one destination) and a length of bytes to copy from the source
  *        location to the destination.
  *
+ * @warning This function does not handle overlap of src and dst. Data can get
+ *          corrupted if overlap detected.
  * @param  src - Source address
  * @param  dst - Destination address
  * @param  length - Number of bytes to copy
