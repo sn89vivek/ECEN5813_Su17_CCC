@@ -36,13 +36,19 @@ void print_memory(uint8_t *start, uint32_t length)
     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
     };
 
-  if (src != NULL && length > 0) 
+  if (start != NULL && length > 0) 
     {
-    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; )
+    size_t ctr = 0;
+    for (uint8_t *ptr = start, *end = start + length; ptr < end; )
       {
-      (void)fputc(hex + (*ptr >> 4), stderr);
-      (void)fputc(hex + (*ptr & 0x0F), stderr);
+      const int value1 = hex[*ptr >> 4];
+      const int value2 = hex[*ptr & 0x0F];
+      (void)fputc(value1, stderr);
+      (void)fputc(value2, stderr);
+      if (0x03 == (ctr++ & 0x03))
+        {
+        (void)fputc('.', stderr);
+        }
       }
-    result = src;
     }
   }

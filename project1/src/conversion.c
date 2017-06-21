@@ -13,10 +13,22 @@
  * @brief This file contains definition of basic data manipulation functions.
  */
 
+#include <libio.h>
 #include "conversion.h"
 #include "common_ccc.h"
 
 /*---------------------------------------------------------------------------*/
+/**
+ * @brief The function my_itoa() converts data from a standard integer type
+ *        into an ASCII string.
+ *
+ * @param data - Pointer to data
+ * @param length - xxx
+ * @param base - Target based from 2 and 16
+ *
+ * @return Returns FAILURE if the conversion failed
+ * @return Returns SUCCESS if the data was successfully converted
+ */
 
 uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base)
   {
@@ -52,13 +64,12 @@ int8_t big_to_little32(uint32_t *data, uint32_t length)
     }
   else
     {
-    for (uint32_t *ptr1 = src, *end = src + length; ptr1 < end; ptr1++)
+    for (uint32_t *ptr = data, *end = data + length; ptr < end; ptr++)
       {
-      const uint32_t value = *ptr1;
-      *ptr = ((value & 0x000000FF) << 24) |
-             ((value & 0x0000FF00) <<  8) |
-             ((value & 0x00FF0000) >>  8) |
-             ((value & 0xFF000000) >> 24);
+      *ptr = ((*ptr & 0x000000FF) << 24) |
+             ((*ptr & 0x0000FF00) <<  8) |
+             ((*ptr & 0x00FF0000) >>  8) |
+             ((*ptr & 0xFF000000) >> 24);
       }
     result = SUCCESS;
     }
@@ -93,10 +104,10 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
     }
   else
     {
-    for (uint32_t *ptr1 = src, *end = src + length; ptr1 < end; )
+    for (uint32_t *ptr = data, *end = data + length; ptr < end; )
       {
-      *ptr1 = RSHIFT_3_BYTES(*ptr1) | BYTE1(RSHIFT_BYTE(*ptr1)) |
-              BYTE2(LSHIFT_BYTE(*ptr1)) | BYTE3(LSHIFT_3_BYTES(*ptr1));
+      *ptr = RSHIFT_3_BYTES(*ptr) | BYTE1(RSHIFT_BYTE(*ptr)) |
+             BYTE2(LSHIFT_BYTE(*ptr)) | BYTE3(LSHIFT_3_BYTES(*ptr));
       }
     result = SUCCESS;
     }

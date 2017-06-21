@@ -21,6 +21,10 @@
 
 #include <stdint.h>
 
+#define BASE_2  (2)
+#define BASE_10 (10)
+#define BASE_16 (16)
+
 #define DATA_SET_SIZE_W (10)
 #define MEM_SET_SIZE_B  (32)
 #define MEM_SET_SIZE_W  (8)

@@ -23,6 +23,7 @@
 #include "project1.h"
 #include "memory.h"
 #include "conversion.h"
+#include "debug.h"
 
 int8_t test_data1() {
   uint8_t * ptr;
@@ -106,9 +107,9 @@ int8_t test_memmove1() {
     set[i] = i;
   }
 
-  print_array(set, MEM_SET_SIZE_B);
-  my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
+  my_memcpy(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  print_memory(set, MEM_SET_SIZE_B);
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -144,9 +145,9 @@ int8_t test_memmove2() {
     set[i] = i;
   }
 
-  print_array(set, MEM_SET_SIZE_B);
-  my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
+  my_memcpy(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  print_memory(set, MEM_SET_SIZE_B);
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -183,9 +184,9 @@ int8_t test_memmove3() {
     set[i] = i;
   }
 
-  print_array(set, MEM_SET_SIZE_B);
-  my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
+  my_memcpy(ptra, ptrb, TEST_MEMMOVE_LENGTH);
+  print_memory(set, MEM_SET_SIZE_B);
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -223,9 +224,9 @@ int8_t test_memcpy() {
     set[i] = i;
   }
 
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
   my_memcpy(ptra, ptrb, TEST_MEMMOVE_LENGTH);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
 
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
@@ -262,11 +263,11 @@ int8_t test_memset()
     set[i] = i;
   }
 
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
   my_memset(ptra, MEM_SET_SIZE_B, 0xFF);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
   my_memzero(ptrb, MEM_ZERO_LENGTH);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
   
   /* Validate Set & Zero Functionality */
   for (i = 0; i < MEM_ZERO_LENGTH; i++)
@@ -305,9 +306,9 @@ int8_t test_reverse()
   
   my_memcpy(set, copy, MEM_SET_SIZE_B);
 
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
   my_reverse(set, MEM_SET_SIZE_B);
-  print_array(set, MEM_SET_SIZE_B);
+  print_memory(set, MEM_SET_SIZE_B);
 
   for (i = 0; i < MEM_SET_SIZE_B; i++)
   {

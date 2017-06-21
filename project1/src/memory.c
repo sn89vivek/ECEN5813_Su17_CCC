@@ -62,7 +62,7 @@ uint8_t *my_memcpy(uint8_t *src, uint8_t *dst, size_t length)
  * @return NULL value indicates error condition
  * @return Pointer to source
  */
-int8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
+uint8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
   {
   uint8_t *result;
 
@@ -72,9 +72,9 @@ int8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
     } 
   else 
     {
-    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; ) 
+    for (uint8_t *ptr = src, *end = src + length; ptr < end; )
       {
-      *ptr1++ = value;
+      *ptr++ = value;
       }
     result = src;
     }
@@ -103,9 +103,9 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
     }
   else
     {
-    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; )
+    for (uint8_t *ptr = src, *end = src + length; ptr < end; )
       {
-      *ptr1++ = 0x00;
+      *ptr++ = 0x00;
       }
     result = src;
     }
@@ -134,9 +134,9 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
     } 
   else 
     {
-    for (uint8_t *ptr1 = src, *end = src + length; ptr1 < end; ) 
+    for (uint8_t *ptr = src, *end = src + length; ptr < end; ) 
       {
-      *ptr1 = (((*ptr) & 0x0F) << 4) | ((*ptr) >> 4);
+      *ptr = (((*ptr) & 0x0F) << 4) | ((*ptr) >> 4);
       }
     result = src;
     }
@@ -156,7 +156,7 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
  */
 int32_t *reserve_words(size_t length)
   {
-  uint8_t *result;
+  int32_t *result;
 
   if (length <= 0)
     {
@@ -164,8 +164,8 @@ int32_t *reserve_words(size_t length)
     }
   else
     {
-    const size_t malloc_bytes = length * sizeof(unit16_t);
-    result = (uint32_t*)malloc(malloc_bytes);
+    const size_t malloc_bytes = length * sizeof(uint16_t);
+    result = (int32_t*)malloc(malloc_bytes);
     }
 
   return result;
