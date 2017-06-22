@@ -34,6 +34,9 @@
 #define BYTE2(a)                ((a) & 0xFF0000)
 #define BYTE3(a)                ((a) & 0xFF000000)
 
+/* ---- Coversion operations --- */
+#define MAX_CONVERSION_STRLEN	31
+#define ASCII_TO_INT(a)			((a) <= '9' ? (a) - '0' : ((a) - 'A') + 10)
 /*---------------------------------------------------------------------------*/
 
 /**

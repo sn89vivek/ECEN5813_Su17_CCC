@@ -24,12 +24,14 @@
 #include "memory.h"
 #include "conversion.h"
 #include "debug.h"
+#include "common_ccc.h"
 
 int8_t test_data1() {
   uint8_t * ptr;
   int32_t num = -4096;
   uint32_t digits;
   int32_t value;
+  uint8_t status;
 
   printf("\ntest_data1();\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
@@ -40,14 +42,14 @@ int8_t test_data1() {
   }
 
   digits = my_itoa( num, ptr, BASE_16);   
-  value = my_atoi( ptr, digits, BASE_16);
+  status = my_atoi( ptr, digits, BASE_16, &value);
   #ifdef VERBOSE
   printf("  Initial number: %d\n", num);  
   printf("  Final Decimal number: %d\n", value);  
   #endif
   free_words( (uint32_t*)ptr );
 
-  if ( value != num )
+  if ((status != SUCCESS) || ( value != num ))
   {
     return TEST_ERROR;
   }
@@ -59,6 +61,7 @@ int8_t test_data2() {
   int32_t num = 123456;
   uint32_t digits;
   int32_t value;
+  uint8_t status;
 
   printf("test_data2();\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
@@ -69,14 +72,14 @@ int8_t test_data2() {
   }
 
   digits = my_itoa( num, ptr, BASE_10);
-  value = my_atoi( ptr, digits, BASE_10);
+  status = my_atoi( ptr, digits, BASE_10, &value);
   #ifdef VERBOSE
   printf("  Initial Decimal number: %d\n", num);  
   printf("  Final Decimal number: %d\n", value);  
   #endif
   free_words( (uint32_t*)ptr );
 
-  if ( value != num )
+  if (( status != SUCCESS) || ( value != num ))
   {
     return TEST_ERROR;
   }
