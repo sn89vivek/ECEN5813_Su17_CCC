@@ -28,8 +28,8 @@ void print_memory(uint8_t *start, uint32_t length)
       {
       const int value1 = *ptr >> 4;
       const int value2 = *ptr & 0x0F;
-      (void)fputc(value1 <= 9 ? '0' + value1 : 'A' + value1, stderr);
-      (void)fputc(value2 <= 9 ? '0' + value2 : 'A' + value2, stderr);
+      (void)fputc(value1 <= 9 ? '0' + value1 : 'A' + (value1-10), stderr);
+      (void)fputc(value2 <= 9 ? '0' + value2 : 'A' + (value2-10), stderr);
       if (0x03 == (ctr++ & 0x03))
         {
         (void)fputc('.', stderr);

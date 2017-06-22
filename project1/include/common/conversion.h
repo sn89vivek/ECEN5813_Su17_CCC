@@ -53,14 +53,26 @@ uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base);
  * @brief The function my_atoi() converts data from an ASCII string into a
  *        standard integer type.
  *
+ * Notes on implementation:
+ * 	- The input string must be a representaion of a positive number in a base
+ *	  between 2-16. This function does not support radix-complement 
+ *    representation in any base
+ *	- Negative number representation must have first character as '-' 
+ *  - A preceding '+' sign is not supported
+ *  - @p digits must include '-' sign and not include null character.
+ *  - A-H for base 16 must be in uppercase only
+ *  - Any characters after MAX_CONVERSION_STRLEN will not be parsed
+ * 
  * @param ptr - Pointer to input character set
- * @param digits - Number of digitd in character set
+ * @param digits - Number of digits in character set including '-' sign and
+ *				   excluding null terminator
  * @param base - Source base from 2 and 16
+ * @param data - If conversion suceeds, the number is written to this variable.
  *
  * @return Returns FAILURE if the conversion failed
  * @return Returns SUCCESS if the data was successfully converted
  */
-int32_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base);
+uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data);
 
 /**
  * @brief The function big_to_little() takes an array of data in memory from a
