@@ -18,8 +18,21 @@
 
 /*---------------------------------------------------------------------------*/
 
+#ifndef TRUE
+#define TRUE (1)
+#endif
+
+#ifndef FALSE
+#define FALSE (0)
+#endif
+
+#ifndef SUCCESS
 #define SUCCESS (0)
+#endif
+
+#ifndef FAILURE
 #define FAILURE (1)
+#endif
 
 typedef char char8_t;
 

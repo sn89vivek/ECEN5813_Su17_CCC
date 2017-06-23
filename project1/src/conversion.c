@@ -18,15 +18,52 @@
 #include "common_ccc.h"
 
 /*---------------------------------------------------------------------------*/
+/* Declarations                                                              */
 
-/* ---- Local function declarations --- */
 uint32_t place_value_get(uint32_t num, uint8_t pow);
 
 /*---------------------------------------------------------------------------*/
 
 uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base)
   {
-  return 0;
+  uint8_t *ptr1 = ptr;
+  uint8_t digits = 0;
+  uint8_t sign = 0;
+
+  if (ptr != NULL && base >= 2 && base <= 16)
+    {
+    /* If negative number then invert and record sign */
+    if (data < 0)
+      {
+      data *= -1;
+      sign = 1;
+      *ptr1++ = '-';
+      digits++;
+      }
+
+    /* Generate each digit from small to large for the selected base */
+    while (data > 0)
+      {
+      size_t value = data % base;
+      *ptr1++ = value <= 9 ? '0' + value : 'A' + (value - 10);
+      digits++;
+      data /= base;
+      }
+
+    /* Null terminate string */
+    *ptr1 = 0;
+
+    /* Invert the generated number's digits */
+    for (uint8_t *ptr2 = ptr + sign, *ptr3 = ptr + digits - 1;
+         ptr2 < ptr3; )
+      {
+      const uint8_t swap = *ptr2;
+      *ptr2++ = *ptr3;
+      *ptr3-- = swap;
+      }
+    }
+
+  return digits;
   }
 
 /*---------------------------------------------------------------------------*/
@@ -126,6 +163,14 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
 
 /*---------------------------------------------------------------------------*/
 
+/**
+ * @brief The function place_value_get() ...
+ *
+ * @param num - TBD
+ * @param pow - TBD
+ *
+ * @return TBD
+ */
 uint32_t place_value_get(uint32_t num, uint8_t pow)
   {
   uint32_t result = 1;  
