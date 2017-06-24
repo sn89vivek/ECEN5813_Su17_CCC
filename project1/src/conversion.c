@@ -75,7 +75,7 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
   uint8_t num;
   uint32_t value = 0;
 
-  if(ptr == NULL)
+  if(ptr == NULL && base >= 2 && base <= 16)
     result = FAILURE;
   else
     {
@@ -164,12 +164,12 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function place_value_get() ...
+ * @brief The function place_value_get() computes the (num)^pow
  *
- * @param num - TBD
- * @param pow - TBD
+ * @param num - number whose power needs to be calculated
+ * @param pow - power
  *
- * @return TBD
+ * @return result of the computation
  */
 uint32_t place_value_get(uint32_t num, uint8_t pow)
   {
