@@ -26,6 +26,8 @@
 #define FALSE (0)
 #endif
 
+/*---------------------------------------------------------------------------*/
+
 #ifndef SUCCESS
 #define SUCCESS (0)
 #endif
@@ -33,6 +35,18 @@
 #ifndef FAILURE
 #define FAILURE (1)
 #endif
+
+/*---------------------------------------------------------------------------*/
+
+#ifndef LF
+#define LF (0x0A)
+#endif
+
+#ifndef CR
+#define CR (0x0D)
+#endif
+
+/*---------------------------------------------------------------------------*/
 
 typedef char char8_t;
 
