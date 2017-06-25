@@ -145,7 +145,7 @@ int32_t *reserve_words(size_t length)
     }
   else
     {
-    const size_t malloc_bytes = length * sizeof(uint16_t);
+    const size_t malloc_bytes = length * sizeof(uint32_t);
     result = (int32_t*)malloc(malloc_bytes);
     }
 
