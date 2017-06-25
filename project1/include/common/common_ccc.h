@@ -23,9 +23,16 @@
   #include <libio.h>
   #include <stdlib.h>
 
+#elif PLATFORM_MKL
+
+  #include <stdint.h>
+  #include <malloc.h>
+  #include "MKL25Z4.h"
+  #include "system_MKL25Z4.h"
+
 #else
 
-  #define NULL ((void*)0)
+  #pragma GCC error "Target platform is not supported"
 
 #endif
 
@@ -51,12 +58,12 @@
 
 /*---------------------------------------------------------------------------*/
 
-#ifndef LF
-#define LF (0x0A)
-#endif
-
 #ifndef CR
 #define CR (0x0D)
+#endif
+
+#ifndef LF
+#define LF (0x0A)
 #endif
 
 /*---------------------------------------------------------------------------*/

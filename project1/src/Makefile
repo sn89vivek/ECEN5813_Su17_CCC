@@ -15,7 +15,7 @@
 
 # The default platform is HOST for building locally on a Linux host.
 # To override the default, define the platform on the make command like such
-# as: make PLATFORM=CMSIS
+# as "make PLATFORM=MKL" or "make PLATFORM=BBB"
 PLATFORM=HOST
 
 CFLAGS = -DPROJECT1 -DVERBOSE
@@ -39,7 +39,27 @@ ifeq ($(PLATFORM),HOST)
 endif
 
 #------------------------------------------------------------------------------
-ifeq ($(PLATFORM),CMSIS)
+ifeq ($(PLATFORM),MKL)
+	CC = arm-none-eabi-gcc
+	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPLATFORM_MKL
+	LDFLAGS = -Xlinker -Map=project1.map
+	BIN = project1.elf
+	SRC = \
+		memory.c		\
+		conversion.c		\
+		debug.c			\
+		main.c			\
+		project1.c		\
+		startup_MKL25Z4.S	\
+		system_MKL25Z4.c
+	INCLUDES = \
+		-I ../include/common	\
+		-I ../include/CMSIS	\
+		-I ../include/kl25z
+endif
+
+#------------------------------------------------------------------------------
+ifeq ($(PLATFORM),BBB)
 	CC = arm-linux-gnueabi-gcc
 #	CC = arm-linux-gnueabihf-gcc
 	CFLAGS += -Wall -Werror -g -O0 -std=c99 -DPLATFORM_CMSIS
@@ -57,30 +77,11 @@ ifeq ($(PLATFORM),CMSIS)
 endif
 
 #------------------------------------------------------------------------------
-ifeq ($(PLATFORM),MLK)
-	CC = arm-none-eabi-gcc
-	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPLATFORM_MLK
-	LDFLAGS = -Xlinker -Map=project1.map
-	BIN = project1.elf
-	SRC = \
-		memory.c		\
-		conversion.c		\
-		debug.c			\
-		main.c			\
-		project1.c		\
-		startup_MKL25Z4.S	\
-		system_MKL25Z4.c
-	INCLUDES = \
-		-I ../include/common	\
-		-I ../include/kl25z
-endif
 
-#------------------------------------------------------------------------------
-
-OBJS	:= $(SRC:.c=.o)
+OBJS	:= $(SRC:.c=.o) $(SRC:.s=.o)
 PP	:= $(SRC:.c=.i)
 DEP	:= $(SRC:.c=.d)
-ASM	:= $(SRC:.c=.asm)
+ASM	:= $(SRC:.s=.asm)
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $^
