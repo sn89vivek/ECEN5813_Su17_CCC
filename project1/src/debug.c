@@ -39,6 +39,6 @@ void print_memory(uint8_t *start, uint32_t length)
       (void)fputc(value2 <= 9 ? '0' + value2 : 'A' + (value2-10), stderr);
       }
     }
-  (void)fputc(LF, stderr);
   (void)fputc(CR, stderr);
+  (void)fputc(LF, stderr);
   }
