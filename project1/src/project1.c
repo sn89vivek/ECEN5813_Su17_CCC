@@ -329,7 +329,7 @@ void course1(void)
 {
   uint8_t i;
   int8_t failed = 0;
-  int8_t results[TESTCOUNT];
+  int8_t results[TESTCOUNT] = {0,0,0,0,0,0,0,0};
 
   results[0] = test_data1();
   results[1] = test_data2();
@@ -342,6 +342,12 @@ void course1(void)
 
   for ( i = 0; i < TESTCOUNT; i++) 
   {
+#ifdef VERBOSE
+    if (results[i] != 0)
+      {
+      printf("Test %d failed\n", i);
+      }
+#endif
     failed += results[i];
   }
 
