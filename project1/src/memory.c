@@ -29,12 +29,20 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
     }
   else
     {
-    for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ptr1 < end; )
+    if (src < dst)
       {
-      if(ptr1 != ptr2)
-        *ptr2 = *ptr1;
-      ptr2++;
-      ptr1++;
+      for (uint8_t *ptr1 = src + length - 1, *ptr2 = dst + length - 1;
+           src <= ptr1; )
+        {
+        *ptr2-- = *ptr1--;
+        }
+      }
+    else
+      {
+      for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ptr1 < end; )
+        {
+        *ptr2++ = *ptr1++;
+        }
       }
     result = dst;
     }
