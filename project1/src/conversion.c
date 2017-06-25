@@ -73,9 +73,10 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
   int8_t sign = 1;
   uint8_t result = SUCCESS;
   uint8_t num;
-  uint32_t value = 0;
 
-  if(ptr == NULL && base >= 2 && base <= 16)
+
+  *data = 0;
+  if(ptr == NULL || base < 2 || base > 16)
     result = FAILURE;
   else
     {
@@ -91,23 +92,23 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
 
     for(;digits != 0; digits--, ptr++)
       {
-      if(ptr == '\0')
+      if(*ptr == '\0')
         {
         /* digits parameter cannot be trusted */
         result = FAILURE;
         break;
         }
-      num = ASCII_TO_INT(*ptr);
+        num = ASCII_TO_INT(*ptr);
       if(num >= base)
         {
         /* Illegal character for the given base */  
         result = FAILURE;
         break;
         }
-      value += (value*place_value_get(base, digits));
+      *data += (num * place_value_get(base, digits-1));
       }
     }
-  *data = value*sign; 
+  *data = (*data) * sign; 
   return result;
   }
 
