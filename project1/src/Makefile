@@ -9,10 +9,10 @@ ifeq ($(PLATFORM),HOST)
 	CC = gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPROJECT1 -DVERBOSE
 	SRC = \
-		memory.c	\
-		conversion.c	\
-		debug.c		\
-		main.c		\
+		memory.c		\
+		conversion.c		\
+		debug.c			\
+		main.c			\
 		project1.c
 	INCLUDES = \
 		-I ../include/common
@@ -22,25 +22,27 @@ ifeq ($(PLATFORM),CMSIS)
 	CC = gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPROJECT1 -DVERBOSE
 	SRC = \
-		memory.c	\
-		conversion.c	\
-		debug.c		\
-		main.c		\
+		memory.c		\
+		conversion.c		\
+		debug.c			\
+		main.c			\
 		project1.c
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/CMSIS
 endif
 
-ifeq ($(PLATFORM),KL25Z)
+ifeq ($(PLATFORM),MLK)
 	CC = gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPROJECT1 -DVERBOSE
 	SRC = \
-		memory.c	\
-		conversion.c	\
-		debug.c		\
-		main.c		\
-		project1.c
+		memory.c		\
+		conversion.c		\
+		debug.c			\
+		main.c			\
+		project1.c		\
+		startup_MKL25Z4.S	\
+		system_MKL25Z4.c
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/kl25z
