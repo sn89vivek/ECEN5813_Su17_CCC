@@ -13,9 +13,8 @@
  * @brief This file contains definition of memory manipulation functions.
  */
 
-#include <stdlib.h>
-#include "memory.h"
 #include "common_ccc.h"
+#include "memory.h"
 
 /*---------------------------------------------------------------------------*/
 

@@ -13,14 +13,13 @@
  * @brief This file contains definition of basic data manipulation functions.
  */
 
-#include <libio.h>
-#include "conversion.h"
 #include "common_ccc.h"
+#include "conversion.h"
 
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
 
-uint32_t place_value_get(uint32_t num, uint8_t pow);
+static uint32_t place_value_get(uint32_t num, uint8_t pow);
 
 /*---------------------------------------------------------------------------*/
 
@@ -172,7 +171,7 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
  *
  * @return result of the computation
  */
-uint32_t place_value_get(uint32_t num, uint8_t pow)
+static uint32_t place_value_get(uint32_t num, uint8_t pow)
   {
   uint32_t result = 1;  
   while(pow--)

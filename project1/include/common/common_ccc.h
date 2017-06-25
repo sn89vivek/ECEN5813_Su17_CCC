@@ -18,6 +18,19 @@
 
 /*---------------------------------------------------------------------------*/
 
+#ifdef PLATFORM_HOST
+
+  #include <libio.h>
+  #include <stdlib.h>
+
+#else
+
+  #define NULL ((void*)0)
+
+#endif
+
+/*---------------------------------------------------------------------------*/
+
 #ifndef TRUE
 #define TRUE (1)
 #endif

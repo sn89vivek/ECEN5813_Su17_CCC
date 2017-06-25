@@ -62,8 +62,9 @@ PP := $(SRC:.c=.i)
 ASM := $(SRC:.c=.asm)
 DEP := $(SRC:.c=.d)
 
-.PHONY:	compile-all
-compile-all:	$(OBJS)
+.PHONY:	all
+all: $(BIN)
+	@true
 
 .PHONY: clean
 clean:

@@ -8,6 +8,7 @@
  * @date June 19, 2017
  */
 
+#include "common_ccc.h"
 #include "project1.h"
 
 /**

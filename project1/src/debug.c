@@ -13,9 +13,12 @@
  * @brief Defintions for debugging related functions.
  */
 
+#ifdef VERBOSE
 #include <stdio.h>
-#include "debug.h"
+#endif
+
 #include "common_ccc.h"
+#include "debug.h"
 
 /*---------------------------------------------------------------------------*/
 
