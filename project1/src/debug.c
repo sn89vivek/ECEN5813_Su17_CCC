@@ -19,6 +19,7 @@
 
 /*---------------------------------------------------------------------------*/
 
+#ifdef VERBOSE
 void print_memory(uint8_t *start, uint32_t length)
   {
   if (start != NULL && length > 0) 
@@ -42,3 +43,4 @@ void print_memory(uint8_t *start, uint32_t length)
   (void)fputc(CR, stderr);
   (void)fputc(LF, stderr);
   }
+#endif
