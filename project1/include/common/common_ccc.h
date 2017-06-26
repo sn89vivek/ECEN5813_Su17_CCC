@@ -32,7 +32,7 @@
 
 #else
 
-  #pragma GCC error "Target platform is not supported"
+  #error "Target platform is not supported"
 
 #endif
 

@@ -46,8 +46,13 @@ int8_t test_data1()
   digits = my_itoa( num, ptr, BASE_16);   
   status = my_atoi( ptr, digits, BASE_16, &value);
   #ifdef VERBOSE
+  #if defined(FORMAT_INT32_AS_LONG_INT)
+  printf("  Initial number: %ld\n", num);  
+  printf("  Final Decimal number: %ld\n", value);
+  #else
   printf("  Initial number: %d\n", num);  
-  printf("  Final Decimal number: %d\n", value);  
+  printf("  Final Decimal number: %d\n", value);
+  #endif
   #endif
   free_words( (uint32_t*)ptr );
 
@@ -79,8 +84,13 @@ int8_t test_data2()
   digits = my_itoa( num, ptr, BASE_10);
   status = my_atoi( ptr, digits, BASE_10, &value);
   #ifdef VERBOSE
+  #if defined(FORMAT_INT32_AS_LONG_INT)
+  printf("  Initial Decimal number: %ld\n", num);  
+  printf("  Final Decimal number: %ld\n", value);  
+  #else
   printf("  Initial Decimal number: %d\n", num);  
   printf("  Final Decimal number: %d\n", value);  
+  #endif
   #endif
   free_words( (uint32_t*)ptr );
 
@@ -367,12 +377,12 @@ void course1(void)
 
   for ( i = 0; i < TESTCOUNT; i++) 
     {
-#ifdef VERBOSE
+    #ifdef VERBOSE
     if (results[i] != 0)
       {
       printf("Test %d failed\n", i);
       }
-#endif
+    #endif
     failed += results[i];
     }
 

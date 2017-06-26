@@ -16,16 +16,17 @@
 # The default platform is HOST for building locally on a Linux host.
 # To override the default, define the platform on the make command like such
 # as "make PLATFORM=MKL" or "make PLATFORM=BBB"
-PLATFORM=HOST
+PLATFORM ?= HOST
 
-CFLAGS = -DPROJECT1 -DVERBOSE
+CPPFLAGS += -DPROJECT1 -DVERBOSE
 
-RM= /bin/rm
+RM = /bin/rm
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
 	CC = gcc
-	CFLAGS += -Wall -Werror -g -O0 -std=c99 -DPLATFORM_HOST
+	CFLAGS += -Wall -Werror -g -O0 -std=c99
+	CPPFLAGS += -DPLATFORM_HOST
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf
 	SRC = \
@@ -41,7 +42,8 @@ endif
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),MKL)
 	CC = arm-none-eabi-gcc
-	CFLAGS = -Wall -Werror -g -O0 -std=c99 -DPLATFORM_MKL
+	CFLAGS = -Wall -Werror -g -O0 -std=c99
+	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf
 	SRC = \
@@ -62,7 +64,8 @@ endif
 ifeq ($(PLATFORM),BBB)
 	CC = arm-linux-gnueabi-gcc
 #	CC = arm-linux-gnueabihf-gcc
-	CFLAGS += -Wall -Werror -g -O0 -std=c99 -DPLATFORM_CMSIS
+	CFLAGS += -Wall -Werror -g -O0 -std=c99
+	CPPFLAGS += -DPLATFORM_BBB
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf
 	SRC = \
@@ -78,31 +81,36 @@ endif
 
 #------------------------------------------------------------------------------
 
-OBJS	:= $(SRC:.c=.o) $(SRC:.s=.o)
+.PHONY: null
+null:
+	@echo "Usage: make PLATFORM=<HOST|MKL|BBB> TEST=<test-case>"
+	@echo "       make all"
+
+OBJS	:= $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRC)))
 PP	:= $(SRC:.c=.i)
 DEP	:= $(SRC:.c=.d)
-ASM	:= $(SRC:.s=.asm)
+ASM	:= $(SRC:.c=.asm)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $^
 
 %.i : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -E -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -E -o $@ $^
 
 %.d : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -M -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -M -o $@ $^
 
 %.asm : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -S -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -S -o $@ $^
 
 $(BIN):	$(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(BIN)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $@
 
 .PHONY: build
 build: $(BIN)
 
 .PHONY: all
-all: $(BIN) $(PP) $(ASM) $(DEP)
+all: build $(PP) $(ASM) $(DEP)
 
 .PHONY:	scratch
 scratch: clean build

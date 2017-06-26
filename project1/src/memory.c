@@ -22,7 +22,7 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
   {
   uint8_t *result;
 
-  if (NULL == src || NULL == dst || length <= 0)
+  if (NULL == src || NULL == dst || 0 == length)
     {
     result = NULL;
     }
@@ -55,7 +55,7 @@ uint8_t *my_memcpy(uint8_t *src, uint8_t *dst, size_t length)
   {
   uint8_t *result;
 
-  if (NULL == src || NULL == dst || length <= 0)
+  if (NULL == src || NULL == dst || 0 == length)
     {
     result = NULL;
     }
@@ -77,7 +77,7 @@ uint8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
   {
   uint8_t *result;
 
-  if (NULL == src || length <= 0) 
+  if (NULL == src || 0 == length)
     {
     result = NULL;
     } 
@@ -99,7 +99,7 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
   {
   uint8_t *result;
 
-  if (NULL == src || length <= 0)
+  if (NULL == src || 0 == length)
     {
     result = NULL;
     }
@@ -122,7 +122,7 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
   uint8_t *result;
   uint8_t  swap;
 
-  if (NULL == src || length <= 0) 
+  if (NULL == src || 0 == length)
     {
     result = NULL;
     } 
@@ -146,7 +146,7 @@ int32_t *reserve_words(size_t length)
   {
   int32_t *result;
 
-  if (length <= 0)
+  if (0 == length)
     {
     result = NULL;
     }
