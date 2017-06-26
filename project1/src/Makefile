@@ -18,16 +18,16 @@
 # as "make PLATFORM=MKL" or "make PLATFORM=BBB"
 PLATFORM ?= HOST
 
-CPPFLAGS += -DPROJECT1 -DVERBOSE
+CPPFLAGS += -DPROJECT1
+
+ifdef VERBOSE
+CPPFLAGS += -DVERBOSE
+endif
 
 RM = /bin/rm
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
-	CPU = tune
-	ARCH = tune
-	SPECS = nosys.specs
-
 	CC = gcc
 	CFLAGS += -Wall -Werror -g -O0 -std=c99
 	CPPFLAGS += -DPLATFORM_HOST
@@ -45,14 +45,12 @@ endif
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),MKL)
-	CPU = cortex-m0plus
-	ARCH = thumb
-	SPECS = nosys.specs
-
 	CC = arm-none-eabi-gcc
-	CFLAGS = -Wall -Werror -g -O0 -std=c99 -mcpu=cortex-m0plus -mthumb -specs=nosys.specs
+	CFLAGS = -Wall -Werror -g -O0 -std=c99 \
+		-mcpu=cortex-m0plus -mthumb -specs=nosys.specs
 	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
-	LDFLAGS = -Xlinker -Map=project1.map -T "../platform/MKL25Z128xxx4_flash.ld"
+	LDFLAGS = -Xlinker -Map=project1.map \
+		-L../platform -T MKL25Z128xxx4_flash.ld
 	BIN = project1.elf
 	SRC = \
 		memory.c		\
@@ -70,13 +68,11 @@ endif
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),BBB)
-	CPU = cortex-m4
-	ARCH = thumb
-	SPECS = nosys.specs
-
 #	CC = arm-linux-gnueabi-gcc
 	CC = arm-linux-gnueabihf-gcc
-	CFLAGS += -Wall -Werror -g -O0 -std=c99 -mcpu=cortex-a8 -mthumb -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16
+	CFLAGS += -Wall -Werror -g -O0 -std=c99 \
+		-mcpu=cortex-a8 -mthumb -march=armv7-a \
+		-mfloat-abi=hard -mfpu=vfpv3-d16
 	CPPFLAGS += -DPLATFORM_BBB
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf
@@ -93,11 +89,9 @@ endif
 
 #------------------------------------------------------------------------------
 
-PLATFORM_FLAGS := -m$(ARCH) –mcpu=$(CPU) –specs=$(SPECS)
-
 .PHONY: null
 null:
-	@echo "Usage: make [PLATFORM=<HOST|MKL|BBB>]"
+	@echo "Usage: make [PLATFORM=<HOST|MKL|BBB>] [VERBOSE=1]"
 	@echo "            [build|all|scratch|neat|clean]"
 	@echo "       make all"
 
