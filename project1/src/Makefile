@@ -50,7 +50,7 @@ ifeq ($(PLATFORM),MKL)
 	SPECS = nosys.specs
 
 	CC = arm-none-eabi-gcc
-	CFLAGS = -Wall -Werror -g -O0 -std=c99
+	CFLAGS = -Wall -Werror -g -O0 -std=c99 -mcpu=cortex-m0plus -mthumb -specs=nosys.specs
 	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf
@@ -74,9 +74,9 @@ ifeq ($(PLATFORM),BBB)
 	ARCH = thumb
 	SPECS = nosys.specs
 
-	CC = arm-linux-gnueabi-gcc
-#	CC = arm-linux-gnueabihf-gcc
-	CFLAGS += -Wall -Werror -g -O0 -std=c99
+#	CC = arm-linux-gnueabi-gcc
+	CC = arm-linux-gnueabihf-gcc
+	CFLAGS += -Wall -Werror -g -O0 -std=c99 -mcpu=cortex-a8 -mthumb -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16
 	CPPFLAGS += -DPLATFORM_BBB
 	LDFLAGS = -Xlinker -Map=project1.map
 	BIN = project1.elf

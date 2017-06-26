@@ -18,12 +18,12 @@
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef PLATFORM_HOST
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
 
   #include <libio.h>
   #include <stdlib.h>
 
-#elif PLATFORM_MKL
+#elif defined(PLATFORM_MKL)
 
   #include <stdint.h>
   #include <malloc.h>
