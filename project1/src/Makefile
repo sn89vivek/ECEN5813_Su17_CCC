@@ -26,6 +26,12 @@ endif
 
 RM = /bin/rm
 
+LINT = splint
+LINT_FLAGS = -posix-lib
+
+OBJDUMP = objdump
+OBJDUMP_FLAGS = -t
+
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
 	CC = gcc
@@ -41,8 +47,6 @@ ifeq ($(PLATFORM),HOST)
 		project1.c
 	INCLUDES = \
 		-I ../include/common
-	LINT = splint
-	LINTFLAGS = -posix-lib
 endif
 
 #------------------------------------------------------------------------------
@@ -66,8 +70,6 @@ ifeq ($(PLATFORM),MKL)
 		-I ../include/common	\
 		-I ../include/CMSIS	\
 		-I ../include/kl25z
-	LINT =
-	LINTFLAGS =
 endif
 
 #------------------------------------------------------------------------------
@@ -89,8 +91,6 @@ ifeq ($(PLATFORM),BBB)
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/CMSIS
-	LINT =
-	LINTFLAGS =
 endif
 
 #------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ endif
 .PHONY: null
 null:
 	@echo "Usage: make [PLATFORM=<HOST|MKL|BBB>] [VERBOSE=1]"
-	@echo "            [build|all|scratch|neat|clean]"
+	@echo "            [build|all|scratch|neat|clean|lint|objdump]"
 	@echo "       make all"
 
 OBJS	:= $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRC)))
@@ -120,7 +120,7 @@ LINT_FILES := $(SRC:.c=.lint)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -S -o $@ $^
 
 %.lint : %.c
-	-$(LINT) $(LINTFLAGS) $(CPPFLAGS) $(INCLUDES) $^
+	-$(LINT) $(LINT_FLAGS) $(CPPFLAGS) $(INCLUDES) $^
 
 $(BIN):	$(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $@
@@ -149,3 +149,8 @@ clean: neat
 
 .PHONY: lint
 lint: $(LINT_FILES)
+	@true
+
+.PHONY: objdump
+objdump:
+	$(OBJDUMP) $(OBJDUMP_FLAGS) $(OBJS)
