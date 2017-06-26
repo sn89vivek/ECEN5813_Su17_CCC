@@ -24,6 +24,10 @@ RM = /bin/rm
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
+	CPU = tune
+	ARCH = tune
+	SPECS = nosys.specs
+
 	CC = gcc
 	CFLAGS += -Wall -Werror -g -O0 -std=c99
 	CPPFLAGS += -DPLATFORM_HOST
@@ -41,6 +45,10 @@ endif
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),MKL)
+	CPU = cortex-m0plus
+	ARCH = thumb
+	SPECS = nosys.specs
+
 	CC = arm-none-eabi-gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99
 	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
@@ -62,6 +70,10 @@ endif
 
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),BBB)
+	CPU = cortex-m4
+	ARCH = thumb
+	SPECS = nosys.specs
+
 	CC = arm-linux-gnueabi-gcc
 #	CC = arm-linux-gnueabihf-gcc
 	CFLAGS += -Wall -Werror -g -O0 -std=c99
@@ -81,9 +93,12 @@ endif
 
 #------------------------------------------------------------------------------
 
+PLATFORM_FLAGS := -m$(ARCH) –mcpu=$(CPU) –specs=$(SPECS)
+
 .PHONY: null
 null:
-	@echo "Usage: make PLATFORM=<HOST|MKL|BBB> TEST=<test-case>"
+	@echo "Usage: make [PLATFORM=<HOST|MKL|BBB>]"
+	@echo "            [build|all|scratch|neat|clean]"
 	@echo "       make all"
 
 OBJS	:= $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRC)))
