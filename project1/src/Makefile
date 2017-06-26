@@ -52,7 +52,7 @@ ifeq ($(PLATFORM),MKL)
 	CC = arm-none-eabi-gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 -mcpu=cortex-m0plus -mthumb -specs=nosys.specs
 	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
-	LDFLAGS = -Xlinker -Map=project1.map
+	LDFLAGS = -Xlinker -Map=project1.map -T "../platform/MKL25Z128xxx4_flash.ld"
 	BIN = project1.elf
 	SRC = \
 		memory.c		\
