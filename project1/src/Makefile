@@ -41,6 +41,8 @@ ifeq ($(PLATFORM),HOST)
 		project1.c
 	INCLUDES = \
 		-I ../include/common
+	LINT = splint
+	LINTFLAGS = -posix-lib
 endif
 
 #------------------------------------------------------------------------------
@@ -64,6 +66,8 @@ ifeq ($(PLATFORM),MKL)
 		-I ../include/common	\
 		-I ../include/CMSIS	\
 		-I ../include/kl25z
+	LINT =
+	LINTFLAGS =
 endif
 
 #------------------------------------------------------------------------------
@@ -85,6 +89,8 @@ ifeq ($(PLATFORM),BBB)
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/CMSIS
+	LINT =
+	LINTFLAGS =
 endif
 
 #------------------------------------------------------------------------------
@@ -99,6 +105,7 @@ OBJS	:= $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRC)))
 PP	:= $(SRC:.c=.i)
 DEP	:= $(SRC:.c=.d)
 ASM	:= $(SRC:.c=.asm)
+LINT_FILES := $(SRC:.c=.lint)
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $^
@@ -111,6 +118,9 @@ ASM	:= $(SRC:.c=.asm)
 
 %.asm : %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -S -o $@ $^
+
+%.lint : %.c
+	-$(LINT) $(LINTFLAGS) $(CPPFLAGS) $(INCLUDES) $^
 
 $(BIN):	$(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $@
@@ -136,3 +146,6 @@ neat:
 clean: neat
 	@$(RM) -f *.map
 	@$(RM) -f $(BIN)
+
+.PHONY: lint
+lint: $(LINT_FILES)
