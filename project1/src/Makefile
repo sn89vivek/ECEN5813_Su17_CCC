@@ -32,6 +32,15 @@ LINT_FLAGS = -posix-lib
 OBJDUMP = objdump
 OBJDUMP_FLAGS = -t
 
+LIB_FILES = \
+		  memory.c \
+		  conversion.c \
+		  debug.c
+LIB_OBJS = $(LIB_FILES:.s=.o)
+LIB_OUT = project1_lib.a
+LIBGEN = ar
+LIBFLAGS = -cr
+
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
 	CC = gcc
@@ -157,3 +166,9 @@ lint: $(LINT_FILES)
 .PHONY: objdump
 objdump:
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $(OBJS)
+
+.PHONY: buildlib
+buildlib: $(LIB_OBJS)
+	$(LIBGEN) $(LIBFLAGS) $(LIB_OUT) $^
+
+
