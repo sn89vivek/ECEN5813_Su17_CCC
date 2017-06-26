@@ -128,6 +128,9 @@ $(BIN):	$(OBJS)
 .PHONY: build
 build: $(BIN)
 
+.PHONY: compile-all
+compile-all: $(BIN)
+
 .PHONY: all
 all: build $(PP) $(ASM) $(DEP)
 
