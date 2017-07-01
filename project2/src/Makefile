@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------------
 # ECEN-5813 Summer 2017
-# Project 1
+# Project 2
 #
 # Copyright (C) 2017 by Robert Blazewicz and Vivek Sankaranarayanan.
 # All Rights Reserved. (This work is unpublished)
 #------------------------------------------------------------------------------
 #
-# @file memory.c
+# @file Makefile
 # @author Robert Blazewicz
 # @author Vivek Sankaranarayanan
 # @date June 24, 2017
@@ -18,7 +18,7 @@
 # as "make PLATFORM=MKL" or "make PLATFORM=BBB"
 PLATFORM ?= HOST
 
-CPPFLAGS += -DPROJECT1
+CPPFLAGS += -DPROJECT2
 
 ifdef VERBOSE
 CPPFLAGS += -DVERBOSE
@@ -32,19 +32,28 @@ LINT_FLAGS = -posix-lib
 OBJDUMP = objdump
 OBJDUMP_FLAGS = -t
 
+LIB_FILES = \
+		  memory.c \
+		  conversion.c \
+		  debug.c
+LIB_OBJS = $(LIB_FILES:.s=.o)
+LIB_OUT = project2_lib.a
+LIBGEN = ar
+LIBFLAGS = -cr
+
 #------------------------------------------------------------------------------
 ifeq ($(PLATFORM),HOST)
 	CC = gcc
 	CFLAGS += -Wall -Werror -g -O0 -std=c99
 	CPPFLAGS += -DPLATFORM_HOST
-	LDFLAGS = -Xlinker -Map=project1.map
-	BIN = project1.elf
+	LDFLAGS = -Xlinker -Map=project2.map
+	BIN = project2.elf
 	SRC = \
 		memory.c		\
 		conversion.c		\
 		debug.c			\
 		main.c			\
-		project1.c
+		project2.c
 	INCLUDES = \
 		-I ../include/common
 endif
@@ -55,15 +64,15 @@ ifeq ($(PLATFORM),MKL)
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 \
 		-mcpu=cortex-m0plus -mthumb -specs=nosys.specs
 	CPPFLAGS += -DPLATFORM_MKL -DFORMAT_INT32_AS_LONG_INT
-	LDFLAGS = -Xlinker -Map=project1.map \
+	LDFLAGS = -Xlinker -Map=project2.map \
 		-L../platform -T MKL25Z128xxx4_flash.ld
-	BIN = project1.elf
+	BIN = project2.elf
 	SRC = \
 		memory.c		\
 		conversion.c		\
 		debug.c			\
 		main.c			\
-		project1.c		\
+		project2.c		\
 		startup_MKL25Z4.S	\
 		system_MKL25Z4.c
 	INCLUDES = \
@@ -80,14 +89,14 @@ ifeq ($(PLATFORM),BBB)
 		-mcpu=cortex-a8 -mthumb -march=armv7-a \
 		-mfloat-abi=hard -mfpu=vfpv3-d16
 	CPPFLAGS += -DPLATFORM_BBB
-	LDFLAGS = -Xlinker -Map=project1.map
-	BIN = project1.elf
+	LDFLAGS = -Xlinker -Map=project2.map
+	BIN = project2.elf
 	SRC = \
 		memory.c		\
 		conversion.c		\
 		debug.c			\
 		main.c			\
-		project1.c
+		project2.c
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/CMSIS
@@ -161,3 +170,7 @@ objdump: build
 .PHONY: objdump2
 objdump2: build
 	$(OBJDUMP) -SD $(BIN)
+
+.PHONY: buildlib
+buildlib: $(LIB_OBJS)
+	$(LIBGEN) $(LIBFLAGS) $(LIB_OUT) $^

@@ -9,15 +9,15 @@
  *
  *****************************************************************************/
 /**
- * @file project1.h 
- * @brief This file is to be used to project 1.
+ * @file project2.h 
+ * @brief This file is to be used to project 2.
  *
  * @author Alex Fosdick
  * @date April 2, 2017
  *
  */
-#ifndef __PROJECT1_H__
-#define __PROJECT1_H__
+#ifndef __PROJECT2_H__
+#define __PROJECT2_H__
 
 #include <stdint.h>
 
@@ -36,18 +36,18 @@
 #define TESTCOUNT           (8)
 
 /**
- * @brief function to run project1 materials
+ * @brief function to run project2 materials
  * 
  * This function calls some various simple tests that you can run to test 
- * your code for the project 1. The contents of these functions
+ * your code for the project 2. The contents of these functions
  * have been provided. 
  *
  * @return void
  */
-void project1(void);
+void project2(void);
 
 /**
- * @brief function to run project1 data operations
+ * @brief function to run project2 data operations
  * 
  * This function calls the my_itoa and my_atoi functions to validate they
  * work as expected for hexadecimal numbers.
@@ -57,7 +57,7 @@ void project1(void);
 int8_t test_data1();
 
 /**
- * @brief function to run project1 data operations
+ * @brief function to run project2 data operations
  * 
  * This function calls the my_itoa and my_atoi functions to validate they
  * work as expected for decimal numbers. 
@@ -90,7 +90,7 @@ int8_t test_memmove1();
 int8_t test_memmove2();
 
 /**
- * @brief function to run project1 memmove overlapped test
+ * @brief function to run project2 memmove overlapped test
  * 
  * This function calls the memmove routine with two sets of data that not
  * over lap. Overlap exists at the start of the source and the end of the
@@ -140,4 +140,4 @@ int8_t test_reverse();
  */
 void course1(void);
 
-#endif /* __PROJECT1_H__ */
+#endif /* __PROJECT2_H__ */

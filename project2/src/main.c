@@ -9,7 +9,7 @@
  */
 
 #include "common_ccc.h"
-#include "project1.h"
+#include "project2.h"
 
 /**
  * @brief Definintion for main function
@@ -19,7 +19,7 @@
  */
 int main()
   {
-#ifdef PROJECT1
+#ifdef PROJECT2
   course1();
 #endif
   return 0;

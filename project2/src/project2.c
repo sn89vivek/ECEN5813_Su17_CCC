@@ -9,8 +9,8 @@
  *
  *****************************************************************************/
 /**
- * @file project1_test.c 
- * @brief This file is to be used to project 1.
+ * @file project2_test.c 
+ * @brief This file is to be used to project 2.
  *
  * @author Alex Fosdick
  * @date April 2, 2017
@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "common_ccc.h"
 #include "platform.h"
-#include "project1.h"
+#include "project2.h"
 #include "memory.h"
 #include "conversion.h"
 #include "debug.h"
