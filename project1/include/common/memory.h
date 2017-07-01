@@ -111,6 +111,17 @@ int32_t * reserve_words(size_t length);
  */
 void free_words(uint32_t * src);
 
+/**
+ * @brief The function find_smallest() scans a data array and returns the
+ *        smallest value.
+ *
+ * @param  data - Source data
+ * @param  length - Data length
+ *
+ * @return Smallest value
+ */
+uint8_t find_smallest(uint8_t *data, size_t length);
+
 /*---------------------------------------------------------------------------*/
 
 #endif /* __MEMORY_H__ */

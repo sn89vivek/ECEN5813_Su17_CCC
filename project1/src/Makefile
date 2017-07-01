@@ -155,5 +155,9 @@ lint: $(LINT_FILES)
 	@true
 
 .PHONY: objdump
-objdump:
+objdump: build
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $(OBJS)
+
+.PHONY: objdump2
+objdump2: build
+	$(OBJDUMP) -SD $(BIN)

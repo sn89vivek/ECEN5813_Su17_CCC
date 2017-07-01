@@ -168,3 +168,23 @@ void free_words(uint32_t *src)
     free(src);
     }
   }
+
+/*---------------------------------------------------------------------------*/
+
+uint8_t find_smallest(uint8_t *data, size_t length)
+  {
+  uint8_t smallest = 0xFF;
+
+  if (data != NULL && 0 != length)
+    {
+    for (uint8_t *ptr = data, *end = data + length - 1; ptr < end; ptr++)
+      {
+      if (*ptr < smallest)
+        {
+        smallest = *ptr;
+        }
+      }
+    }
+
+  return smallest;
+  }
