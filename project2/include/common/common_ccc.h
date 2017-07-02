@@ -25,6 +25,12 @@
   #include <stdlib.h>
   #include <libio.h>
 
+  #ifdef CMOCKA_UNIT_TESTS
+    #include <stdarg.h>
+    #include <setjmp.h>
+    #include <cmocka.h>
+  #endif
+
 #elif defined(PLATFORM_MKL)
 
   #include <stdbool.h>

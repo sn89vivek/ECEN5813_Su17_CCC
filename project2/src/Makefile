@@ -111,7 +111,8 @@ endif
 .PHONY: null
 null:
 	@echo "Usage: make [PLATFORM=<HOST|MKL|BBB>] [VERBOSE=1]"
-	@echo "            [build|all|scratch|neat|clean|lint|objdump]"
+	@echo "            [build|all|scratch|neat|clean|lint|objdump|"
+	@echo "             unittests]"
 	@echo "       make all"
 
 OBJS	:= $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SRC)))
@@ -178,3 +179,25 @@ objdump2: build
 .PHONY: buildlib
 buildlib: $(LIB_OBJS)
 	$(LIBGEN) $(LIBFLAGS) $(LIB_OUT) $^
+
+#------------------------------------------------------------------------------
+
+conversion_test.elf : conversion_test.o conversion.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
+
+debug_test.elf : debug_test.o debug.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
+
+memory_test.elf : memory_test.o memory.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
+
+circbuf_test.elf : circbuf_test.o circbuf.o memory.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
+
+.PHONY: unittests
+unittests: CPPFLAGS += -DCMOCKA_UNIT_TESTS
+unittests: conversion_test.elf debug_test.elf memory_test.elf circbuf_test.elf
+	./conversion_test.elf
+	./debug_test.elf
+	./memory_test.elf
+	./circbuf_test.elf
