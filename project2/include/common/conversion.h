@@ -16,8 +16,6 @@
 #ifndef __CONVERSION_H__
 #define __CONVERSION_H__
 
-#include <stdint.h>
-
 /*---------------------------------------------------------------------------*/
 
 /* ---- Bitwise operations --- */

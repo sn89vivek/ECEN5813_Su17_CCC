@@ -20,11 +20,14 @@
 
 #if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
 
-  #include <libio.h>
+  #include <stdbool.h>
+  #include <stdint.h>
   #include <stdlib.h>
+  #include <libio.h>
 
 #elif defined(PLATFORM_MKL)
 
+  #include <stdbool.h>
   #include <stdint.h>
   #include <malloc.h>
   #include "MKL25Z4.h"

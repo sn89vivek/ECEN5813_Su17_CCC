@@ -15,6 +15,10 @@ memory.asm
 memory.d
 memory.i
 memory.o
+circbuf.asm
+circbuf.d
+circbuf.i
+circbuf.o
 project2.asm
 project2.d
 project2.elf

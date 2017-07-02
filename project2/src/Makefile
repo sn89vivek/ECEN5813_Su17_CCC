@@ -33,9 +33,10 @@ OBJDUMP = objdump
 OBJDUMP_FLAGS = -t
 
 LIB_FILES = \
-		  memory.c \
-		  conversion.c \
-		  debug.c
+	memory.c	\
+	conversion.c	\
+	debug.c		\
+	circbuf.c
 LIB_OBJS = $(LIB_FILES:.s=.o)
 LIB_OUT = project2_lib.a
 LIBGEN = ar
@@ -52,6 +53,7 @@ ifeq ($(PLATFORM),HOST)
 		memory.c		\
 		conversion.c		\
 		debug.c			\
+		circbuf.c		\
 		main.c			\
 		project2.c
 	INCLUDES = \
@@ -71,6 +73,7 @@ ifeq ($(PLATFORM),MKL)
 		memory.c		\
 		conversion.c		\
 		debug.c			\
+		circbuf.c		\
 		main.c			\
 		project2.c		\
 		startup_MKL25Z4.S	\
@@ -95,6 +98,7 @@ ifeq ($(PLATFORM),BBB)
 		memory.c		\
 		conversion.c		\
 		debug.c			\
+		circbuf.c		\
 		main.c			\
 		project2.c
 	INCLUDES = \

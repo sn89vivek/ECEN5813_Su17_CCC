@@ -10,7 +10,7 @@
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date June 19, 2017
- * @brief Defintions for debugging related functions.
+ * @brief Definitions for debugging related functions.
  */
 
 #ifdef VERBOSE

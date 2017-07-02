@@ -18,7 +18,11 @@
 
 /*---------------------------------------------------------------------------*/
 
-#include <stdint.h>
+#define SIZEOF_IN_WORDS(object)  ((sizeof(object) / sizeof(uint32_t)) + 1)
+
+#define LENGTH_IN_WORDS(length)  ((length / sizeof(uint32_t)) + 1)
+
+/*---------------------------------------------------------------------------*/
 
 /**
  * @brief The function my_memmove() takes two byte pointers (one source and

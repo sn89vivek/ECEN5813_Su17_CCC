@@ -12,7 +12,7 @@
 #include "project2.h"
 
 /**
- * @brief Definintion for main function
+ * @brief Definition of main function
  * 
  * @param None
  * @return None
