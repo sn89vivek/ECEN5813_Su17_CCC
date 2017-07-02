@@ -58,6 +58,8 @@ ifeq ($(PLATFORM),HOST)
 		project2.c
 	INCLUDES = \
 		-I ../include/common
+
+	TEST_BINS = circbuf_test.elf conversion_test.elf memory_test.elf
 endif
 
 #------------------------------------------------------------------------------
@@ -162,7 +164,7 @@ neat:
 .PHONY: clean
 clean: neat
 	@$(RM) -f *.map
-	@$(RM) -f $(BIN)
+	@$(RM) -f $(BIN) $(TEST_BINS)
 
 .PHONY: lint
 lint: $(LINT_FILES)
@@ -182,22 +184,18 @@ buildlib: $(LIB_OBJS)
 
 #------------------------------------------------------------------------------
 
-conversion_test.elf : conversion_test.o conversion.o
+circbuf_test.elf : circbuf_test.o circbuf.o memory.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
 
-debug_test.elf : debug_test.o debug.o
+conversion_test.elf : conversion_test.o conversion.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
 
 memory_test.elf : memory_test.o memory.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
 
-circbuf_test.elf : circbuf_test.o circbuf.o memory.o
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcmocka -o $@
-
 .PHONY: unittests
 unittests: CPPFLAGS += -DCMOCKA_UNIT_TESTS
-unittests: conversion_test.elf debug_test.elf memory_test.elf circbuf_test.elf
-	./conversion_test.elf
-	./debug_test.elf
-	./memory_test.elf
+unittests: $(TEST_BINS)
 	./circbuf_test.elf
+	./conversion_test.elf
+	./memory_test.elf

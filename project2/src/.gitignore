@@ -9,8 +9,6 @@ debug.asm
 debug.d
 debug.i
 debug.o
-debug_test.o
-debug_test.elf
 main.asm
 main.d
 main.i
