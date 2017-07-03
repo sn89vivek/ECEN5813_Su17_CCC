@@ -9,7 +9,6 @@
  */
 
 #include "common_ccc.h"
-#include "project2.h"
 
 /**
  * @brief Definition of main function
@@ -19,8 +18,5 @@
  */
 int main()
   {
-#ifdef PROJECT2
-  course1();
-#endif
   return 0;
   }

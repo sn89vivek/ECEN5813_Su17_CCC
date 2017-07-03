@@ -54,8 +54,7 @@ ifeq ($(PLATFORM),HOST)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
-		main.c			\
-		project2.c
+		main.c
 	INCLUDES = \
 		-I ../include/common
 
@@ -76,8 +75,7 @@ ifeq ($(PLATFORM),MKL)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
-		main.c			\
-		project2.c		\
+		main.c
 		startup_MKL25Z4.S	\
 		system_MKL25Z4.c
 	INCLUDES = \
@@ -101,8 +99,7 @@ ifeq ($(PLATFORM),BBB)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
-		main.c			\
-		project2.c
+		main.c
 	INCLUDES = \
 		-I ../include/common	\
 		-I ../include/CMSIS
