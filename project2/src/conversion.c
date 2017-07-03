@@ -117,7 +117,7 @@ int8_t big_to_little32(uint32_t *data, uint32_t length)
   {
   int8_t result;
 
-  if (NULL == data || length <= 0)
+  if (NULL == data || 0 == length)
     {
     result = FAILURE;
     }
