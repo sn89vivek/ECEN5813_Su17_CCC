@@ -101,12 +101,27 @@ void my_atoi__5(void **state)
 void my_atoi__6(void **state)
   {
   int32_t data;
+  char8_t buffer[] = "-";
+  assert_int_equal(my_atoi((uint8_t*)buffer, 1, 10, &data), FAILURE);
+  }
+
+
+void my_atoi__7(void **state)
+  {
+  char8_t buffer[] = "123x";
+  assert_int_equal(my_atoi((uint8_t*)buffer, 4, 16, NULL), FAILURE);
+  }
+
+
+void my_atoi__8(void **state)
+  {
+  int32_t data;
   char8_t buffer[] = "-1000";
   assert_int_equal(my_atoi((uint8_t*)buffer, 5, 16, &data), SUCCESS);
   assert_int_equal(data, -4096);
   }
 
-void my_atoi__7(void **state)
+void my_atoi__9(void **state)
   {
   int32_t data;
   char8_t buffer[] = "123456";
@@ -204,6 +219,8 @@ int main(int argc, char *argv[])
     unit_test(my_atoi__5),
     unit_test(my_atoi__6),
     unit_test(my_atoi__7),
+    unit_test(my_atoi__8),
+    unit_test(my_atoi__9),
     unit_test(big_to_little32__1),
     unit_test(big_to_little32__2),
     unit_test(big_to_little32__3),
