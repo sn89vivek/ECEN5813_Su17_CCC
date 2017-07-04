@@ -73,12 +73,11 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
   uint8_t result = SUCCESS;
   uint8_t num;
 
-
-  *data = 0;
-  if(ptr == NULL || base < 2 || base > 16)
+  if(ptr == NULL || *ptr == EOS || data == NULL || base < 2 || base > 16)
     result = FAILURE;
   else
     {
+    *data = 0;  
     if(*ptr == '-')
       {
       sign = -1;
@@ -106,8 +105,8 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
         }
       *data += (num * place_value_get(base, digits-1));
       }
-    }
-  *data = (*data) * sign; 
+    *data = (*data) * sign;
+    } 
   return result;
   }
 
@@ -148,7 +147,7 @@ int8_t little_to_big32(uint32_t *data, uint32_t length)
     }
   else
     {
-    for (uint32_t *ptr = data, *end = data + length; ptr < end; )
+    for (uint32_t *ptr = data, *end = data + length; ptr < end; ptr++)
       {
       *ptr = (RSHIFT_3_BYTES(*ptr)) | 
              (BYTE1(RSHIFT_BYTE(*ptr))) |

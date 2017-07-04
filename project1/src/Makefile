@@ -36,7 +36,7 @@ LIB_FILES = \
 		  memory.c \
 		  conversion.c \
 		  debug.c
-LIB_OBJS = $(LIB_FILES:.s=.o)
+LIB_OBJS = $(LIB_FILES:.c=.o)
 LIB_OUT = project1_lib.a
 LIBGEN = ar
 LIBFLAGS = -cr

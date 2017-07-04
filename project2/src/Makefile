@@ -37,7 +37,7 @@ LIB_FILES = \
 	conversion.c	\
 	debug.c		\
 	circbuf.c
-LIB_OBJS = $(LIB_FILES:.s=.o)
+LIB_OBJS = $(LIB_FILES:.c=.o)
 LIB_OUT = project2_lib.a
 LIBGEN = ar
 LIBFLAGS = -cr

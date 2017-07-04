@@ -75,6 +75,10 @@
 #define LF (0x0A)
 #endif
 
+#ifndef EOS
+#define EOS (0)
+#endif
+
 /*---------------------------------------------------------------------------*/
 
 typedef char char8_t;
