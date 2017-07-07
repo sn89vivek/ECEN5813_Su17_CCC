@@ -75,9 +75,9 @@ ifeq ($(PLATFORM),MKL)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
-		main.c       \  
+		main.c			\
 		startup_MKL25Z4.S	\
-		uart.c   \
+		uart.c			\
 		system_MKL25Z4.c
 	INCLUDES = \
 		-I ../include/common	\
