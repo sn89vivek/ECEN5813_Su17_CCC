@@ -17,10 +17,23 @@
 
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
-
 static void port_init();
 
+/*---------------------------------------------------------------------------*/
+
+void uart_configure()
+  {
+  port_init();
+  }
+
+/*---------------------------------------------------------------------------*/
+
 /*
+ * @brief This function initializes ports for UART
+ *
+ * @param None
+ * @return None
+ *
  * # Port Mapping table
  *
  * PTA1: UART0_RX (ALT2)
@@ -36,7 +49,5 @@ void port_init()
   PORTA_PCR2 |= (PORTA_UART0_FUNC << PORT_PCR_MUX_SHIFT);
   }
 
-void uart_configure()
-  {
-  port_init();
-  }
+/*---------------------------------------------------------------------------*/
+

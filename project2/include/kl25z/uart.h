@@ -23,6 +23,15 @@
 /* ---- UART config --- */
 #define PORTA_UART0_FUNC                           2
 
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function configures UART peripheral
+ *
+ * @param None
+ * @return None
+ *
+ */
 void uart_configure();
 
 #endif /* UART_H_ */
