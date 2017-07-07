@@ -1,8 +1,7 @@
-/**
+/*
  * @file main.c
  * @brief source file containing main function
  *
- * TODO
  *
  * @author Robert Blazewicz/Vivek Sankaranarayanan
  * @date June 19, 2017
@@ -18,5 +17,9 @@
  */
 int main()
   {
+#if defined(PLATFORM_MKL)
+  uart_configure();
+  while(1) {}
+#endif
   return 0;
   }
