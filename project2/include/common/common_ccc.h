@@ -38,6 +38,7 @@
   #include <malloc.h>
   #include "MKL25Z4.h"
   #include "system_MKL25Z4.h"
+  #include "uart.h"
 
 #else
 
