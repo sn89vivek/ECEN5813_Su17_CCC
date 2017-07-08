@@ -13,10 +13,6 @@
  * @brief This file validates the memory functions.
  */
 
-/* Add strdupa() */
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
 #include <string.h>
 
 #include "common_ccc.h"
@@ -254,50 +250,43 @@ void my_reverse__2(void **state)
 
 void my_reverse__3(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("a");
-  assert_non_null(src);
+  uint8_t src[] = "a";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 1), "a", 1), 0);
   }
 
 void my_reverse__4(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("ab");
-  assert_non_null(src);
+  uint8_t src[] = "ab";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 2), "ba", 2), 0);
   }
 
 void my_reverse__5(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("abc");
-  assert_non_null(src);
+  uint8_t src[] = "abc";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 3), "cba", 3), 0);
   }
 
 void my_reverse__6(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("0123456789");
-  assert_non_null(src);
+  uint8_t src[] = "0123456789";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 10), "9876543210", 10), 0);
   }
 
 void my_reverse__7(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("0123X6789");
-  assert_non_null(src);
+  uint8_t src[] = "0123X6789";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 9), "9876X3210", 9), 0);
   }
 
 void my_reverse__8(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("0123456789");
-  assert_non_null(src);
+  uint8_t src[] = "0123456789";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 5), "4321056789", 5), 0);
   }
 
 void my_reverse__9(void **state)
   {
-  uint8_t *src = (uint8_t*)strdupa("012345");
-  assert_non_null(src);
+  uint8_t src[] = "012345";
   assert_int_equal(strncmp((const char8_t*)my_reverse(src, 6), "5432106789", 6), 0);
   }
 
