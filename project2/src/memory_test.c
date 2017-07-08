@@ -35,49 +35,38 @@
 
 void my_memmove__1(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memmove(NULL, data, 1), NULL);
   }
 
 void my_memmove__2(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memmove(data, NULL, 1), NULL);
   }
 
 void my_memmove__3(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memmove(data, data, 0), NULL);
   }
 
 void my_memmove__4(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memmove(data, data, 1), data);
   }
 
 /* Test no-overlap condition */
 void my_memmove__5(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptra;
-  uint8_t *ptrb;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptra = &data[0];
-  ptrb = &data[16];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++)
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptra = data;
+  uint8_t *ptrb = &data[16];
 
   assert_int_equal(my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH), ptrb);
 
@@ -90,20 +79,13 @@ void my_memmove__5(void **state)
 /* Test source in destination region overlap */
 void my_memmove__6(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptra;
-  uint8_t *ptrb;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptra = &data[0];
-  ptrb = &data[8];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++)
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptra = data;
+  uint8_t *ptrb = &data[8];
 
   assert_int_equal(my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH), ptrb);
 
@@ -116,20 +98,13 @@ void my_memmove__6(void **state)
 /* Test destination in source region overlap */
 void my_memmove__7(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptra;
-  uint8_t *ptrb;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptra = &data[8];
-  ptrb = &data[0];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++)
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptra = &data[8];
+  uint8_t *ptrb = data;
 
   assert_int_equal(my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH), ptrb);
 
@@ -144,48 +119,37 @@ void my_memmove__7(void **state)
 
 void my_memcpy__1(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memcpy(NULL, data, 1), NULL);
   }
 
 void my_memcpy__2(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memcpy(data, NULL, 1), NULL);
   }
 
 void my_memcpy__3(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memcpy(data, data, 0), NULL);
   }
 
 void my_memcpy__4(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memcpy(data, data, 1), data);
   }
 
 void my_memcpy__5(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptra;
-  uint8_t *ptrb;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptra = &data[0];
-  ptrb = &data[16];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++)
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptra = data;
+  uint8_t *ptrb = &data[16];
 
   assert_int_equal(my_memcpy(ptra, ptrb, TEST_MEMMOVE_LENGTH), ptrb);
 
@@ -205,34 +169,25 @@ void my_memset__1(void **state)
 
 void my_memset__2(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memset(data, 0, 0), NULL);
   }
 
 void my_memset__3(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memset(data, 1, 0), data);
   }
 
 void my_memset__4(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptra;
-  uint8_t *ptrb;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptra = &data[0];
-  ptrb = &data[16];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++) 
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptra = data;
+  uint8_t *ptrb = &data[16];
 
   assert_int_equal(my_memset(ptra, MEM_SET_SIZE_B, 0xFF), ptra);
 
@@ -256,32 +211,24 @@ void my_memzero__1(void **state)
 
 void my_memzero__2(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memzero(data, 0), NULL);
   }
 
 void my_memzero__3(void **state)
   {
-  uint8_t *data = (uint8_t*)alloca(1);
-  assert_non_null(data);
+  uint8_t data[1];
   assert_int_equal(my_memzero(data, 1), data);
   }
 
 void my_memzero__4(void **state)
   {
-  uint8_t *data;
-  uint8_t *ptr;
-
-  data = (uint8_t*)alloca(MEM_SET_SIZE_W);
-  assert_non_null(data);
-  ptr = &data[0];
-
-  // Initialize the set to test values
-  for (size_t i = 0; i < MEM_SET_SIZE_B; i++) 
+  uint8_t data[MEM_SET_SIZE_B] =
     {
-    data[i] = i;
-    }
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+    };
+  uint8_t *ptr = data;
 
   assert_int_equal(my_memzero(ptr, MEM_SET_SIZE_B), ptr);
 
@@ -356,10 +303,8 @@ void my_reverse__9(void **state)
 
 void my_reverse__10(void **state)
   {
-  uint8_t *src1 = (uint8_t*)alloca(256);
-  uint8_t *src2 = (uint8_t*)alloca(256);
-  assert_non_null(src1);
-  assert_non_null(src2);
+  uint8_t src1[256];
+  uint8_t src2[256];
 
   for (size_t i = 0; i < 256; i++)
     {
