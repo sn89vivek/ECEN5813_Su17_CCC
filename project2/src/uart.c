@@ -30,15 +30,15 @@ void uart_configure()
    * **************************************************************************
    */
 
-  /* Disable uart before any config settings */
-  DISABLE_UART0();
+  /* Enable Clock to UART module */
+  SIM->SCGC4 |= SIM_SCGC4_UART0(ENABLE_CLK);
 
   /* Select clock source */
   /* MCGPLLCLK_by_2 selected: 20971520Hz */
   SIM->SOPT2 |= SIM_SOPT2_UART0SRC(UART0_CLK_SRC);
 
-  /* Enable Clock to UART module */
-  SIM->SCGC4 |= SIM_SCGC4_UART0(ENABLE_CLK);
+  /* Disable uart before any config settings */
+  DISABLE_UART0();
 
   /* UART BAUD RATE */
   UART0->BDH |= UART0_BDH_SBR(UART0_BAUD_REG_HIGH());
@@ -58,6 +58,30 @@ void uart_configure()
 
   /* UART_Enable */
   ENABLE_UART0();
+
+  uart_send_n((uint8_t *)"Hello World\n\r",13);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+uint8_t uart_send_n(uint8_t *buf, uint32_t n)
+  {
+  if(buf == NULL)
+  return FAILURE;
+  while(n--)
+    uart_send(buf++);
+  return SUCCESS;
+  }
+
+/*---------------------------------------------------------------------------*/
+
+uint8_t uart_send(uint8_t *data)
+  {
+  if(data == NULL)
+  return FAILURE;
+  while(!(UART0->S1 & UART0_S1_TDRE_MASK)) {}
+  UART0->D = *data;
+  return SUCCESS;
   }
 
 /*---------------------------------------------------------------------------*/
@@ -83,5 +107,4 @@ void uart_port_init()
   PORTA_PCR2 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
   }
 
-/*---------------------------------------------------------------------------*/
 
