@@ -132,32 +132,11 @@ CB_status CB_init(CB_t **cb, uint32_t length)
   {
   CB_status status;
 
-#ifdef CB_POWER_OF_TWO
-  bool power_of_two;
-  power_of_two = FALSE;
-  if (length != 0)
-    {
-    uint32_t tmp_length = length;
-    while (0 == (tmp_length & 0x00000001))
-      {
-      tmp_length >>= 1;
-      };
-    if (0 == (tmp_length ^ 0x00000001))
-      {
-      power_of_two = TRUE;
-      }
-    }
-#endif
-
   if (NULL == cb)
     {
     status = CB_NULL;
     }
-#ifdef CB_POWER_OF_TWO
-  else if (0 == length || length > MAX_CB_LENGTH || FALSE == power_of_two)
-#else
-  else if (0 == length || length > MAX_CB_LENGTH)
-#endif
+  else if (length <= 1 || (length & (length - 1)) != 0)
     {
     status = CB_LENGTH;
     }

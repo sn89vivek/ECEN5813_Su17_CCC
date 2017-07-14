@@ -18,24 +18,15 @@
 
 /*---------------------------------------------------------------------------*/
 
-#ifndef CB_POWER_OF_TWO
-#define CB_POWER_OF_TWO  FALSE
-#endif
-
-#define MIN_CB_LENGTH  (0x0004)
-#define MAX_CB_LENGTH  (0x8000)
-
-/*---------------------------------------------------------------------------*/
-
 /* Object: CB_t: Curcular buffer type */
 typedef struct
   {
-  uint32_t buf_size;  /* Buffer length */
-  uint8_t *buf_start; /* Buffer start */
-  uint8_t *buf_end;   /* Buffer end */
-  uint32_t count;     /* Content count */
-  uint8_t *head;      /* Content head */
-  uint8_t *tail;      /* Content tail */
+  uint32_t  buf_size;  /* Buffer length */
+  uint8_t  *buf_start; /* Buffer start */
+  uint8_t  *buf_end;   /* Buffer end */
+  uint32_t  count;     /* Content count */
+  uint8_t  *head;      /* Content head */
+  uint8_t  *tail;      /* Content tail */
   } CB_t;
 
 /* Object: CB_status: Curcular buffer status enumeration */
