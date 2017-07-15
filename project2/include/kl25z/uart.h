@@ -36,7 +36,7 @@
 #define UART_OSR_VAL			  (4)
 #define UART_OSR_REG_VAL 		  (UART_OSR_VAL-1)
 
-#define UART0_BAUD_RATE			  57600
+#define UART0_BAUD_RATE			  115200
 #define BAUD_RATE_REG_VAL()       (SystemCoreClock/(UART_OSR_VAL * UART0_BAUD_RATE))
 #define UART0_BAUD_REG_HIGH()     ((BAUD_RATE_REG_VAL() >> 8) & 0x0F)
 #define UART0_BAUD_REG_LOW()      (BAUD_RATE_REG_VAL() & 0xFF)
@@ -55,7 +55,7 @@ void uart_configure();
 /*---------------------------------------------------------------------------*/
 
 /*
- * @brief This function tranmits a buffer of specified size over UART
+ * @brief This function transmits a buffer of specified size over UART
  *
  * @param buf: pointer to the buffer to be transimitted
  * @param n: No. of bytes to be transmitted over UART
@@ -74,5 +74,26 @@ uint8_t uart_send_n(uint8_t *buf, uint32_t n);
  *
  */
 uint8_t uart_send(uint8_t *data);
+
+/*
+ * @brief This function receives a buffer of specified size over UART
+ *
+ * @param buf: pointer to the buffer to store received bytes
+ * @param n: No. of bytes to be received over UART
+ * @return Operation status (SUCCESS or FAILURE)
+ *
+ */
+uint8_t uart_receive_n(uint8_t *buf, uint32_t n);
+
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function receives a byte over UART
+ *
+ * @param data: pointer to the data where received variable is stored
+ * @return Operation status (SUCCESS or FAILURE)
+ *
+ */
+uint8_t uart_receive(uint8_t *data);
 
 #endif /* UART_H_ */
