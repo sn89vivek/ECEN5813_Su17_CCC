@@ -12,7 +12,7 @@
  * @date July 2, 2017
  * @brief This file validates the circbuf functions.
  */
-
+#include <stdio.h>
 #include "common_ccc.h"
 #include "circbuf.h"
 
@@ -104,6 +104,30 @@ void CB_buffer_add_item__1(void **state)
   assert_int_equal(CB_buffer_add_item(NULL, 0), CB_NULL);
   }
 
+void CB_buffer_add_item__2(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(NULL, 0), CB_NULL);
+  }
+
+void CB_buffer_add_item__3(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  }
+
+void CB_buffer_add_item__4(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_BUFFER_FULL);
+  }
+
 /*---------------------------------------------------------------------------*/
 
 void CB_buffer_remove_item__1(void **state)
@@ -116,6 +140,14 @@ void CB_buffer_remove_item__2(void **state)
   CB_t *cb;
   assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
   assert_int_equal(CB_buffer_remove_item(cb, NULL), CB_NULL);
+  }
+
+void CB_buffer_remove_item__3(void **state)
+  {
+  CB_t *cb;
+  uint8_t data;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_remove_item(cb, &data), CB_BUFFER_EMPTY);
   }
 
 /*---------------------------------------------------------------------------*/
@@ -195,6 +227,57 @@ void CB_peek__3(void **state)
 
 /*---------------------------------------------------------------------------*/
 
+void CB_sanity__1(void **state)
+  {
+  CB_t *cb;
+  uint8_t data;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0xEE), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0xDD), CB_SUCCESS);
+  assert_int_equal(CB_buffer_remove_item(cb, &data), CB_SUCCESS);
+  assert_int_equal(data, 0xEE);
+  assert_int_equal(CB_buffer_add_item(cb, 0xCC), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0xBB), CB_BUFFER_FULL);
+  assert_int_equal(CB_buffer_remove_item(cb, &data), CB_SUCCESS);
+  assert_int_equal(data, 0xDD);
+  assert_int_equal(CB_buffer_add_item(cb, 0xBB), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0xAA), CB_BUFFER_FULL);
+  }
+
+void CB_sanity__2(void **state)
+  {
+  CB_t *cb;
+  uint8_t data;
+  uint16_t i;
+  assert_int_equal(CB_init(&cb, 32), CB_SUCCESS);
+
+  /* Fill buffer */
+  for (i = 0; i < 32; i++)
+    {
+    assert_int_equal(CB_buffer_add_item(cb, i), CB_SUCCESS);
+    }
+  assert_int_equal(CB_buffer_add_item(cb, i), CB_BUFFER_FULL);
+
+  /* Remove and Add entries 224 times */
+  for ( ; i < 256; i++)
+    {
+    assert_int_equal(CB_buffer_remove_item(cb, &data), CB_SUCCESS);
+    assert_int_equal(data, i - 32);
+
+    assert_int_equal(CB_buffer_add_item(cb, i), CB_SUCCESS);
+    }
+
+  /* Empty buffer */
+  for (i = 0; i < 32; i++)
+    {
+    assert_int_equal(CB_buffer_remove_item(cb, &data), CB_SUCCESS);
+    assert_int_equal(data, i + 224);
+    }
+  assert_int_equal(CB_buffer_remove_item(cb, &data), CB_BUFFER_EMPTY);
+  }
+
+/*---------------------------------------------------------------------------*/
+
 int main(int argc, char *argv[])
   {
   const struct CMUnitTest tests[] =
@@ -208,8 +291,12 @@ int main(int argc, char *argv[])
     unit_test(CB_destroy__1),
     unit_test(CB_destroy__2),
     unit_test(CB_buffer_add_item__1),
+    unit_test(CB_buffer_add_item__2),
+    unit_test(CB_buffer_add_item__3),
+    unit_test(CB_buffer_add_item__4),
     unit_test(CB_buffer_remove_item__1),
     unit_test(CB_buffer_remove_item__2),
+    unit_test(CB_buffer_remove_item__3),
     unit_test(CB_is_full__1),
     unit_test(CB_is_full__2),
     unit_test(CB_is_full__3),
@@ -219,7 +306,9 @@ int main(int argc, char *argv[])
     unit_test(CB_is_empty__3),
     unit_test(CB_peek__1),
     unit_test(CB_peek__2),
-    unit_test(CB_peek__3)
+    unit_test(CB_peek__3),
+    unit_test(CB_sanity__1),
+    unit_test(CB_sanity__2)
     };
   return cmocka_run_group_tests(tests, NULL, NULL);
   }

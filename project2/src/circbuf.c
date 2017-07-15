@@ -58,7 +58,7 @@ CB_status CB_buffer_remove_item(CB_t *cb, uint8_t *data)
     }
   else
     {
-    *data = *(cb->tail);
+    *data = *(cb->head);
     cb->head = (cb->head < cb->buf_end) ? cb->head + 1 : cb->buf_start;
     cb->count--;
     status = CB_SUCCESS;
