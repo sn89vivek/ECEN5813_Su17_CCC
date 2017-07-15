@@ -99,6 +99,102 @@ void CB_destroy__2(void **state)
 
 /*---------------------------------------------------------------------------*/
 
+void CB_buffer_add_item__1(void **state)
+  {
+  assert_int_equal(CB_buffer_add_item(NULL, 0), CB_NULL);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void CB_buffer_remove_item__1(void **state)
+  {
+  assert_int_equal(CB_buffer_remove_item(NULL, NULL), CB_NULL);
+  }
+
+void CB_buffer_remove_item__2(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_remove_item(cb, NULL), CB_NULL);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void CB_is_full__1(void **state)
+  {
+  assert_int_equal(CB_is_full(NULL), CB_NULL);
+  }
+
+void CB_is_full__2(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_is_full(cb), CB_LENGTH);
+  }
+
+void CB_is_full__3(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_is_full(cb), CB_LENGTH);
+  }
+
+void CB_is_full__4(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_is_full(cb), CB_SUCCESS);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void CB_is_empty__1(void **state)
+  {
+  assert_int_equal(CB_is_empty(NULL), CB_NULL);
+  }
+
+void CB_is_empty__2(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_is_empty(cb), CB_SUCCESS);
+  }
+
+void CB_is_empty__3(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_buffer_add_item(cb, 0), CB_SUCCESS);
+  assert_int_equal(CB_is_empty(cb), CB_LENGTH);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void CB_peek__1(void **state)
+  {
+  assert_int_equal(CB_peek(NULL, 0, NULL), CB_NULL);
+  }
+
+void CB_peek__2(void **state)
+  {
+  CB_t *cb;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_peek(cb, 0, NULL), CB_NULL);
+  }
+
+void CB_peek__3(void **state)
+  {
+  CB_t *cb;
+  uint8_t data;
+  assert_int_equal(CB_init(&cb, 2), CB_SUCCESS);
+  assert_int_equal(CB_peek(cb, 0, &data), CB_LENGTH);
+  }
+
+/*---------------------------------------------------------------------------*/
+
 int main(int argc, char *argv[])
   {
   const struct CMUnitTest tests[] =
@@ -110,7 +206,20 @@ int main(int argc, char *argv[])
     unit_test(CB_init__5),
     unit_test(CB_init__6),
     unit_test(CB_destroy__1),
-    unit_test(CB_destroy__2)
+    unit_test(CB_destroy__2),
+    unit_test(CB_buffer_add_item__1),
+    unit_test(CB_buffer_remove_item__1),
+    unit_test(CB_buffer_remove_item__2),
+    unit_test(CB_is_full__1),
+    unit_test(CB_is_full__2),
+    unit_test(CB_is_full__3),
+    unit_test(CB_is_full__4),
+    unit_test(CB_is_empty__1),
+    unit_test(CB_is_empty__2),
+    unit_test(CB_is_empty__3),
+    unit_test(CB_peek__1),
+    unit_test(CB_peek__2),
+    unit_test(CB_peek__3)
     };
   return cmocka_run_group_tests(tests, NULL, NULL);
   }
