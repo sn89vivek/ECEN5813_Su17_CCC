@@ -41,6 +41,11 @@ typedef enum
 
 /*---------------------------------------------------------------------------*/
 
+/* Extern Var: Buffer Pointers */
+CB_t *CB_rx, *CB_tx;
+
+/*---------------------------------------------------------------------------*/
+
 /**
  * @brief The function CB_init() allocates curcular buffer.
  *
