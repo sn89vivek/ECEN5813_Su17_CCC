@@ -18,7 +18,12 @@
 # as "make PLATFORM=MKL" or "make PLATFORM=BBB"
 PLATFORM ?= HOST
 
+ifdef PROJECT1
+CPPFLAGS += -DPROJECT1
+endif
+ifdef PROJECT2
 CPPFLAGS += -DPROJECT2
+endif
 
 ifdef VERBOSE
 CPPFLAGS += -DVERBOSE
@@ -54,6 +59,8 @@ ifeq ($(PLATFORM),HOST)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
+		project1.c		\
+		project2.c		\
 		main.c
 	INCLUDES = \
 		-I ../include/common
@@ -75,6 +82,8 @@ ifeq ($(PLATFORM),MKL)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
+		project1.c		\
+		project2.c		\
 		main.c			\
 		startup_MKL25Z4.S	\
 		uart.c			\
@@ -100,6 +109,8 @@ ifeq ($(PLATFORM),BBB)
 		conversion.c		\
 		debug.c			\
 		circbuf.c		\
+		project1.c		\
+		project2.c		\
 		main.c
 	INCLUDES = \
 		-I ../include/common	\
