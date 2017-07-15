@@ -28,7 +28,9 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
     }
   else
     {
+    /* If the start of source lower in memory than the destination? */
     if (src < dst)
+      /* Start of source is lower in memory than the destination. */
       {
       for (uint8_t *ptr1 = src + length - 1, *ptr2 = dst + length - 1;
            src <= ptr1; )
@@ -37,6 +39,7 @@ uint8_t *my_memmove(uint8_t *src, uint8_t *dst, size_t length)
         }
       }
     else
+      /* Start of destination is at or lower than the source in memory. */
       {
       for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ptr1 < end; )
         {
@@ -61,6 +64,7 @@ uint8_t *my_memcpy(uint8_t *src, uint8_t *dst, size_t length)
     }
   else
     {
+    /* Copy bytes from source to destination */
     for (uint8_t *ptr1 = src, *ptr2 = dst, *end = src + length; ptr1 < end; )
       {
       *ptr2++ = *ptr1++;
@@ -83,6 +87,7 @@ uint8_t *my_memset(uint8_t *src, size_t length, uint8_t value)
     } 
   else 
     {
+    /* Set target with value from source for length bytes */
     for (uint8_t *ptr = src, *end = src + length; ptr < end; )
       {
       *ptr++ = value;
@@ -105,6 +110,7 @@ uint8_t *my_memzero(uint8_t *src, size_t length)
     }
   else
     {
+    /* Set target with zero from source for length bytes */
     for (uint8_t *ptr = src, *end = src + length; ptr < end; )
       {
       *ptr++ = 0x00;
@@ -128,6 +134,7 @@ uint8_t *my_reverse(uint8_t *src, size_t length)
     } 
   else 
     {
+    /* Reverse bytes in memory from source for length bytes */
     for (uint8_t *ptr = src, *end = src + (length - 1); ptr < end; )
       {
       swap = *ptr;
@@ -152,6 +159,7 @@ int32_t *reserve_words(size_t length)
     }
   else
     {
+    /* Allocate a block of memory of length Words */
     const size_t malloc_bytes = length * sizeof(uint32_t);
     result = (int32_t*)malloc(malloc_bytes);
     }
@@ -165,6 +173,7 @@ void free_words(uint32_t *src)
   {
   if (src != NULL)
     {
+    /* Deallocate a block of memory */
     free(src);
     }
   }
@@ -177,6 +186,7 @@ uint8_t find_smallest(uint8_t *data, size_t length)
 
   if (data != NULL && 0 != length)
     {
+    /* Search memory for lowest byte value */
     for (uint8_t *ptr = data, *end = data + length - 1; ptr < end; ptr++)
       {
       if (*ptr < smallest)
