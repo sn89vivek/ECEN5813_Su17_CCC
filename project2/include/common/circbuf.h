@@ -42,6 +42,25 @@ typedef enum
 /*---------------------------------------------------------------------------*/
 
 /**
+ * @brief The function CB_init() allocates curcular buffer.
+ *
+ * @param  cb - Curcular buffer object
+ * @param  length - Length of the buffer
+ *
+ * @return Curcular buffer status enumeration
+ */
+CB_status CB_init(CB_t **cb, uint32_t length);
+
+/**
+ * @brief The function CB_destroy() deallocates curcular buffer.
+ *
+ * @param  cb - Curcular buffer object
+ *
+ * @return Curcular buffer status enumeration
+ */
+CB_status CB_destroy(CB_t *cb);
+
+/**
  * @brief The function CB_buffer_add_item() adds a single value to the buffer.
  *
  * @param  cb - Curcular buffer object
@@ -91,25 +110,6 @@ CB_status CB_is_empty(CB_t *cb);
  * @return Curcular buffer status enumeration
  */
 CB_status CB_peek(CB_t *cb, uint32_t index, uint8_t *data);
-
-/**
- * @brief The function CB_init() allocates curcular buffer.
- *
- * @param  cb - Curcular buffer object
- * @param  length - Length of the buffer
- *
- * @return Curcular buffer status enumeration
- */
-CB_status CB_init(CB_t **cb, uint32_t length);
-
-/**
- * @brief The function CB_destroy() deallocates curcular buffer.
- *
- * @param  cb - Curcular buffer object
- *
- * @return Curcular buffer status enumeration
- */
-CB_status CB_destroy(CB_t *cb);
 
 /**
  * @brief The function CB_length() returns the length of the buffer.
