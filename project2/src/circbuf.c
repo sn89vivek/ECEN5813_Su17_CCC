@@ -38,13 +38,17 @@ CB_status CB_init(CB_t **cb, uint32_t length)
   else
     {
     *cb = (CB_t*)reserve_words(SIZEOF_IN_WORDS(CB_t));
-    if(*cb == NULL)
-      status = CB_NULL;
+    if (NULL == *cb)
+      {
+      status = CB_ENOMEM;
+      }
     else
       {
       (*cb)->buf_start = (uint8_t*)reserve_words(LENGTH_IN_WORDS(length));
-      if((*cb)->buf_start == NULL)
-      status = CB_NULL;
+      if (NULL == (*cb)->buf_start)
+        {
+        status = CB_NOMEM;
+        }
       else
         {
         (*cb)->buf_end = (*cb)->buf_start + length - 1;

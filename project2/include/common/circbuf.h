@@ -36,7 +36,8 @@ typedef enum
     CB_NULL,
     CB_LENGTH,
     CB_BUFFER_FULL,
-    CB_BUFFER_EMPTY
+    CB_BUFFER_EMPTY,
+    CB_ENOMEM
   } CB_status;
 
 /*---------------------------------------------------------------------------*/
