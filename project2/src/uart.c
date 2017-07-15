@@ -50,6 +50,8 @@ void uart_configure()
   /* UART_c4: Over Sampling Ratio setting */
   UART0->C4 = UART0_C4_OSR(UART_OSR_REG_VAL);
 
+  UART0->C5 = UART0_C5_BOTHEDGE(1);
+
 #if defined(UART_MODE_INTERRUPTS)
   /* Enable transmit and receive interrupts */
   UART0->C2 |= UART0_C2_TIE(TRANSMIT_INTERRUPT_ENABLE);
@@ -81,6 +83,28 @@ uint8_t uart_send(uint8_t *data)
   return FAILURE;
   while(!(UART0->S1 & UART0_S1_TDRE_MASK)) {}
   UART0->D = *data;
+  return SUCCESS;
+  }
+
+/*---------------------------------------------------------------------------*/
+
+uint8_t uart_receive_n(uint8_t *buf, uint32_t n)
+  {
+  if(buf == NULL)
+  return FAILURE;
+  while(n--)
+    uart_receive(buf++);
+  return SUCCESS;
+  }
+
+/*---------------------------------------------------------------------------*/
+
+uint8_t uart_receive(uint8_t *data)
+  {
+  if(data == NULL)
+  return FAILURE;
+  while(!(UART0->S1 & UART0_S1_RDRF_MASK)) {}
+  *data = UART0->D;
   return SUCCESS;
   }
 
