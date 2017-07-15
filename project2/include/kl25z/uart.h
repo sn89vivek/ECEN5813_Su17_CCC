@@ -27,6 +27,7 @@
 #define PORTA_UART0_FUNC          (2)
 #define TRANSMIT_ENABLE           (1)
 #define RECEIVE_ENABLE            (1)
+#define RECEIVE_INTERRUPT_ENABLE  (1)
 
 #define CLK_SRC_MCGPLLCLK_2       (1)
 #define UART0_CLK_SRC             (CLK_SRC_MCGPLLCLK_2)
@@ -51,6 +52,17 @@
  *
  */
 void uart_configure();
+
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function configures interrupts for the UART peripheral
+ *
+ * @param None
+ * @return None
+ *
+ */
+void uart_interrupts_enable();
 
 /*---------------------------------------------------------------------------*/
 

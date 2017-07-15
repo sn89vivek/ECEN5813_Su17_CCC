@@ -21,6 +21,20 @@
 /* Declarations                                                              */
 
 void proj2_err(proj2_status pr_stat, CB_status cb_stat);
+void UART0_IRQHandler();
+
+/*---------------------------------------------------------------------------*/
+
+void UART0_IRQHandler()
+  {
+  uint8_t uart_char;
+  /* Check and Process UART interrupt */
+  if(UART0->S1 & UART0_S1_RDRF_MASK)
+    {
+  uart_receive(&uart_char);
+  CB_buffer_add_item(CB_rx, uart_char);
+    }
+  }
 
 /*---------------------------------------------------------------------------*/
 
@@ -38,6 +52,8 @@ void project2()
   if(status != CB_SUCCESS)
     proj2_err(PR_RXBUF_CREATION_FAILED, status);
 
+  uart_configure();
+  uart_interrupts_enable();
   while(1) {}
   }
 

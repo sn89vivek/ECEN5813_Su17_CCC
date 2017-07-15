@@ -52,16 +52,25 @@ void uart_configure()
 
   UART0->C5 = UART0_C5_BOTHEDGE(1);
 
-#if defined(UART_MODE_INTERRUPTS)
-  /* Enable transmit and receive interrupts */
-  UART0->C2 |= UART0_C2_TIE(TRANSMIT_INTERRUPT_ENABLE);
-  UART0->C2 |= UART0_C2_TIE(RECEIVE_INTERRUPT_ENABLE);
-#endif
-
   /* UART_Enable */
   ENABLE_UART0();
 
   uart_send_n((uint8_t *)"Hello World\n\r",13);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void uart_interrupts_enable()
+  {
+  /* Enable receive interrupt */
+  UART0->C2 |= UART0_C2_RIE(RECEIVE_INTERRUPT_ENABLE);
+
+  /* interrupts and priority at NVIC level */
+  NVIC_EnableIRQ(UART0_IRQn);
+  NVIC_SetPriority(UART0_IRQn, 0);
+
+  /* Enable interrupts at CPU level */
+  __enable_irq();
   }
 
 /*---------------------------------------------------------------------------*/
@@ -130,5 +139,3 @@ void uart_port_init()
   PORTA_PCR1 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
   PORTA_PCR2 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
   }
-
-
