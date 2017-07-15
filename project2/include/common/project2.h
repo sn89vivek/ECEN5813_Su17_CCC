@@ -6,26 +6,37 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file project2.c 
- * @brief This file defines the primary operation of project 2.
- *
+ * @file project2.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 15, 2017
- *
+ * @brief Declarations for project2 related functions
  */
-#ifndef __PROJECT2_H__
-#define __PROJECT2_H__
+
+
+#ifndef INCLUDES_PROJECT2_H_
+#define INCLUDES_PROJECT2_H_
+
+/*---------------------------------------------------------------------------*/
+
+/* Object: proj2_status: Project2 status enumeration */
+typedef enum
+  {
+	PR_TXBUF_CREATION_FAILED,
+	PR_RXBUF_CREATION_FAILED
+  } proj2_status;
 
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief Function project2() defines main operation of project 2.
+ * @brief The function initiates testing of UART and circular buffer functions
+ *        for project2
  *
- * @return void
+ * @param  none
+ * @return This function does not return
  */
-void project2(void);
+void project2();
 
-/*---------------------------------------------------------------------------*/
 
-#endif /* __PROJECT2_H__ */
+
+#endif /* INCLUDES_PROJECT2_H_ */

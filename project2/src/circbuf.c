@@ -34,13 +34,23 @@ CB_status CB_init(CB_t **cb, uint32_t length)
   else
     {
     *cb = (CB_t*)reserve_words(SIZEOF_IN_WORDS(CB_t));
-    (*cb)->buf_start = (uint8_t*)reserve_words(LENGTH_IN_WORDS(length));
-    (*cb)->buf_end = (*cb)->buf_start + length - 1;
-    (*cb)->head = (*cb)->buf_start;
-    (*cb)->tail = (*cb)->buf_start;
-    (*cb)->buf_size = length;
-    (*cb)->count = 0;
-    status = CB_SUCCESS;
+    if(*cb == NULL)
+      status = CB_NULL;
+    else
+      {
+      (*cb)->buf_start = (uint8_t*)reserve_words(LENGTH_IN_WORDS(length));
+      if((*cb)->buf_start == NULL)
+      status = CB_NULL;
+      else
+        {
+        (*cb)->buf_end = (*cb)->buf_start + length - 1;
+        (*cb)->head = (*cb)->buf_start;
+        (*cb)->tail = (*cb)->buf_start;
+        (*cb)->buf_size = length;
+        (*cb)->count = 0;
+        status = CB_SUCCESS;
+        }
+      }
     }
 
   return status;
