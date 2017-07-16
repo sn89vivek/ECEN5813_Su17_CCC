@@ -13,17 +13,16 @@
  * @brief Declarations for project2 related functions
  */
 
-
-#ifndef INCLUDES_PROJECT2_H_
-#define INCLUDES_PROJECT2_H_
+#ifndef __PROJECT2_H_
+#define __PROJECT2_H_
 
 /*---------------------------------------------------------------------------*/
 
 /* Object: proj2_status: Project2 status enumeration */
 typedef enum
   {
-	PR_TXBUF_CREATION_FAILED,
-	PR_RXBUF_CREATION_FAILED
+  PR_TXBUF_CREATION_FAILED,
+  PR_RXBUF_CREATION_FAILED
   } proj2_status;
 
 /*---------------------------------------------------------------------------*/
@@ -37,6 +36,6 @@ typedef enum
  */
 void project2();
 
+/*---------------------------------------------------------------------------*/
 
-
-#endif /* INCLUDES_PROJECT2_H_ */
+#endif /* __PROJECT2_H_ */

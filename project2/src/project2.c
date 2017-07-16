@@ -17,6 +17,14 @@
 #include "circbuf.h"
 #include "project2.h"
 
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
+
+void project2()
+  {
+  }
+
+#elif defined(PLATFORM_MKL)
+
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
 
@@ -43,13 +51,13 @@ void project2()
   CB_status status;
 
   /* Create Tx buffers */
-  CB_init(&CB_tx, 8);
-  if(status != CB_SUCCESS)
+  status = CB_init(&CB_tx, 8);
+  if (status != CB_SUCCESS)
     proj2_err(PR_TXBUF_CREATION_FAILED, status);
 
   /* Create Rx buffer */
-  CB_init(&CB_rx, 8);
-  if(status != CB_SUCCESS)
+  status = CB_init(&CB_rx, 8);
+  if (status != CB_SUCCESS)
     proj2_err(PR_RXBUF_CREATION_FAILED, status);
 
   uart_configure();
@@ -75,3 +83,5 @@ void proj2_err(proj2_status pr_stat, CB_status cb_stat)
   // TODO
   while(1) {}
   }
+
+#endif /* PLATFORM_MKL */
