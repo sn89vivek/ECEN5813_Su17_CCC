@@ -281,6 +281,8 @@ void dump_statistics(proj2_statistics_t *stats, CB_t *cb)
   put_string((const uint8_t *)msg6, (uint32_t)strlen((const char8_t *)msg6), cb);
   my_itoa((int32_t)stats->num_total, number, 10);
   put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  
+  put_string((const uint8_t *)"\r", 1, cb);
 
   initialize_statistics(stats);
   }
