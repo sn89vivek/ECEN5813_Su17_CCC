@@ -103,7 +103,7 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
         break;
         }
         num = ASCII_TO_INT(*ptr);
-      if(num > base)
+      if(num >= base)
         {
         /* Illegal character for the given base */  
         result = FAILURE;

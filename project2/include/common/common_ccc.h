@@ -40,6 +40,10 @@
   #include "system_MKL25Z4.h"
   #include "uart.h"
 
+  #define __ATOMIC__
+  #define __ATOMIC_START()  __disable_irq()
+  #define __ATOMIC_END()    __enable_irq()
+
 #else
 
   #error "Target platform is not supported"

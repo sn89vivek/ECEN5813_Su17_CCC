@@ -125,7 +125,7 @@ void uart_print_string(const uint8_t *strng)
   uint32_t len;
   if(strng == NULL)
     return;
-  len = strlen((const char *)strng);
+  len = strlen((const char8_t *)strng);
   uart_send_n(strng, len);
   }
 

@@ -103,7 +103,15 @@ CB_status CB_buffer_add_item(CB_t *cb, uint8_t data)
     /* Add item to end of buffer with wrapping at bounds of memory */
     *(cb->tail) = data;
     cb->tail = (cb->tail < cb->buf_end) ? cb->tail + 1 : cb->buf_start;
+
+#ifdef __ATOMIC__
+    __ATOMIC_START();
+#endif
     cb->count++;
+#ifdef __ATOMIC__
+    __ATOMIC_END();
+#endif
+
     status = CB_SUCCESS;
     }
 
@@ -129,7 +137,17 @@ CB_status CB_buffer_remove_item(CB_t *cb, uint8_t *data)
     /* Remove item from front of buffer with wrapping at bounds of memory */
     *data = *(cb->head);
     cb->head = (cb->head < cb->buf_end) ? cb->head + 1 : cb->buf_start;
+    __ATOMIC_START();
+
+#ifdef __ATOMIC__
+    __ATOMIC_START();
+#endif
     cb->count--;
+#ifdef __ATOMIC__
+    __ATOMIC_END();
+#endif
+
+    __ATOMIC_END();
     status = CB_SUCCESS;
     }
 
@@ -200,16 +218,16 @@ CB_status CB_peek(CB_t *cb, uint32_t index, uint8_t *data)
       /* Are we indexing into segment of buffer at end of memory? */
       if (cb->head + index <= cb->buf_end)
         /* We are indexing into segment of buffer at end of memory. */
-	{
-	*data = *(cb->head + index);
-	}
+  {
+  *data = *(cb->head + index);
+  }
       else
         /* We are indexing into segment of buffer at beginning of memory. */
-	{
-	const uint8_t segment_length = cb->tail - cb->buf_start;
-	const uint8_t segment_index = index - (cb->count - segment_length);
+  {
+  const uint8_t segment_length = cb->tail - cb->buf_start;
+  const uint8_t segment_index = index - (cb->count - segment_length);
         *data = *(cb->buf_start + segment_index);
-	}
+  }
       }
     status = SUCCESS;
     }

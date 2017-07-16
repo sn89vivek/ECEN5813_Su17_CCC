@@ -43,6 +43,7 @@
 #define UART0_BAUD_REG_LOW()      (BAUD_RATE_REG_VAL() & 0xFF)
 #define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
 #define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
+#define UART0_TIE_ENABLED()       (UART0->C2 & UART0_C2_TIE_MASK)
 
 /*---------------------------------------------------------------------------*/
 
