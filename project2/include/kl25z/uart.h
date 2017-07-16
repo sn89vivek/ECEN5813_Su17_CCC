@@ -76,7 +76,7 @@ void uart_interrupts_enable();
  * @return Operation status (SUCCESS or FAILURE)
  *
  */
-uint8_t uart_send_n(uint8_t *buf, uint32_t n);
+uint8_t uart_send_n(const uint8_t *buf, uint32_t n);
 
 /*---------------------------------------------------------------------------*/
 
@@ -87,7 +87,7 @@ uint8_t uart_send_n(uint8_t *buf, uint32_t n);
  * @return Operation status (SUCCESS or FAILURE)
  *
  */
-uint8_t uart_send(uint8_t *data);
+uint8_t uart_send(const uint8_t *data);
 
 /*
  * @brief This function receives a buffer of specified size over UART
@@ -109,5 +109,17 @@ uint8_t uart_receive_n(uint8_t *buf, uint32_t n);
  *
  */
 uint8_t uart_receive(uint8_t *data);
+
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function prints a constant string over uart using blocking
+ *        uart transmit.
+ *
+ * @param strng: string to be transmitted
+ * @return none
+ *
+ */
+void uart_print_string(const uint8_t *strng);
 
 #endif /* UART_H_ */

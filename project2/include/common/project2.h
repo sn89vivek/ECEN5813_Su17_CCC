@@ -13,8 +13,9 @@
  * @brief Declarations for project2 related functions
  */
 
-#ifndef __PROJECT2_H_
-#define __PROJECT2_H_
+
+#ifndef INCLUDES_PROJECT2_H_
+#define INCLUDES_PROJECT2_H_
 
 /*---------------------------------------------------------------------------*/
 
@@ -22,6 +23,16 @@
 #define MAX_CB_LENGTH  (0x100)
 
 /*---------------------------------------------------------------------------*/
+
+/* Object: proj2_metrics: Metrics for the project2 input sequence */
+typedef struct
+  {
+  uint32_t num_alpha;      /* Number of alphabetic characters */
+  uint32_t num_numeric;    /* Number of numeric characters */
+  uint32_t num_punct;      /* Number of punctuation characters */
+  uint32_t num_total;      /* Number of total characters */
+  uint8_t flag_EOS;        /* flag to indicate end of sequence */
+  }proj2_metrics_t;
 
 /* Object: proj2_status: Project2 status enumeration */
 typedef enum
@@ -44,6 +55,6 @@ typedef enum
  */
 void project2();
 
-/*---------------------------------------------------------------------------*/
 
-#endif /* __PROJECT2_H_ */
+
+#endif /* INCLUDES_PROJECT2_H_ */

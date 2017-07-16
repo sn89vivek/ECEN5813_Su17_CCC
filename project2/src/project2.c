@@ -16,6 +16,7 @@
 #include "common_ccc.h"
 #include "circbuf.h"
 #include "project2.h"
+#include "conversion.h"
 
 #if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
 
@@ -60,7 +61,7 @@ void UART0_IRQHandler()
   status = CB_buffer_remove_item(CB_tx, &uart_char);
   if(status != CB_SUCCESS)
     proj2_err(PR_TXBUF_REMOVE_FAILED, status);
-  UART0->D = uart_char;
+  uart_send((const uint8_t *)&uart_char);
     }
 
   /* Rx Interrupt */
@@ -83,8 +84,8 @@ void UART0_IRQHandler()
  *       does not look for termination character in the string
  *
  * @param str: Pointer to the string to be written
- * @param length: Lenth of the string to be written
- * @param cb: Poinet to tx Circular buffer
+ * @param length: Length of the string to be written
+ * @param cb: Pointer to tx Circular buffer
  *
  * @return Number of bytes written to the buffer
  */
@@ -128,7 +129,18 @@ uint32_t put_string(const uint8_t *str, uint32_t length, CB_t *cb)
  */
 void proj2_err(proj2_status pr_stat, CB_status cb_stat)
   {
-  // TODO
+  /* disable interrupts. Not supported anymore */
+  uint8_t errcode[4];
+  __disable_irq();
+  uart_print_string((const uint8_t*)"\r\nFatal Error occurred...\n\r");
+  uart_print_string((const uint8_t*)"Project 2 Error code: ");
+  my_itoa((int32_t)pr_stat, errcode, 10);
+  uart_print_string((const uint8_t*)errcode);
+  uart_print_string((const uint8_t*)"\r\nCB Error code: ");
+  my_itoa((int32_t)cb_stat, errcode,10);
+  uart_print_string((const uint8_t*)errcode);
+  DISABLE_UART0();
+  /* TODO perform any cleanup if required */
   while(1) {}
   }
 

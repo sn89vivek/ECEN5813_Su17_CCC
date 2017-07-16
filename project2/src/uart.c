@@ -14,6 +14,7 @@
  */
 
 #include "uart.h"
+#include "string.h"
 
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
@@ -55,7 +56,7 @@ void uart_configure()
   /* UART_Enable */
   ENABLE_UART0();
 
-  uart_send_n((uint8_t *)"Hello UART\r\n",13);
+  uart_send_n((const uint8_t *)"Hello UART\r\n",13);
   }
 
 /*---------------------------------------------------------------------------*/
@@ -75,7 +76,7 @@ void uart_interrupts_enable()
 
 /*---------------------------------------------------------------------------*/
 
-uint8_t uart_send_n(uint8_t *buf, uint32_t n)
+uint8_t uart_send_n(const uint8_t *buf, uint32_t n)
   {
   if(buf == NULL)
   return FAILURE;
@@ -86,7 +87,7 @@ uint8_t uart_send_n(uint8_t *buf, uint32_t n)
 
 /*---------------------------------------------------------------------------*/
 
-uint8_t uart_send(uint8_t *data)
+uint8_t uart_send(const uint8_t *data)
   {
   if(data == NULL)
   return FAILURE;
@@ -115,6 +116,17 @@ uint8_t uart_receive(uint8_t *data)
   while(!(UART0->S1 & UART0_S1_RDRF_MASK)) {}
   *data = UART0->D;
   return SUCCESS;
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void uart_print_string(const uint8_t *strng)
+  {
+  uint32_t len;
+  if(strng == NULL)
+    return;
+  len = strlen((const char *)strng);
+  uart_send_n(strng, len);
   }
 
 /*---------------------------------------------------------------------------*/
