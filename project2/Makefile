@@ -38,8 +38,8 @@ include platform/$(PLATFORM)/source.mk
 SRCDIR = src
 UTEST_DIR = test
 
-OBJDIR = Debug
-#OBJDIR = Release
+OBJDIR = Debug_$(PLATFORM)
+#OBJDIR = Release_$(PLATFORM)
 
 #------------------------------------------------------------------------------
 
