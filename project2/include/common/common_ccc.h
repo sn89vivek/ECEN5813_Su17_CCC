@@ -31,6 +31,9 @@
     #include <cmocka.h>
   #endif
 
+  #define __ATOMIC_START()
+  #define __ATOMIC_END()
+
 #elif defined(PLATFORM_MKL)
 
   #include <stdbool.h>
@@ -40,7 +43,6 @@
   #include "system_MKL25Z4.h"
   #include "uart.h"
 
-  #define __ATOMIC__
   #define __ATOMIC_START()  __disable_irq()
   #define __ATOMIC_END()    __enable_irq()
 

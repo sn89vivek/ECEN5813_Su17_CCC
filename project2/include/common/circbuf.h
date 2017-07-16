@@ -18,7 +18,7 @@
 
 /*---------------------------------------------------------------------------*/
 
-/* Object: CB_t: Curcular buffer type */
+/** Object: CB_t: Curcular buffer type */
 typedef struct
   {
   uint32_t  buf_size;  /* Buffer length */
@@ -29,7 +29,7 @@ typedef struct
   uint8_t  *tail;      /* Content tail */
   } CB_t;
 
-/* Object: CB_status: Curcular buffer status enumeration */
+/** Object: CB_status: Curcular buffer status enumeration */
 typedef enum
   {
     CB_SUCCESS,
@@ -39,11 +39,6 @@ typedef enum
     CB_BUFFER_EMPTY,
     CB_ENOMEM
   } CB_status;
-
-/*---------------------------------------------------------------------------*/
-
-/* Extern Var: Buffer Pointers */
-CB_t *CB_rx, *CB_tx;
 
 /*---------------------------------------------------------------------------*/
 
