@@ -21,6 +21,8 @@
  * @date June 19, 2017
  */
 
+#if defined(PROJECT2)
+
 #include <stdio.h>
 #include "common_ccc.h"
 #include "platform.h"
@@ -28,6 +30,8 @@
 #include "memory.h"
 #include "conversion.h"
 #include "debug.h"
+
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
 
 /*---------------------------------------------------------------------------*/
 
@@ -396,3 +400,9 @@ void course1(void)
   printf("  FAILED: %d / %d\n", failed, TESTCOUNT);
   printf("--------------------------------\n");
   }
+
+/*---------------------------------------------------------------------------*/
+
+#endif /* PLATFORM_MKL | PLATFORM_BBB */
+
+#endif /* PROJECT1 */

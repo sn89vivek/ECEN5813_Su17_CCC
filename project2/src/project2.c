@@ -13,6 +13,8 @@
  * @brief This file contains definition of project2 related tasks
  */
 
+#if defined(PROJECT2)
+
 #include "common_ccc.h"
 #include "circbuf.h"
 #include "project2.h"
@@ -329,3 +331,5 @@ void project2()
 /*---------------------------------------------------------------------------*/
 
 #endif /* PLATFORM_MKL */
+
+#endif /* PROJECT2 */
