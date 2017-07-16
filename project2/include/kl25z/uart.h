@@ -41,6 +41,8 @@
 #define BAUD_RATE_REG_VAL()       (SystemCoreClock/(UART_OSR_VAL * UART0_BAUD_RATE))
 #define UART0_BAUD_REG_HIGH()     ((BAUD_RATE_REG_VAL() >> 8) & 0x0F)
 #define UART0_BAUD_REG_LOW()      (BAUD_RATE_REG_VAL() & 0xFF)
+#define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
+#define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
 
 /*---------------------------------------------------------------------------*/
 

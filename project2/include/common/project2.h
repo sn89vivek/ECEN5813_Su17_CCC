@@ -18,11 +18,19 @@
 
 /*---------------------------------------------------------------------------*/
 
+#define MIN_CB_LENGTH  (0x0004)
+#define MAX_CB_LENGTH  (0x100)
+
+/*---------------------------------------------------------------------------*/
+
 /* Object: proj2_status: Project2 status enumeration */
 typedef enum
   {
   PR_TXBUF_CREATION_FAILED,
-  PR_RXBUF_CREATION_FAILED
+  PR_RXBUF_CREATION_FAILED,
+  PR_TXBUF_REMOVE_FAILED,
+  PR_RXBUF_ADD_FAILED,
+  PR_TXBUF_ADD_FAILED
   } proj2_status;
 
 /*---------------------------------------------------------------------------*/

@@ -124,7 +124,7 @@ CB_status CB_peek(CB_t *cb, uint32_t index, uint8_t *data);
  *
  * @return Length of the buffer
  */
-inline uint32_t CB_length(CB_t *cb)
+static inline uint32_t CB_length(CB_t *cb)
   {
   return (NULL == cb) ? 0 : cb->buf_size;
   }
@@ -136,7 +136,7 @@ inline uint32_t CB_length(CB_t *cb)
  *
  * @return Data items in the buffer
  */
-inline uint32_t CB_count(CB_t *cb)
+static inline uint32_t CB_count(CB_t *cb)
   {
   return (NULL == cb) ? 0 : cb->count;
   }

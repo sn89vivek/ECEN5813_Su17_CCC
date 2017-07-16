@@ -55,7 +55,7 @@ void uart_configure()
   /* UART_Enable */
   ENABLE_UART0();
 
-  uart_send_n((uint8_t *)"Hello World\n\r",13);
+  uart_send_n((uint8_t *)"Hello UART\r\n",13);
   }
 
 /*---------------------------------------------------------------------------*/
