@@ -28,6 +28,6 @@ LIB_FILES = \
 	src/circbuf.c
 
 UTEST_SRC = \
-	src/circbuf_test.c	\
-	src/conversion_test.c	\
-	src/memory_test.c
+	test/circbuf_test.c	\
+	test/conversion_test.c	\
+	test/memory_test.c

@@ -36,7 +36,7 @@ include platform/$(PLATFORM)/platform.mk
 include platform/$(PLATFORM)/source.mk
 
 SRCDIR = src
-UTEST_DIR = src
+UTEST_DIR = test
 
 OBJDIR = Debug
 #OBJDIR = Release
@@ -59,6 +59,10 @@ LINTS	:= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.lint,$(SRC))
 
 UTEST_OBJ := $(patsubst $(UTEST_DIR)/%.c,$(OBJDIR)/%.o,$(UTEST_SRC))
 UTEST_EXE := $(patsubst $(OBJDIR)/%.o,$(OBJDIR)/%.elf,$(UTEST_OBJ))
+
+$(OBJDIR)/%.o : $(UTEST_DIR)/%.c
+	@$(MKDIR) -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -c $< $(LIBDIR) $(LIBS) -o $@
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(MKDIR) -p $(OBJDIR)
