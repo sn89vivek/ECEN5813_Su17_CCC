@@ -40,25 +40,35 @@ uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base)
       digits++;
       }
 
-    /* Generate each digit from small to large for the selected base */
-    while (data > 0)
+    if (0 == data)
       {
-      size_t value = data % base;
-      *ptr1++ = value <= 9 ? '0' + value : 'A' + (value - 10);
+      /* Zero is '0' in each of the bases */
+      *ptr1++ = '0';
+      *ptr1 = 0;
       digits++;
-      data /= base;
       }
-
-    /* Null terminate string */
-    *ptr1 = 0;
-
-    /* Invert the generated number's digits */
-    for (uint8_t *ptr2 = ptr + sign, *ptr3 = ptr + digits - 1;
-         ptr2 < ptr3; )
+    else
       {
-      const uint8_t swap = *ptr2;
-      *ptr2++ = *ptr3;
-      *ptr3-- = swap;
+      /* Generate each digit from small to large for the selected base */
+      while (data > 0)
+        {
+        size_t value = data % base;
+        *ptr1++ = value <= 9 ? '0' + value : 'A' + (value - 10);
+        digits++;
+        data /= base;
+        }
+
+      /* Null terminate string */
+      *ptr1 = 0;
+
+      /* Invert the generated number's digits */
+      for (uint8_t *ptr2 = ptr + sign, *ptr3 = ptr + digits - 1;
+           ptr2 < ptr3; )
+        {
+        const uint8_t swap = *ptr2;
+        *ptr2++ = *ptr3;
+        *ptr3-- = swap;
+        }
       }
     }
 

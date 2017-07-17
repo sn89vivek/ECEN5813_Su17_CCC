@@ -70,13 +70,31 @@ void my_itoa__3(void **state)
   }
 
 /**
- * @brief For function my_itoa(), validate a base 10 conversion.
+ * @brief For function my_itoa(), validate value zero in each base from 2-16.
  *
  * @param  state - Cmocka state handle
  *
  * @return Nothing
  */
 void my_itoa__4(void **state)
+  {
+  uint8_t *buffer = (uint8_t*)alloca(BUFFER_SIZE);
+  assert_non_null(buffer);
+  for (uint8_t i = 2; i <= 16; i++)
+    {
+    assert_int_equal(my_itoa(0, buffer, i), 1);
+    assert_string_equal((const char8_t*)buffer, "0");
+    }
+  }
+
+/**
+ * @brief For function my_itoa(), validate a base 10 conversion.
+ *
+ * @param  state - Cmocka state handle
+ *
+ * @return Nothing
+ */
+void my_itoa__5(void **state)
   {
   uint8_t *buffer = (uint8_t*)alloca(BUFFER_SIZE);
   assert_non_null(buffer);
@@ -91,7 +109,7 @@ void my_itoa__4(void **state)
  *
  * @return Nothing
  */
-void my_itoa__5(void **state)
+void my_itoa__6(void **state)
   {
   uint8_t *buffer = (uint8_t*)alloca(BUFFER_SIZE);
   assert_non_null(buffer);
@@ -377,6 +395,7 @@ int main(int argc, char *argv[])
     unit_test(my_itoa__3),
     unit_test(my_itoa__4),
     unit_test(my_itoa__5),
+    unit_test(my_itoa__6),
     unit_test(my_atoi__1),
     unit_test(my_atoi__2),
     unit_test(my_atoi__3),
