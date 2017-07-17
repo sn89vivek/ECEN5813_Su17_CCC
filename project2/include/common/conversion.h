@@ -56,20 +56,21 @@ uint8_t my_itoa(int32_t data, uint8_t *ptr, uint32_t base);
  *        standard integer type.
  *
  * Notes on implementation:
- * 	- The input string must be a representaion of a positive number in a base
- *	  between 2-16. This function does not support radix-complement 
+ * 	- The input string must be a representation of a positive number in a base
+ *	  between 2-16. This function does not support radix-complement
  *    representation in any base
- *	- Negative number representation must have first character as '-' 
+ *	- Negative number representation must have first character as '-'
  *  - A preceding '+' sign is not supported
  *  - @p digits must include '-' sign and not include null character.
  *  - A-H for base 16 must be in uppercase only
  *  - Any characters after MAX_CONVERSION_STRLEN will not be parsed
- * 
+ *
  * @param ptr - Pointer to input character set
  * @param digits - Number of digits in character set including '-' sign and
  *				   excluding null terminator
  * @param base - Source base from 2 and 16
- * @param data - If conversion suceeds, the number is written to this variable.
+ * @param data - If conversion succeeds, the number is written to this
+ *               variable.
  *
  * @return Returns FAILURE if the conversion failed
  * @return Returns SUCCESS if the data was successfully converted

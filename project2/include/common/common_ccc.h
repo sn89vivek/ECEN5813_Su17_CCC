@@ -10,7 +10,7 @@
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date June 20, 2017
- * @brief Common defintions for use by the Crazy Crafty Coders.
+ * @brief Common definitions for use by the Crazy Crafty Coders.
  */
 
 #ifndef __COMMON_CCC_H__
@@ -18,7 +18,7 @@
 
 /*---------------------------------------------------------------------------*/
 
-#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
 
   #include <stdbool.h>
   #include <stdint.h>

@@ -2,10 +2,10 @@
  * Copyright (C) 2017 by Alex Fosdick - University of Colorado
  *
  * Redistribution, modification or use of this software in source or binary
- * forms is permitted as long as the files maintain this copyright. Users are 
+ * forms is permitted as long as the files maintain this copyright. Users are
  * permitted to modify this and use it to learn about the field of embedded
  * software. Alex Fosdick and the University of Colorado are not liable for any
- * misuse of this material. 
+ * misuse of this material.
  *
  *****************************************************************************/
 /**
@@ -31,7 +31,7 @@
 #include "conversion.h"
 #include "debug.h"
 
-#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
 
 /*---------------------------------------------------------------------------*/
 
@@ -51,14 +51,14 @@ int8_t test_data1()
     return TEST_ERROR;
     }
 
-  digits = my_itoa( num, ptr, BASE_16);   
+  digits = my_itoa( num, ptr, BASE_16);
   status = my_atoi( ptr, digits, BASE_16, &value);
   #ifdef VERBOSE
   #if defined(FORMAT_INT32_AS_LONG_INT)
-  printf("  Initial number: %ld\n", num);  
+  printf("  Initial number: %ld\n", num);
   printf("  Final Decimal number: %ld\n", value);
   #else
-  printf("  Initial number: %d\n", num);  
+  printf("  Initial number: %d\n", num);
   printf("  Final Decimal number: %d\n", value);
   #endif
   #endif
@@ -93,11 +93,11 @@ int8_t test_data2()
   status = my_atoi( ptr, digits, BASE_10, &value);
   #ifdef VERBOSE
   #if defined(FORMAT_INT32_AS_LONG_INT)
-  printf("  Initial Decimal number: %ld\n", num);  
-  printf("  Final Decimal number: %ld\n", value);  
+  printf("  Initial Decimal number: %ld\n", num);
+  printf("  Final Decimal number: %ld\n", value);
   #else
-  printf("  Initial Decimal number: %d\n", num);  
-  printf("  Final Decimal number: %d\n", value);  
+  printf("  Initial Decimal number: %d\n", num);
+  printf("  Final Decimal number: %d\n", value);
   #endif
   #endif
   free_words( (uint32_t*)ptr );
@@ -122,14 +122,14 @@ int8_t test_memmove1()
   printf("test_memmove1() - NO OVERLAP\n");
   set = (uint8_t*) reserve_words( MEM_SET_SIZE_W );
 
-  if (! set ) 
+  if (! set )
     {
     return TEST_ERROR;
     }
-  
+
   ptra = &set[0];
   ptrb = &set[16];
-  
+
   /* Initialize the set to test values */
   for( i = 0; i < MEM_SET_SIZE_B; i++)
     {
@@ -207,7 +207,7 @@ int8_t test_memmove3()
   printf("test_memove3() - OVERLAP END OF DEST BEGINNING OF SRC\n");
   set = (uint8_t*)reserve_words( MEM_SET_SIZE_W);
 
-  if (! set ) 
+  if (! set )
     {
     return TEST_ERROR;
     }
@@ -249,7 +249,7 @@ int8_t test_memcpy()
   printf("test_memcpy()\n");
   set = (uint8_t*) reserve_words(MEM_SET_SIZE_W);
 
-  if (! set ) 
+  if (! set )
     {
     return TEST_ERROR;
     }
@@ -298,7 +298,7 @@ int8_t test_memset()
   ptrb = &set[16];
 
   /* Initialize the set to test values */
-  for( i = 0; i < MEM_SET_SIZE_B; i++) 
+  for( i = 0; i < MEM_SET_SIZE_B; i++)
     {
     set[i] = i;
     }
@@ -308,7 +308,7 @@ int8_t test_memset()
   print_memory(set, MEM_SET_SIZE_B);
   my_memzero(ptrb, MEM_ZERO_LENGTH);
   print_memory(set, MEM_SET_SIZE_B);
-  
+
   /* Validate Set & Zero Functionality */
   for (i = 0; i < MEM_ZERO_LENGTH; i++)
     {
@@ -321,7 +321,7 @@ int8_t test_memset()
       ret = TEST_ERROR;
       }
     }
-  
+
   free_words( (uint32_t*)set );
   return ret;
   }
@@ -347,7 +347,7 @@ int8_t test_reverse()
     {
     return TEST_ERROR;
     }
-  
+
   my_memcpy(set, copy, MEM_SET_SIZE_B);
 
   print_memory(set, MEM_SET_SIZE_B);
@@ -368,7 +368,7 @@ int8_t test_reverse()
 
 /*---------------------------------------------------------------------------*/
 
-void course1(void) 
+void course1(void)
   {
   uint8_t i;
   int8_t failed = 0;
@@ -383,7 +383,7 @@ void course1(void)
   results[6] = test_memset();
   results[7] = test_reverse();
 
-  for ( i = 0; i < TESTCOUNT; i++) 
+  for ( i = 0; i < TESTCOUNT; i++)
     {
     #ifdef VERBOSE
     if (results[i] != 0)
@@ -403,6 +403,6 @@ void course1(void)
 
 /*---------------------------------------------------------------------------*/
 
-#endif /* PLATFORM_MKL | PLATFORM_BBB */
+#endif /* PLATFORM_HOST | PLATFORM_BBB */
 
 #endif /* PROJECT1 */
