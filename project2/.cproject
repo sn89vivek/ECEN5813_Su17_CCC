@@ -98,6 +98,8 @@
 					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.1484028979" name="Makefile" rcbsApplicability="disable" resourcePath="src/Makefile" toolsToInvoke=""/>
 					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.1898036974" name="uart.h" rcbsApplicability="disable" resourcePath="include/kl25z/uart.h" toolsToInvoke=""/>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include/CMSIS"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include/kl25z"/>
 						<entry excluding="Makefile|memory_test.c|conversion_test.c|circbuf_test.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -106,6 +108,9 @@
 		</cconfiguration>
 		<cconfiguration id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1700948857">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1700948857" moduleId="org.eclipse.cdt.core.settings" name="Release_KDS">
+				<macros>
+					<stringMacro name="USE_HOST_LEX" type="VALUE_TEXT" value="yes"/>
+				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -193,6 +198,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include/CMSIS"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include/kl25z"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -220,6 +227,8 @@
 		<configuration configurationName="Multiple configurations">
 			<resource resourceType="PROJECT" workspacePath="/project2"/>
 		</configuration>
+		<configuration configurationName="Release_KDS"/>
+		<configuration configurationName="Debug_KDS"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/project2"/>
 		</configuration>
