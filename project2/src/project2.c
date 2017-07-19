@@ -22,7 +22,7 @@
 #include "ctype.h"
 #include "string.h"
 
-#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB) 
+#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
 
 void project2()
   {
@@ -43,6 +43,7 @@ CB_t *CB_rx;
 /* Declarations                                                              */
 
 void UART0_IRQHandler();
+uint32_t put_zstring(CB_t *cb, const char8_t *str);
 uint32_t put_string(const uint8_t *str, uint32_t length, CB_t *cb);
 void proj2_err(proj2_status pr_status, CB_status cb_status);
 proj2_status input_sequence_parse(CB_t *cb, proj2_statistics_t *stats);
@@ -95,6 +96,22 @@ void UART0_IRQHandler()
 /*---------------------------------------------------------------------------*/
 
 /**
+ * @brief Function put_zstring() pushes a string into tx buffer and initiates
+ *        a write sequence over UART.
+ *
+ * @param cb - Pointer to Tx circular buffer
+ * @param str - Null terminated string
+ *
+ * @return Number of bytes written to the buffer
+ */
+uint32_t put_zstring(CB_t *cb, const char8_t *str)
+  {
+  return put_string((const uint8_t *)str, (uint32_t)strlen(str), cb);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+/**
  * @brief This function handles pushes a string into tx buffer and initiates a
  *        write sequence over UART
  *
@@ -111,31 +128,35 @@ void UART0_IRQHandler()
  * @param length: length of the string to be written
  * @param cb: Pointer to tx Circular buffer
  *
- * @return Number of bytes written to the buffer
+ * @return num_buffer of bytes written to the buffer
  */
 uint32_t put_string(const uint8_t *str, uint32_t length, CB_t *cb)
   {
-  CB_status status;
   uint32_t bytes_written = 0;
 
   if (str != NULL)
     {
-    while(bytes_written < length)
+    while (bytes_written < length)
       {
-      status = CB_buffer_add_item(cb, *str);
-      if (status == CB_BUFFER_FULL)
-        continue;
-      else if(status == CB_SUCCESS)
+      CB_status status = CB_buffer_add_item(cb, *str);
+      switch (status)
         {
-        bytes_written++;
-        str++;
-        }
-      else
-        proj2_err(PR_TXBUF_ADD_FAILED, status);
+        case CB_BUFFER_FULL:
+          continue;
+        case CB_SUCCESS:
+          bytes_written++;
+          str++;
+          break;
+        default:
+          proj2_err(PR_TXBUF_ADD_FAILED, status);
+          break;
         }
       }
-    if (bytes_written != 0)
-      UART0_ENABLE_TIE();
+    }
+
+  if (bytes_written != 0)
+    UART0_ENABLE_TIE();
+
   return bytes_written;
   }
 
@@ -159,7 +180,7 @@ void proj2_err(proj2_status pr_status, CB_status cb_status)
   /* disable interrupts. Not supported anymore */
   uint8_t errcode[4];
   __disable_irq();
-  uart_print_string((const uint8_t*)"\r\nFatal Error occurred...\n\r");
+  uart_print_string((const uint8_t*)"\r\nFatal Error occurred...\r\n");
   uart_print_string((const uint8_t*)"Project 2 Error code: ");
   my_itoa((int32_t)pr_status, errcode, 10);
   uart_print_string((const uint8_t*)errcode);
@@ -218,7 +239,6 @@ proj2_status update_statistics(proj2_statistics_t *stats, uint8_t character)
   proj2_status result;
 
   result = PR_PARSING_IN_PROGRESS;
-
   stats->num_total++;
   if (isalpha(character))
     stats->num_alpha++;
@@ -226,13 +246,16 @@ proj2_status update_statistics(proj2_statistics_t *stats, uint8_t character)
     stats->num_numeric++;
   else if (ispunct(character))
     stats->num_punct++;
+  else if (character == EOS_CHARACTER)
+    {
+    stats->num_misc++;
+    result = PR_PARSING_COMPLETE;
+    }
   else
     {
     stats->num_misc++;
-    if (character == EOS_CHARACTER)
-      result = PR_PARSING_COMPLETE;
     }
-  return result;
+   return result;
   }
 
 /*---------------------------------------------------------------------------*/
@@ -266,36 +289,31 @@ void initialize_statistics(proj2_statistics_t *stats)
  */
 void dump_statistics(proj2_statistics_t *stats, CB_t *cb)
   {
-  uint8_t number[10];
-  const uint8_t *msg1 = (const uint8_t *)"\r****** PROJECT 2 INPUT SEQUENCE STATISTICS ******\r\n";
-  put_string((const uint8_t *)msg1, (uint32_t)strlen((const char8_t *)msg1), cb);
+  char8_t num_buffer[11+1];
 
-  const uint8_t *msg2 = (const uint8_t *)"\rNumber of alphabetic characters:      ";
-  put_string((const uint8_t *)msg2, (uint32_t)strlen((const char8_t *)msg2), cb);
-  my_itoa((int32_t)stats->num_alpha, number, 10);
-  put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  put_zstring(cb, "\r\n****** PROJECT 2 INPUT SEQUENCE STATISTICS ******\r\n");
 
-  const uint8_t *msg3 = (const uint8_t *)"\rNumber of numeric characters:         ";
-  put_string((const uint8_t *)msg3, (uint32_t)strlen((const char8_t *)msg3), cb);
-  my_itoa((int32_t)stats->num_numeric, number, 10);
-  put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  put_zstring(cb, "\r\nNumber of alphabetic characters:      ");
+  my_itoa(stats->num_alpha, (uint8_t *)num_buffer, 10);
+  put_zstring(cb, num_buffer);
 
-  const uint8_t *msg4 = (const uint8_t *)"\rNumber of punctuation characters:     ";
-  put_string((const uint8_t *)msg4, (uint32_t)strlen((const char8_t *)msg4), cb);
-  my_itoa((int32_t)stats->num_punct, number, 10);
-  put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  put_zstring(cb, "\r\nNumber of numeric characters:         ");
+  my_itoa(stats->num_numeric, (uint8_t *)num_buffer, 10);
+  put_zstring(cb, num_buffer);
 
-  const uint8_t *msg5 = (const uint8_t *)"\rNumber of miscellaneous characters:   ";
-  put_string((const uint8_t *)msg5, (uint32_t)strlen((const char8_t *)msg5), cb);
-  my_itoa((int32_t)stats->num_misc, number, 10);
-  put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  put_zstring(cb, "\r\nNumber of punctuation characters:     ");
+  my_itoa(stats->num_punct, (uint8_t *)num_buffer, 10);
+  put_zstring(cb, num_buffer);
 
-  const uint8_t *msg6 = (const uint8_t *)"\rTotal characters received:            ";
-  put_string((const uint8_t *)msg6, (uint32_t)strlen((const char8_t *)msg6), cb);
-  my_itoa((int32_t)stats->num_total, number, 10);
-  put_string((const uint8_t *)number, (uint32_t)strlen((const char8_t *)number), cb);
+  put_zstring(cb, "\r\nNumber of miscellaneous characters:   ");
+  my_itoa(stats->num_misc, (uint8_t *)num_buffer, 10);
+  put_zstring(cb, num_buffer);
 
-  put_string((const uint8_t *)"\r", 1, cb);
+  put_zstring(cb, "\r\nTotal characters received:            ");
+  my_itoa(stats->num_total, (uint8_t *)num_buffer, 10);
+  put_zstring(cb, num_buffer);
+
+  put_zstring(cb, "\r\n");
 
   initialize_statistics(stats);
   }

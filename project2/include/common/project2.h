@@ -25,17 +25,17 @@
 
 /*---------------------------------------------------------------------------*/
 
-/* Object: proj2_metrics: Metrics for the project2 input sequence */
+/** Object: proj2_metrics: Metrics for the project2 input sequence */
 typedef struct
   {
-  uint32_t num_alpha;      /* Number of alphabetic characters */
-  uint32_t num_numeric;    /* Number of numeric characters */
-  uint32_t num_punct;      /* Number of punctuation characters */
-  uint32_t num_misc;       /* Number of miscellaneous characters */
-  uint32_t num_total;      /* Number of total characters */
-  }proj2_statistics_t;
+  int32_t num_alpha;      /* Number of alphabetic characters */
+  int32_t num_numeric;    /* Number of numeric characters */
+  int32_t num_punct;      /* Number of punctuation characters */
+  int32_t num_misc;       /* Number of miscellaneous characters */
+  int32_t num_total;      /* Number of total characters */
+  } proj2_statistics_t;
 
-/* Object: proj2_status: Project2 status enumeration */
+/** Object: proj2_status: Project2 status enumeration */
 typedef enum
   {
   PR_TXBUF_CREATION_FAILED,
