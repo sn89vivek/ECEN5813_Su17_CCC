@@ -187,6 +187,7 @@ void proj2_err(proj2_status pr_status, CB_status cb_status)
   uart_print_string((const uint8_t*)"\r\nCB Error code: ");
   my_itoa((int32_t)cb_status, errcode, 10);
   uart_print_string((const uint8_t*)errcode);
+  uart_print_string((const uint8_t*)"\r\n");
 
   /* TODO perform any cleanup if required */
   while (1) {}
@@ -337,7 +338,8 @@ void project2()
 
   uart_configure();
   uart_interrupts_enable();
-  put_string((const uint8_t *)"Does UART-buffer integration work?\r\n", 36, CB_tx);
+  put_zstring(CB_tx, "Hello UART\r\n");
+  put_zstring(CB_tx, "Does UART-buffer integration work?\r\n");
   initialize_statistics(&sequence_stats);
   while (1)
     {
