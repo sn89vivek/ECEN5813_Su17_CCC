@@ -638,6 +638,37 @@ void CB_sanity__2(void **state)
   assert_int_equal(CB_buffer_remove_item(cb, &data), CB_BUFFER_EMPTY);
   }
 
+/**
+ * @brief Validate wrapping data with a simple pattern of adding and removing
+ *        items from buffer.
+ *
+ * @param  state - Cmocka state handle
+ *
+ * @return Nothing
+ */
+void CB_sanity__3(void **state)
+  {
+  CB_t *cb;
+  uint8_t data;
+  uint16_t i;
+  assert_int_equal(CB_init(&cb, 8), CB_SUCCESS);
+
+  for (i=0; i < 8; i++)
+    {
+    assert_int_equal(CB_buffer_add_item(cb, 0xFF-i), CB_SUCCESS);
+    assert_int_not_equal(CB_is_empty(cb), CB_BUFFER_EMPTY);
+    }
+  assert_int_equal(CB_is_full(cb), CB_SUCCESS);
+  assert_int_equal(CB_length(cb), 8);
+  for (i=0; i < 8; i++)
+    {
+    assert_int_equal(CB_buffer_remove_item(cb, &data), CB_SUCCESS);
+    assert_int_equal(data, 0xFF-i);
+    }
+  assert_int_equal(CB_length(cb), 8);
+  assert_int_equal(CB_is_empty(cb), CB_SUCCESS);
+  }
+
 /*---------------------------------------------------------------------------*/
 
 int main(int argc, char *argv[])
@@ -673,7 +704,8 @@ int main(int argc, char *argv[])
     unit_test(CB_peek__4),
     unit_test(CB_peek__5),
     unit_test(CB_sanity__1),
-    unit_test(CB_sanity__2)
+    unit_test(CB_sanity__2),
+    unit_test(CB_sanity__3)
     };
   return cmocka_run_group_tests(tests, NULL, NULL);
   }
