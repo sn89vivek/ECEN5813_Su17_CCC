@@ -13,20 +13,21 @@
 # @brief This file contains list of source file for platform MKL.
 #------------------------------------------------------------------------------
 SRC = \
-	src/memory.c		\
+	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
-	src/circbuf.c		\
+	src/main.c		\
+	src/memory.c		\
+	src/memory_dma.c	\
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\
-	src/main.c		\
 	src/startup_MKL25Z4.S	\
-	src/uart.c		\
-	src/system_MKL25Z4.c
+	src/system_MKL25Z4.c	\
+	src/uart.c
 
 LIB_FILES = \
-	src/memory.c		\
+	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
-	src/circbuf.c
+	src/memory.c
