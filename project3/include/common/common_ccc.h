@@ -18,7 +18,7 @@
 
 /*---------------------------------------------------------------------------*/
 
-#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
+#if defined(PLATFORM_HOST)
 
   #include <stdbool.h>
   #include <stdint.h>
@@ -31,8 +31,12 @@
     #include <cmocka.h>
   #endif
 
-  #define __ATOMIC_START()
-  #define __ATOMIC_END()
+#elif defined(PLATFORM_BBB)
+
+  #include <stdbool.h>
+  #include <stdint.h>
+  #include <stdlib.h>
+  #include <libio.h>
 
 #elif defined(PLATFORM_MKL)
 
@@ -43,12 +47,38 @@
   #include "system_MKL25Z4.h"
   #include "uart.h"
 
-  #define __ATOMIC_START()  __disable_irq()
-  #define __ATOMIC_END()    __enable_irq()
+#else
+
+  #error "Target platform is not supported: #include"
+
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+#if defined(PLATFORM_HOST)
+
+  #define INLINE __attribute__( ( always_inline ) ) static inline
+
+  #define CRITICAL_SECTION_START()
+  #define CRITICAL_SECTION_END()
+
+#elif defined(PLATFORM_BBB)
+
+  #define INLINE __attribute__( ( always_inline ) ) static inline
+
+  #define CRITICAL_SECTION_START()
+  #define CRITICAL_SECTION_END()
+
+#elif defined(PLATFORM_MKL)
+
+  #define INLINE __attribute__( ( always_inline ) ) __STATIC_INLINE
+
+  #define CRITICAL_SECTION_START()  __disable_irq()
+  #define CRITICAL_SECTION_END()    __enable_irq()
 
 #else
 
-  #error "Target platform is not supported"
+  #error "Target platform is not supported: #define"
 
 #endif
 

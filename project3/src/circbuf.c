@@ -97,11 +97,11 @@ CB_status CB_buffer_add_item(CB_t *cb, uint8_t data)
   else
     {
     /* Add item to end of buffer with wrapping at bounds of memory */
-    __ATOMIC_START();
+    CRITICAL_SECTION_START();
     *(cb->tail) = data;
     cb->tail = (cb->tail < cb->buf_end) ? cb->tail + 1 : cb->buf_start;
     cb->count++;
-    __ATOMIC_END();
+    CRITICAL_SECTION_END();
 
     status = CB_SUCCESS;
     }
@@ -126,11 +126,11 @@ CB_status CB_buffer_remove_item(CB_t *cb, uint8_t *data)
   else
     {
     /* Remove item from front of buffer with wrapping at bounds of memory */
-    __ATOMIC_START();
+    CRITICAL_SECTION_START();
     *data = *(cb->head);
     cb->head = (cb->head < cb->buf_end) ? cb->head + 1 : cb->buf_start;
     cb->count--;
-    __ATOMIC_END();
+    CRITICAL_SECTION_END();
     status = CB_SUCCESS;
     }
 

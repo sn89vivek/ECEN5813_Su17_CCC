@@ -33,7 +33,7 @@
 #ifdef VERBOSE
 void print_memory(uint8_t *start, uint32_t length);
 #else
-static inline void print_memory(uint8_t *start, uint32_t length) {}
+#define print_memory()
 #endif
 
 /*---------------------------------------------------------------------------*/
