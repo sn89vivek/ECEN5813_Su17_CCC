@@ -33,10 +33,10 @@ void project2()
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
 
-/** Object: CB_tx: Tx curcular buffer for UART */
+/** Object: CB_tx: Tx circular buffer for UART */
 CB_t *CB_tx;
 
-/** Object: CB_rx: Rx curcular buffer for UART */
+/** Object: CB_rx: Rx circular buffer for UART */
 CB_t *CB_rx;
 
 /*---------------------------------------------------------------------------*/
