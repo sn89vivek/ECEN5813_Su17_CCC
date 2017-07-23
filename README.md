@@ -12,4 +12,6 @@ Repository Contents
 * project1
 This is a project that explores the use of Make as the build system for multiple target platforms. Platforms supported include Ubuntu 17.04, BeagleBoard Black and NXP FRMD-KL25Z. Additionally, the assignment is for C-programming practice and development of good coding practices.
 * project2
+This project implemented a UART interupt handler on the FRDM-KL25Z with circular buffers for Rx/Tx.
+* project3
 This project...
