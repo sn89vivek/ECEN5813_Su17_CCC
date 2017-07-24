@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------
  * ECEN-5813 Summer 2017
- * Project 1
+ * Project 2
  *
  * Copyright (C) 2017 by Robert Blazewicz and Vivek Sankaranarayanan.
  * All Rights Reserved. (This work is unpublished)
@@ -17,17 +17,82 @@
 #include "uart.h"
 
 /*---------------------------------------------------------------------------*/
-/* Declarations                                                              */
+/* UART0 configuration                                                       */
 
-void uart_port_init();
+/* UART0 Baud Rate */
+#define UART0_BAUD_RATE           (115200)
+
+/* UART0 clock source: MCGFLLCLK/2 */
+#define CLK_SRC_MCGPLLCLK_2       (1)
+
+/* Enable Clock */
+#define ENABLE_CLK                (1)
+
+/* Diable Clock */
+#define DISABLE_CLK               (0)
+
+/* Disable UART0 Interrupts
+ *  - UART Control Register 2 (UARTx_C2)
+ *    Set all of the interrupt bits to disabled.
+ *    Set Rx and Tx to normal operation.
+ */
+#define DISABLE_UART0()           (UART0->C2 = 0)
+
+/* Enable UART0 Interrupts
+ *  - UART Control Register 2 (UARTx_C2)
+ *    Enable the UART0 Rx and Tx interrupts.
+ */
+#define ENABLE_UART0()            (UART0->C2 |= UART0_C2_RE(RECEIVE_ENABLE) + UART0_C2_TE(TRANSMIT_ENABLE))
+
+/* Stop Bits */
+#define ONE_STOP_BIT              (0)
+#define TWO_STOP_BIT              (1)
+
+/* Compute the prescale divisor for UART0 baud rate */
+#define UART_OSR_VAL              (4)
+#define UART0_BAUD_RATE_REG_VAL   (SystemCoreClock / (UART_OSR_VAL * UART0_BAUD_RATE))
+#define UART0_BAUD_REG_HIGH       ((UART0_BAUD_RATE_REG_VAL >> 8) & 0x0F)
+#define UART0_BAUD_REG_LOW        (UART0_BAUD_RATE_REG_VAL & 0xFF)
+
+#define PORTA_UART0_FUNC          (2)
+#define TRANSMIT_ENABLE           (1)
+#define RECEIVE_ENABLE            (1)
+#define RECEIVE_INTERRUPT_ENABLE  (1)
+
+#define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
+#define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
+#define UART0_TIE_ENABLED()       (UART0->C2 & UART0_C2_TIE_MASK)
+
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function initializes the port of UART0
+ *
+ * @param None
+ * @return None
+ */
+void uart_board_init()
+  {
+  /** Enable clock to PORTA
+   *  - System Clock Gating Control Register 5 (SIM_SCGC5)
+   *    Enable Port A Clock Gate Control
+   */
+  SIM->SCGC5 |= SIM_SCGC5_PORTA(ENABLE_CLK);
+
+  /** Configure Alternate functionality in appropriate Control register
+   *  - Pin Control Register n (PORTx_PCRn)
+   *    Set the Pin Mux Control for Port A PCR1 and PCR2
+   *      PTA1: UART0_RX (ALT2)
+   *      PTA2: UART0_TX (ALT2)
+   */
+  PORTA_PCR1 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
+  PORTA_PCR2 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
+  }
 
 /*---------------------------------------------------------------------------*/
 
 void uart_configure()
   {
-  /* Initialize port for operation of UART0 */
-  uart_port_init();
-
   /* Enable Clock to UART0 module
    *  - System Clock Gating Control Register 4 (SIM_SCGC4)
    *    Set bit 10 to enable clock gate to the UART0 module.
@@ -192,30 +257,4 @@ void uart_print_string(const uint8_t *str)
       uart_send_n(str, len);
       }
     }
-  }
-
-/*---------------------------------------------------------------------------*/
-
-/*
- * @brief This function initializes the port of UART0
- *
- * @param None
- * @return None
- */
-void uart_port_init()
-  {
-  /** Enable clock to PORTA
-   *  - System Clock Gating Control Register 5 (SIM_SCGC5)
-   *    Enable Port A Clock Gate Control
-   */
-  SIM->SCGC5 |= SIM_SCGC5_PORTA(ENABLE_CLK);
-
-  /** Configure Alternate functionality in appropriate Control register
-   *  - Pin Control Register n (PORTx_PCRn)
-   *    Set the Pin Mux Control for Port A PCR1 and PCR2
-   *      PTA1: UART0_RX (ALT2)
-   *      PTA2: UART0_TX (ALT2)
-   */
-  PORTA_PCR1 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
-  PORTA_PCR2 |= PORT_PCR_MUX(PORTA_UART0_FUNC);
   }

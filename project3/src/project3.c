@@ -32,6 +32,8 @@ void project3()
 
 #elif defined(PLATFORM_MKL)
 
+#include "board.h"
+
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
 
@@ -44,6 +46,8 @@ void project3()
 
 void project3()
   {
+  board_init();
+  uart_interrupts_enable();
   }
 
 /*---------------------------------------------------------------------------*/

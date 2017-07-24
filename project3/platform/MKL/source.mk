@@ -13,6 +13,7 @@
 # @brief This file contains list of source file for platform MKL.
 #------------------------------------------------------------------------------
 SRC = \
+	src/board.c		\
 	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\

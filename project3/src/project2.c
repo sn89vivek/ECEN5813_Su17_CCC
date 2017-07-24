@@ -15,12 +15,12 @@
 
 #if defined(PROJECT2)
 
+#include <ctype.h>
+#include <string.h>
 #include "common_ccc.h"
 #include "circbuf.h"
 #include "project2.h"
 #include "conversion.h"
-#include "ctype.h"
-#include "string.h"
 
 #if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
 
@@ -29,6 +29,8 @@ void project2()
   }
 
 #elif defined(PLATFORM_MKL)
+
+#include "board.h"
 
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
@@ -336,8 +338,9 @@ void project2()
   if (status != CB_SUCCESS)
     proj2_err(PR_RXBUF_CREATION_FAILED, status);
 
-  uart_configure();
+  board_init();
   uart_interrupts_enable();
+
   put_zstring(CB_tx, "Hello UART\r\n");
   put_zstring(CB_tx, "Does UART-buffer integration work?\r\n");
   initialize_statistics(&sequence_stats);
