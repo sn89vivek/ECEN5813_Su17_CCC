@@ -59,10 +59,6 @@
 #define RECEIVE_ENABLE            (1)
 #define RECEIVE_INTERRUPT_ENABLE  (1)
 
-#define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
-#define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
-#define UART0_TIE_ENABLED()       (UART0->C2 & UART0_C2_TIE_MASK)
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -141,21 +137,13 @@ void uart_configure()
 
   /* Enable UART0 */
   ENABLE_UART0();
-  }
 
-/*---------------------------------------------------------------------------*/
-
-void uart_interrupts_enable()
-  {
   /* Enable UART0 receiver interrupt for RDRF */
   UART0->C2 |= UART0_C2_RIE(RECEIVE_INTERRUPT_ENABLE);
 
   /* Enable UART0 interrupts and set priority at NVIC level */
   NVIC_EnableIRQ(UART0_IRQn);
   NVIC_SetPriority(UART0_IRQn, 0);
-
-  /* Enable interrupts at CPU level */
-  __enable_irq();
   }
 
 /*---------------------------------------------------------------------------*/

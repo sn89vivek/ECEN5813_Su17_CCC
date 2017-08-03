@@ -18,9 +18,12 @@
 #include <ctype.h>
 #include <string.h>
 #include "common_ccc.h"
-#include "circbuf.h"
 #include "project2.h"
+#include "circbuf.h"
 #include "conversion.h"
+#include "board.h"
+#include "led.h"
+#include "timer.h"
 
 #if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
 
@@ -339,7 +342,9 @@ void project2()
     proj2_err(PR_RXBUF_CREATION_FAILED, status);
 
   board_init();
-  uart_interrupts_enable();
+
+  /* Enable interrupts at CPU level */
+  __enable_irq();
 
   put_zstring(CB_tx, "Hello UART\r\n");
   put_zstring(CB_tx, "Does UART-buffer integration work?\r\n");

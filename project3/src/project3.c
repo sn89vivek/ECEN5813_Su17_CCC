@@ -15,8 +15,11 @@
 
 #if defined(PROJECT3)
 
+#include <string.h>
 #include "common_ccc.h"
 #include "project3.h"
+#include "board.h"
+#include "led.h"
 
 #if defined(PLATFORM_HOST)
 
@@ -47,7 +50,16 @@ void project3()
 void project3()
   {
   board_init();
-  uart_interrupts_enable();
+
+  /* Modulate the Red LED at 50% duty cycle */
+  led_modulate();
+
+  /* Enable interrupts at CPU level */
+  __enable_irq();
+
+  while (1)
+    {
+    }
   }
 
 /*---------------------------------------------------------------------------*/

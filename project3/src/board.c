@@ -15,8 +15,9 @@
 
 #include "common_ccc.h"
 #include "board.h"
-//#include "led.h"
+#include "led.h"
 #include "uart.h"
+#include "timer.h"
 //#include "spi.h"
 
 /*---------------------------------------------------------------------------*/
@@ -25,12 +26,14 @@ void board_init(void)
   {
 #if defined(PLATFORM_MTK)
   /* Enable ports */
-  //led_board_init();
+  led_board_init();
+  //timer_board_init();
   uart_board_init();
   //spi_board_init();
 
   /* Configure device */
-  //led_configure();
+  led_configure();
+  //timer_configure();
   uart_configure();
   //spi_configure();
 #endif

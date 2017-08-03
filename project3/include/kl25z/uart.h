@@ -18,6 +18,12 @@
 
 /*---------------------------------------------------------------------------*/
 
+#define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
+#define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
+#define UART0_TIE_ENABLED()       (UART0->C2 & UART0_C2_TIE_MASK)
+
+/*---------------------------------------------------------------------------*/
+
 /*
  * @brief This function configures UART peripheral
  *
@@ -26,17 +32,6 @@
  *
  */
 void uart_configure();
-
-/*---------------------------------------------------------------------------*/
-
-/*
- * @brief This function configures interrupts for the UART peripheral
- *
- * @param None
- * @return None
- *
- */
-void uart_interrupts_enable();
 
 /*---------------------------------------------------------------------------*/
 
