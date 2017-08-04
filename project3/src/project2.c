@@ -21,11 +21,16 @@
 #include "project2.h"
 #include "circbuf.h"
 #include "conversion.h"
-#include "board.h"
-#include "led.h"
-#include "timer.h"
 
-#if defined(PLATFORM_HOST) || defined(PLATFORM_BBB)
+#if defined(PLATFORM_HOST)
+
+void project2()
+  {
+  }
+
+#elif defined(PLATFORM_BBB)
+
+#include "board.h"
 
 void project2()
   {
@@ -33,6 +38,7 @@ void project2()
 
 #elif defined(PLATFORM_MKL)
 
+#include "uart0_kl25z.h"
 #include "board.h"
 
 /*---------------------------------------------------------------------------*/

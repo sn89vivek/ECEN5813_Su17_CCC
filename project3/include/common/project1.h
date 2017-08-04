@@ -133,15 +133,6 @@ int8_t test_memset();
  */
 int8_t test_reverse();
 
-/**
- * @brief function to execute all tests
- *
- * This function calls all of the test functions and displays the results.
- *
- * @return void
- */
-void course1(void);
-
 /*---------------------------------------------------------------------------*/
 
 #endif /* __PROJECT1_H__ */

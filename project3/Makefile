@@ -24,9 +24,9 @@ endif
 ifdef PROJECT2
 CPPFLAGS += -DPROJECT2
 endif
-#ifdef PROJECT3
+ifdef PROJECT3
 CPPFLAGS += -DPROJECT3
-#endif
+endif
 
 ifdef VERBOSE
 CPPFLAGS += -DVERBOSE

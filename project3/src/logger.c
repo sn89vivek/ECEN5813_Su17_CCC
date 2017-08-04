@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include "common_ccc.h"
 #include "logger.h"
+#include "conversion.h"
 
 /*---------------------------------------------------------------------------*/
 
@@ -24,7 +25,7 @@ void log_data(uint8_t *data, size_t length)
   {
   if (data != NULL)
     {
-    for (char8_t *ptr = data, *end = data + length; ptr < end; ptr++)
+    for (uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
       {
       (void)fputc('.', stderr);
       }
@@ -37,7 +38,7 @@ void log_data(uint8_t *data, size_t length)
 #ifdef VERBOSE
 void log_string(char8_t *str, size_t length)
   {
-  if (string != NULL)
+  if (str != NULL)
     {
     for (char8_t *ptr = str, *end = str + length; ptr < end; ptr++)
       {
@@ -50,9 +51,9 @@ void log_string(char8_t *str, size_t length)
 /*---------------------------------------------------------------------------*/
 
 #ifdef VERBOSE
-void log_zstring(char8_t *string)
+void log_zstring(char8_t *str)
   {
-  if (string != NULL)
+  if (str != NULL)
     {
     for (char8_t *ptr = str; *ptr != '\0'; ptr++)
       {
@@ -68,7 +69,7 @@ void log_zstring(char8_t *string)
 void log_integer(int32_t value)
   {
   uint8_t buffer[1+10+1];
-  if (my_itoa(value, buffer, 10) > )
+  if (my_itoa(value, buffer, 10) > 0)
     {
     (void)fprintf(stderr, "%s", buffer);
     }

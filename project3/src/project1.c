@@ -21,7 +21,7 @@
  * @date June 19, 2017
  */
 
-#if defined(PROJECT2)
+#if defined(PROJECT1)
 
 #include <stdio.h>
 #include "common_ccc.h"
@@ -368,7 +368,7 @@ int8_t test_reverse()
 
 /*---------------------------------------------------------------------------*/
 
-void course1(void)
+void project1(void)
   {
   uint8_t i;
   int8_t failed = 0;
@@ -403,6 +403,14 @@ void course1(void)
 
 /*---------------------------------------------------------------------------*/
 
-#endif /* PLATFORM_HOST | PLATFORM_BBB */
+#elif defined(PLATFORM_MKL)
+
+void project1()
+  {
+  }
+
+/*---------------------------------------------------------------------------*/
+
+#endif /* PLATFORM_MKL */
 
 #endif /* PROJECT1 */

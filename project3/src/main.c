@@ -35,7 +35,7 @@
 int main()
   {
 #if defined(PROJECT1)
-  course1();
+  project1();
 #elif defined(PROJECT2)
   project2();
 #elif defined(PROJECT3)
