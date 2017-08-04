@@ -6,15 +6,15 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file led.h
+ * @file led_kl25z.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 23, 2017
  * @brief This file contains declaration for on-board LED driver.
  */
 
-#ifndef __LED_H_
-#define __LED_H_
+#ifndef __LED_KL25Z_H_
+#define __LED_KL25Z_H_
 
 /*---------------------------------------------------------------------------*/
 
@@ -49,9 +49,9 @@ void led_configure();
  * @return None
  */
 __attribute__((always_inline)) __STATIC_INLINE void led_red_off(void)
-	  {
-		    PTB->PCOR = 1 << PTB18;
-		      }
+  {
+  PTB->PCOR = 1 << PTB18;
+  }
 
 /*---------------------------------------------------------------------------*/
 
@@ -62,9 +62,9 @@ __attribute__((always_inline)) __STATIC_INLINE void led_red_off(void)
  * @return None
  */
 __attribute__((always_inline)) __STATIC_INLINE void led_red_on(void)
-	  {
-		    PTB->PSOR = 1 << PTB18;
-		      }
+  {
+  PTB->PSOR = 1 << PTB18;
+  }
 
 /*---------------------------------------------------------------------------*/
 
@@ -75,9 +75,9 @@ __attribute__((always_inline)) __STATIC_INLINE void led_red_on(void)
  * @return None
  */
 __attribute__((always_inline)) __STATIC_INLINE void led_red_toggle(void)
-	  {
-		    PTB->PTOR = 1 << PTB18;
-		      }
+  {
+  PTB->PTOR = 1 << PTB18;
+  }
 
 /*---------------------------------------------------------------------------*/
 
@@ -91,4 +91,4 @@ void led_modulate();
 
 /*---------------------------------------------------------------------------*/
 
-#endif /* __LED_H_ */
+#endif /* __LED_KL25Z_H_ */

@@ -17,6 +17,7 @@ SRC = \
 	src/conversion.c	\
 	src/debug.c		\
 	src/circbuf.c		\
+	src/logger.c		\
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\

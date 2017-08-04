@@ -6,15 +6,15 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file uart.h
+ * @file timer_kl25z.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 30, 2017
  * @brief This file contains declaration of timer related drivers.
  */
 
-#ifndef __TIMER_H_
-#define __TIMER_H_
+#ifndef __TIMER_KL25Z_H_
+#define __TIMER_KL25Z_H_
 
 /*---------------------------------------------------------------------------*/
 
@@ -106,4 +106,4 @@ __attribute__((always_inline)) __STATIC_INLINE double timer_elapsed(uint32_t tic
 
 /*---------------------------------------------------------------------------*/
 
-#endif /* __TIMER_H_ */
+#endif /* __TIMER_KL25Z_H_ */

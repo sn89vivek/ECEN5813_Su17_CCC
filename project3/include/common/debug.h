@@ -6,7 +6,7 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file debug.c
+ * @file debug.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date June 19, 2017
@@ -17,8 +17,6 @@
 #define __DEBUG_H__
 
 /*---------------------------------------------------------------------------*/
-
-#include <stdint.h>
 
 /**
  * @brief The function print_memory() takes a pointer to memory and prints the

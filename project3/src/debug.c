@@ -13,10 +13,7 @@
  * @brief Definitions for debugging related functions.
  */
 
-#ifdef VERBOSE
 #include <stdio.h>
-#endif
-
 #include "common_ccc.h"
 #include "debug.h"
 

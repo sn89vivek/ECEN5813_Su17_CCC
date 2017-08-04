@@ -18,8 +18,6 @@
 #include <string.h>
 #include "common_ccc.h"
 #include "project3.h"
-#include "board.h"
-#include "led.h"
 
 #if defined(PLATFORM_HOST)
 
@@ -29,12 +27,15 @@ void project3()
 
 #elif defined(PLATFORM_BBB)
 
+#include "board.h"
+
 void project3()
   {
   }
 
 #elif defined(PLATFORM_MKL)
 
+#include "led_kl25z.h"
 #include "board.h"
 
 /*---------------------------------------------------------------------------*/

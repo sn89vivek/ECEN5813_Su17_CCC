@@ -6,21 +6,31 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file uart.h
+ * @file uart0_kl25z.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 5, 2017
  * @brief This file contains declaration of uart related drivers.
  */
 
-#ifndef __UART_H_
-#define __UART_H_
+#ifndef __UART0_KL25Z_H_
+#define __UART0_KL25Z_H_
 
 /*---------------------------------------------------------------------------*/
 
 #define UART0_DISABLE_TIE()       (UART0->C2 &= ~(UART0_C2_TIE_MASK))
 #define UART0_ENABLE_TIE()        (UART0->C2 |= (UART0_C2_TIE_MASK))
 #define UART0_TIE_ENABLED()       (UART0->C2 & UART0_C2_TIE_MASK)
+
+/*---------------------------------------------------------------------------*/
+
+/*
+ * @brief This function initializes the port of UART0
+ *
+ * @param None
+ * @return None
+ */
+void uart_board_init();
 
 /*---------------------------------------------------------------------------*/
 
@@ -91,4 +101,4 @@ void uart_print_string(const uint8_t *strng);
 
 /*---------------------------------------------------------------------------*/
 
-#endif /* __UART_H_ */
+#endif /* __UART0_KL25Z_H_ */

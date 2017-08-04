@@ -13,11 +13,12 @@
 # @brief This file contains list of source file for platform MKL.
 #------------------------------------------------------------------------------
 SRC = \
-	src/board.c		\
+	src/board_kl25z.c	\
 	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
-	src/led.c		\
+	src/led_kl25z.c		\
+	src/logger_kl25z.c	\
 	src/main.c		\
 	src/memory.c		\
 	src/memory_dma.c	\
@@ -26,8 +27,8 @@ SRC = \
 	src/project3.c		\
 	src/startup_MKL25Z4.S	\
 	src/system_MKL25Z4.c	\
-	src/timer.c		\
-	src/uart.c
+	src/timer_kl25z.c	\
+	src/uart0_kl25z.c
 
 LIB_FILES = \
 	src/circbuf.c		\

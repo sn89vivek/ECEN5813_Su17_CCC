@@ -6,7 +6,7 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file uart.c
+ * @file uart0_kl25z.c
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 5, 2017
@@ -14,7 +14,7 @@
  */
 
 #include "common_ccc.h"
-#include "uart.h"
+#include "uart0_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 /* UART0 configuration                                                       */
@@ -61,12 +61,6 @@
 
 /*---------------------------------------------------------------------------*/
 
-/*
- * @brief This function initializes the port of UART0
- *
- * @param None
- * @return None
- */
 void uart_board_init()
   {
   /** Enable clock to PORTA

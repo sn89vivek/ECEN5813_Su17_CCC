@@ -6,7 +6,7 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file led.h
+ * @file led_kl25z.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 23 2017
@@ -14,7 +14,7 @@
  */
 
 #include "common_ccc.h"
-#include "led.h"
+#include "led_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 

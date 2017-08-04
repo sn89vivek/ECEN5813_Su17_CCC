@@ -6,16 +6,15 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file timer.c
+ * @file timer_kl25z.c
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date July 30 2017
- * @brief This file contains definition for on-board LED driver.
+ * @brief This file contains definition of timer related drivers.
  */
 
 #include "common_ccc.h"
-#include "timer.h"
-#include "led.h"
+#include "timer_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 
