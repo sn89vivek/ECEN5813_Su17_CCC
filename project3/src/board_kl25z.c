@@ -19,6 +19,7 @@
 #include "led_kl25z.h"
 #include "uart0_kl25z.h"
 #include "timer_kl25z.h"
+#include "memory_dma.h"
 //#include "spi_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
@@ -32,12 +33,14 @@ void board_init(void)
   led_board_init();
   timer_board_init();
   uart_board_init();
+  dma_board_init();
   //spi_board_init();
 
   /* Configure device */
   led_configure();
   timer_configure();
   uart_configure();
+  dma_configure();
   //spi_configure();
 
   log_item(GPIO_INITIALIZED);

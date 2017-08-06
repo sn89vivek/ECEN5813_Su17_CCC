@@ -19,10 +19,11 @@
 
 /*---------------------------------------------------------------------------*/
 
-typedef struct {
-	uint32_t tf_size_in_bytes;
-	uint32_t dma_done;
-} dma_config_t;
+typedef struct
+  {
+  uint32_t tf_size_in_bytes;
+  uint32_t dma_done;
+  } dma_config_t;
 
 /*---------------------------------------------------------------------------*/
 
@@ -61,7 +62,15 @@ uint8_t *memset_dma(uint8_t *src, size_t length, uint8_t value);
  * @param None
  * @return None
  */
-void dma_init();
+void dma_board_init();
+
+/**
+ * @brief This function configures DMA.
+ *
+ * @param None
+ * @return None
+ */
+void dma_configure();
 
 /**
  * @brief The function tests and profiles all dma operations
@@ -85,7 +94,7 @@ INLINE void dma_block_wait(uint8_t ch)
 
 INLINE void dma_start(uint8_t ch)
   {
-	DMA_DCR(ch) |= DMA_DCR_START(1);
+  DMA_DCR(ch) |= DMA_DCR_START(1);
   }
 
 INLINE uint8_t dma_width_calc(uint8_t wd)
@@ -93,9 +102,9 @@ INLINE uint8_t dma_width_calc(uint8_t wd)
   if(wd == 4)
     return 0;
   if(wd == 1)
-	return 1;
+    return 1;
   if(wd == 2)
-	return 2;
+    return 2;
   return 3;
   }
 
