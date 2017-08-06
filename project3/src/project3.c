@@ -40,8 +40,9 @@ void project3()
 
 #elif defined(PLATFORM_MKL)
 
-#include "led_kl25z.h"
 #include "board.h"
+#include "led_kl25z.h"
+#include "memory_dma.h"
 
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
@@ -67,6 +68,8 @@ void project3()
 
   /* Enable interrupts at CPU level */
   __enable_irq();
+
+  dma_memory_tests();
 
   while (1)
     {
