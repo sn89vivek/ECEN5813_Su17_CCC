@@ -111,8 +111,8 @@
 #define LF (0x0A)
 #endif
 
-#ifndef EOS
-#define EOS (0)
+#ifndef SPACE
+#define SPACE (' ')
 #endif
 
 /*---------------------------------------------------------------------------*/

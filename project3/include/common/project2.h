@@ -20,7 +20,6 @@
 
 #define MIN_CB_LENGTH  (0x0004)
 #define MAX_CB_LENGTH  (0x100)
-#define EOS_CHARACTER  ('\r')
 
 /*---------------------------------------------------------------------------*/
 

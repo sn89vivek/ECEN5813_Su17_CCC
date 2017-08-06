@@ -13,6 +13,8 @@
  * @brief Definitions for logger related functions.
  */
 
+#ifdef VERBOSE
+
 #include <stdio.h>
 #include "common_ccc.h"
 #include "logger.h"
@@ -20,67 +22,59 @@
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef VERBOSE
-void log_data(uint8_t *data, size_t length)
+void log_init(void)
+  {
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_data(const uint8_t * const data,
+              const size_t length)
   {
   if (data != NULL)
     {
-    for (uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
-      {
-      (void)fputc('.', stderr);
-      }
-    }
-  }
-#endif
-
-/*---------------------------------------------------------------------------*/
-
-#ifdef VERBOSE
-void log_string(char8_t *str, size_t length)
-  {
-  if (str != NULL)
-    {
-    for (char8_t *ptr = str, *end = str + length; ptr < end; ptr++)
+    for (const uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
       {
       (void)fputc(*ptr, stderr);
       }
     }
   }
-#endif
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef VERBOSE
-void log_zstring(char8_t *str)
+void log_string(const char8_t * const str)
   {
   if (str != NULL)
     {
-    for (char8_t *ptr = str; *ptr != '\0'; ptr++)
+    for (const char8_t *ptr = str; *ptr != '\0'; ptr++)
       {
       (void)fputc(*ptr, stderr);
       }
     }
   }
-#endif
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef VERBOSE
-void log_integer(int32_t value)
+void log_integer(const int32_t value)
   {
-  uint8_t buffer[1+10+1];
-  if (my_itoa(value, buffer, 10) > 0)
+  char8_t buffer[16];
+  uint8_t digits;
+
+  /* Convert value to base-10 ASCII */
+  digits = my_itoa(value, (uint8_t*)buffer, 10);
+  if (digits > 0)
     {
-    (void)fprintf(stderr, "%s", buffer);
+    log_string(buffer);
     }
   }
-#endif
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef VERBOSE
 void log_flush()
   {
   (void)fflush(stderr);
   }
-#endif
+
+/*---------------------------------------------------------------------------*/
+
+#endif /* VERBOSE */

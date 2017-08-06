@@ -14,11 +14,12 @@
 #------------------------------------------------------------------------------
 SRC = \
 	src/board_bbb.c		\
-	src/memory.c		\
+	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
-	src/circbuf.c		\
 	src/logger.c		\
+	src/logger_q.c		\
+	src/memory.c		\
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\

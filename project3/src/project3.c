@@ -18,11 +18,14 @@
 #include <string.h>
 #include "common_ccc.h"
 #include "project3.h"
+#include "logger_q.h"
 
 #if defined(PLATFORM_HOST)
 
 void project3()
   {
+  log_id1(SYSTEM_INITIALIZED);
+  log_id1(SYSTEM_HALTED);
   }
 
 #elif defined(PLATFORM_BBB)
@@ -31,6 +34,8 @@ void project3()
 
 void project3()
   {
+  log_id1(SYSTEM_INITIALIZED);
+  log_id1(SYSTEM_HALTED);
   }
 
 #elif defined(PLATFORM_MKL)
@@ -58,9 +63,13 @@ void project3()
   /* Enable interrupts at CPU level */
   __enable_irq();
 
+  log_id1(SYSTEM_INITIALIZED);
+
   while (1)
     {
     }
+
+  log_id1(SYSTEM_HALTED);
   }
 
 /*---------------------------------------------------------------------------*/

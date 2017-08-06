@@ -19,6 +19,7 @@ SRC = \
 	src/debug.c		\
 	src/led_kl25z.c		\
 	src/logger_kl25z.c	\
+	src/logger_q_kl25z.c	\
 	src/main.c		\
 	src/memory.c		\
 	src/memory_dma.c	\

@@ -19,47 +19,48 @@
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function log_data() takes a pointer to memory and logs length
+ * @brief The function log_init() initializes logger.
+ *
+ * @param  None
+ *
+ * @return None
+ */
+#ifdef VERBOSE
+void log_init(void);
+#else
+#define log_init()
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief The function log_data() takes a pointer to data and logs length
  *        number of raw bytes.
  *
- * @param  data - Start address of data to be logged
+ * @param  data - Start address of data
  * @param  length - Number of bytes to log
  *
  * @return None
  */
 #ifdef VERBOSE
-void log_data(uint8_t *data, size_t length);
+void log_data(const uint8_t * const data,
+              const size_t length);
 #else
 #define log_data()
 #endif
 
 /**
- * @brief The function log_string() takes a pointer to memory and logs length
- *        number of characters.
- *
- * @param  str - Start address of string to be logged
- * @param  length - Number of bytes to log
- *
- * @return None
- */
-#ifdef VERBOSE
-void log_string(char8_t *str, size_t length);
-#else
-#define log_string()
-#endif
-
-/**
- * @brief The function log_zstring() takes a pointer to memory and logs
+ * @brief The function log_string() takes a pointer to a z-string and logs
  *        characters up to the \0 character.
  *
- * @param  str - Start address of z-string to be logged
+ * @param  str - Start address of z-string
  *
  * @return None
  */
 #ifdef VERBOSE
-void log_zstring(char8_t *str);
+void log_string(const char8_t * const str);
 #else
-#define log_zstring()
+#define log_string()
 #endif
 
 /**
@@ -71,7 +72,7 @@ void log_zstring(char8_t *str);
  * @return None
  */
 #ifdef VERBOSE
-void log_integer(int32_t value);
+void log_integer(const int32_t value);
 #else
 #define log_integer()
 #endif

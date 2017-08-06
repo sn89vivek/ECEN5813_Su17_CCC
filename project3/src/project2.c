@@ -258,7 +258,7 @@ proj2_status update_statistics(proj2_statistics_t *stats, uint8_t character)
     stats->num_numeric++;
   else if (ispunct(character))
     stats->num_punct++;
-  else if (character == EOS_CHARACTER)
+  else if (character == '\r')
     {
     stats->num_misc++;
     result = PR_PARSING_COMPLETE;

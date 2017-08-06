@@ -6,10 +6,10 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file board_kl25z.c
+ * @file board.c
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
- * @date July 23, 2017
+ * @date August 5, 2017
  * @brief This file contains definition of board startup.
  */
 
@@ -17,10 +17,6 @@
 #include "board.h"
 #include "logger.h"
 #include "logger_q.h"
-#include "led_kl25z.h"
-#include "uart0_kl25z.h"
-#include "timer_kl25z.h"
-//#include "spi_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 
@@ -28,19 +24,11 @@ void board_init(void)
   {
   log_init();
   log_q_init();
-  log_id1(LOGGER_INITIALIZED);
+  log_id(LOGGER_INITIALIZED, NULL, 0);
 
   /* Enable ports */
-  led_board_init();
-  timer_board_init();
-  uart_board_init();
-  //spi_board_init();
 
   /* Configure device */
-  led_configure();
-  timer_configure();
-  uart_configure();
-  //spi_configure();
 
-  log_id1(GPIO_INITIALIZED);
+  //log_id1(GPIO_INITIALIZED);
   }

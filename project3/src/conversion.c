@@ -83,7 +83,7 @@ uint8_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base, int32_t *data)
   uint8_t result = SUCCESS;
   uint8_t num;
 
-  if(ptr == NULL || *ptr == EOS || data == NULL || base < 2 || base > 16)
+  if(ptr == NULL || *ptr == '\0' || data == NULL || base < 2 || base > 16)
     result = FAILURE;
   else
     {
