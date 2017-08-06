@@ -17,6 +17,7 @@
 
 #include "common_ccc.h"
 #include "logger.h"
+#include "logger_q.h"
 #include "circbuf.h"
 #include "conversion.h"
 #include "uart0_kl25z.h"
@@ -36,6 +37,12 @@ void UART0_IRQHandler();
 
 void log_init(void)
   {
+  CB_status status;
+
+  /* Create Tx buffer */
+  status = CB_init(&logger_tx, MAX_LOGGER_LEN);
+  if (status != CB_SUCCESS)
+    while (1);
   }
 
 /*---------------------------------------------------------------------------*/
@@ -129,6 +136,46 @@ void log_integer(const int32_t value)
 void logger_flush()
   {
   while (CB_is_empty(logger_tx) != CB_SUCCESS);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_item(const logger_id_t id)
+  {
+  logger_item_t item;
+
+  item.id = id;
+  item.timestamp = 0;//TODO
+  item.length = 0;
+
+  (void)LOGQ_add_item(&item);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_item2(const logger_id_t id,
+               const uint8_t * const data,
+               const uint8_t length)
+  {
+  logger_item_t item;
+
+  item.id = id;
+  item.timestamp = 0;//TODO
+  if (NULL == data)
+    {
+    item.length = 0;
+    }
+  else
+    {
+    item.length = (length < 8) ? length : 8;
+    for (uint8_t *src = (uint8_t*)data, *end = (uint8_t*)data + item.length,
+         *dst = item.data; src < end; )
+      {
+      *dst++ = *src++;
+      }
+    }
+
+  (void)LOGQ_add_item(&item);
   }
 
 /*---------------------------------------------------------------------------*/

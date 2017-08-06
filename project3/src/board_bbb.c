@@ -16,7 +16,6 @@
 #include "common_ccc.h"
 #include "board.h"
 #include "logger.h"
-#include "logger_q.h"
 //#include "led.h"
 //#include "uart.h"
 //#include "timer.h"
@@ -27,8 +26,7 @@
 void board_init(void)
   {
   log_init();
-  log_q_init();
-  log_id1(LOGGER_INITIALIZED);
+  log_item(LOGGER_INITIALIZED);
 
   /* Enable ports */
   //led_board_init();
@@ -42,5 +40,5 @@ void board_init(void)
   //uart_configure();
   //spi_configure();
 
-  log_id1(GPIO_INITIALIZED);
+  log_item(GPIO_INITIALIZED);
   }

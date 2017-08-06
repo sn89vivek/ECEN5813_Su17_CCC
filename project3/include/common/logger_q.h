@@ -18,90 +18,94 @@
 
 /*---------------------------------------------------------------------------*/
 
-/** Object: logger_id_t: Logger ids to indicate the log context */
-typedef enum
-  {
-  LOGGER_INITIALIZED,     // No Payload
-  GPIO_INITIALIZED,       // No Payload
-  SYSTEM_INITIALIZED,     // No Payload
-  SYSTEM_HALTED,          // No Payload
-  INFO,                   // Send important info with regards to an info string
-  WARNING,                // Send important info with regards to an info string
-  ERROR,                  // Send important info with regards to an info string
-  PROFILING_STARTED,      // Profiling analysis has started
-  PROFILING_RESULT,       // Log a function id and a count for how long it took
-  PROFILING_COMPLETED,    // Profiling analysis has completed
-  DATA_RECEIVED,          // An item was received on UART, transmits it back
-  DATA_ANALYSIS_STARTED,  // No Payload
-  DATA_ALPHA_COUNT,       // Log number of alphabetic characters
-  DATA_NUMERIC_COUNT,     // Log number of alphabetic characters
-  DATA_PUNCTUATION_COUNT, // Log number of alphabetic characters
-  DATA_MISC_COUNT,        // Log number of alphabetic characters
-  DATA_ANALYSIS_COMPLETED // No Payload
-  } logger_id_t;
-
-/** Object: logger_item_t: Logger item structure */
+/** Object: LOGQ_t: Circular buffer type */
 typedef struct
   {
-  logger_id_t  id;
-  uint32_t     timestamp;
-  uint8_t     *data;
-  uint32_t     length;
-  } logger_item_t;
+  uint32_t       buf_size;  /* Buffer length */
+  logger_item_t *buf_start; /* Buffer start */
+  logger_item_t *buf_end;   /* Buffer end */
+  uint32_t       count;     /* Content count */
+  logger_item_t *head;      /* Content head */
+  logger_item_t *tail;      /* Content tail */
+  } LOGQ_t;
+
+/** Object: LOGQ_status: Circular buffer status enumeration */
+typedef enum
+  {
+    LOGQ_SUCCESS,
+    LOGQ_NULL,
+    LOGQ_LENGTH,
+    LOGQ_BUFFER_FULL,
+    LOGQ_BUFFER_EMPTY,
+    LOGQ_ENOMEM
+  } LOGQ_status;
 
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function log_q_init() initializes logger_q.
+ * @brief The function LOGQ_init() allocates Circular buffer.
+ *
+ * @param  length - Length of the buffer
+ *
+ * @return Circular buffer status enumeration
+ */
+LOGQ_status LOGQ_init(uint32_t length);
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief The function LOGQ_destroy() deallocates Circular buffer.
  *
  * @param  None
  *
- * @return None
+ * @return Circular buffer status enumeration
  */
-#ifdef VERBOSE
-void log_q_init(void);
-#else
-#define log_q_init()
-#endif
+LOGQ_status LOGQ_destroy(void);
 
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function log_item() takes a pointer to a log item structure and
- *        logs the content without blocking.
+ * @brief The function LOGQ_add_item() adds a single log item to the buffer.
  *
- * @param  item - Log item structure
+ * @param  item - Log item to be added
  *
- * @return logger_q_e
+ * @return Circular buffer status enumeration
  */
-#ifdef VERBOSE
-void log_item(const logger_item_t * const item);
-#else
-#define log_item()
-#endif
+LOGQ_status LOGQ_add_item(logger_item_t *item);
 
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function log_item() takes a pointer to a log item structure and
- *        logs the content without blocking.
+ * @brief The function LOGQ_remove_item() removed a single log item from the
+ *        buffer.
  *
- * @param  item - Log item structure
+ * @param  item - Log item removed
  *
- * @return logger_q_e
+ * @return Circular buffer status enumeration
  */
-#ifdef VERBOSE
-#define log_id1(id)                                                           \
-  {                                                                           \
-  const logger_item_t item = { (id), 0, NULL, 0 };                            \
-  log_item(&item);                                                            \
-  }
-#define log_id2(id, ptr, len)                                                 \
-  {                                                                           \
-  const logger_item_t item = { (id), 0, (ptr), (len) };                       \
-  log_item(&item);                                                            \
-  }
-#endif
+LOGQ_status LOGQ_remove_item(logger_item_t *item);
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief The function LOGQ_is_full() tests if the Circular buffer is full.
+ *
+ * @param  None
+ *
+ * @return Returns success if the Circular buffer is full.
+ */
+LOGQ_status LOGQ_is_full(void);
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief The function LOGQ_is_empty() tests if the Circular buffer is full.
+ *
+ * @param  None
+ *
+ * @return Returns success if the Circular buffer is empty.
+ */
+LOGQ_status LOGQ_is_empty(void);
 
 /*---------------------------------------------------------------------------*/
 

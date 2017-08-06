@@ -16,15 +16,13 @@
 #include "common_ccc.h"
 #include "board.h"
 #include "logger.h"
-#include "logger_q.h"
 
 /*---------------------------------------------------------------------------*/
 
 void board_init(void)
   {
   log_init();
-  log_q_init();
-  log_id(LOGGER_INITIALIZED, NULL, 0);
+  log_item(LOGGER_INITIALIZED);
 
   /* Enable ports */
 

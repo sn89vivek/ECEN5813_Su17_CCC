@@ -77,4 +77,45 @@ void log_flush()
 
 /*---------------------------------------------------------------------------*/
 
+void log_item(const logger_id_t id)
+  {
+  (void)fputc('^', stderr);
+  (void)fputc(id <= 9 ? '0' + id : 'A' + (id-10), stderr);
+  (void)fputc(SPACE, stderr);
+  (void)fputc('T', stderr); //TODO output timestamp
+  (void)fputc(SPACE, stderr);
+  (void)fputc('0', stderr);
+  (void)fputc(':', stderr);
+  (void)fputc(CR, stderr);
+  (void)fputc(LF, stderr);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_item2(const logger_id_t id,
+               const uint8_t * const data,
+               const uint8_t length)
+  {
+  char8_t buffer[16];
+  (void)fputc('^', stderr);
+  (void)fputc(id <= 9 ? '0' + id : 'A' + (id-10), stderr);
+  (void)fputc(SPACE, stderr);
+  (void)fputc('T', stderr); //TODO output timestamp
+  (void)fputc(SPACE, stderr);
+  (void)my_itoa(length, (uint8_t*)buffer, 10);
+  (void)fprintf(stderr, "%s", buffer); 
+  (void)fputc(':', stderr);
+  if (data != NULL)
+    {
+    for (const uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
+      {
+      (void)fputc(*ptr, stderr);
+      }
+    }
+  (void)fputc(CR, stderr);
+  (void)fputc(LF, stderr);
+  }
+
+/*---------------------------------------------------------------------------*/
+
 #endif /* VERBOSE */
