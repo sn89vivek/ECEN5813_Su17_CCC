@@ -48,6 +48,7 @@ void project3()
   {
   board_init();
   uart_interrupts_enable();
+  dma_memory_tests();
   }
 
 /*---------------------------------------------------------------------------*/
