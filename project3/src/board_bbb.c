@@ -16,6 +16,7 @@
 #include "common_ccc.h"
 #include "board.h"
 #include "logger.h"
+#include "rtc.h"
 //#include "led.h"
 //#include "uart.h"
 //#include "timer.h"
@@ -29,12 +30,14 @@ void board_init(void)
   log_item(LOGGER_INITIALIZED);
 
   /* Enable ports */
+  rtc_board_init();
   //led_board_init();
   //timer_board_init();
   //uart_board_init();
   //spi_board_init();
 
   /* Configure device */
+  rtc_configure();
   //led_configure();
   //timer_configure();
   //uart_configure();
@@ -43,5 +46,5 @@ void board_init(void)
   log_item(GPIO_INITIALIZED);
 
   /* Enable interrupts at CPU level */
-  __enable_irq();
+  //__enable_irq();
   }

@@ -20,10 +20,12 @@
 
 #if defined(PLATFORM_HOST)
 
+  #include <stdio.h>
   #include <stdbool.h>
   #include <stdint.h>
   #include <stdlib.h>
   #include <libio.h>
+  #include <time.h>
 
   #ifdef CMOCKA_UNIT_TESTS
     #include <stdarg.h>
@@ -33,10 +35,12 @@
 
 #elif defined(PLATFORM_BBB)
 
+  #include <stdio.h>
   #include <stdbool.h>
   #include <stdint.h>
   #include <stdlib.h>
   #include <libio.h>
+  #include <time.h>
 
 #elif defined(PLATFORM_MKL)
 
@@ -118,6 +122,10 @@
 /*---------------------------------------------------------------------------*/
 
 typedef char char8_t;
+
+#if defined(PLATFORM_MKL)
+typedef uint32_t time_t;
+#endif
 
 /*---------------------------------------------------------------------------*/
 

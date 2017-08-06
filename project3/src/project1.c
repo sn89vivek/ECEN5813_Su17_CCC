@@ -23,7 +23,6 @@
 
 #if defined(PROJECT1)
 
-#include <stdio.h>
 #include "common_ccc.h"
 #include "platform.h"
 #include "project1.h"

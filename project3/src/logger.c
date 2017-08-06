@@ -15,10 +15,10 @@
 
 #ifdef VERBOSE
 
-#include <stdio.h>
 #include "common_ccc.h"
 #include "logger.h"
 #include "conversion.h"
+#include "rtc.h"
 
 /*---------------------------------------------------------------------------*/
 
@@ -79,15 +79,7 @@ void log_flush()
 
 void log_item(const logger_id_t id)
   {
-  (void)fputc('^', stderr);
-  (void)fputc(id <= 9 ? '0' + id : 'A' + (id-10), stderr);
-  (void)fputc(SPACE, stderr);
-  (void)fputc('T', stderr); //TODO output timestamp
-  (void)fputc(SPACE, stderr);
-  (void)fputc('0', stderr);
-  (void)fputc(':', stderr);
-  (void)fputc(CR, stderr);
-  (void)fputc(LF, stderr);
+  (void)fprintf(stderr, "^%02X %08lX 0 \n", id, rtc_now());
   }
 
 /*---------------------------------------------------------------------------*/
@@ -97,14 +89,11 @@ void log_item2(const logger_id_t id,
                const uint8_t length)
   {
   char8_t buffer[16];
-  (void)fputc('^', stderr);
-  (void)fputc(id <= 9 ? '0' + id : 'A' + (id-10), stderr);
-  (void)fputc(SPACE, stderr);
-  (void)fputc('T', stderr); //TODO output timestamp
-  (void)fputc(SPACE, stderr);
+
+  buffer[0] = '\0';
   (void)my_itoa(length, (uint8_t*)buffer, 10);
-  (void)fprintf(stderr, "%s", buffer); 
-  (void)fputc(':', stderr);
+
+  (void)fprintf(stderr, "^%02X %08lX %s ", id, rtc_now(), buffer);
   if (data != NULL)
     {
     for (const uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)

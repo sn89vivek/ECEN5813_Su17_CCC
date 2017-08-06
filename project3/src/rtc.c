@@ -6,30 +6,24 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file board.c
+ * @file rtc.c
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date August 5, 2017
- * @brief This file contains definition of board startup.
+ * @brief Definitions for RTC related functions.
  */
 
 #include "common_ccc.h"
-#include "board.h"
-#include "logger.h"
 #include "rtc.h"
 
 /*---------------------------------------------------------------------------*/
 
-void board_init(void)
+void rtc_board_init(void)
   {
-  log_init();
-  log_item(LOGGER_INITIALIZED);
+  }
 
-  /* Enable ports */
-  rtc_board_init();
+/*---------------------------------------------------------------------------*/
 
-  /* Configure device */
-  rtc_configure();
-
-  //log_id1(GPIO_INITIALIZED);
+void rtc_configure()
+  {
   }

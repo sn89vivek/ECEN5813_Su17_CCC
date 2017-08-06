@@ -16,6 +16,7 @@
 #include "common_ccc.h"
 #include "board.h"
 #include "logger.h"
+#include "rtc_kl25z.h"
 #include "led_kl25z.h"
 #include "uart0_kl25z.h"
 #include "timer_kl25z.h"
@@ -30,6 +31,7 @@ void board_init(void)
   log_item(LOGGER_INITIALIZED);
 
   /* Enable ports */
+  rtc_board_init();
   led_board_init();
   timer_board_init();
   uart_board_init();
@@ -37,6 +39,7 @@ void board_init(void)
   //spi_board_init();
 
   /* Configure device */
+  rtc_configure();
   led_configure();
   timer_configure();
   uart_configure();

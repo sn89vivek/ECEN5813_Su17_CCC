@@ -26,6 +26,7 @@ SRC = \
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\
+	src/rtc_kl25z.c		\
 	src/startup_MKL25Z4.S	\
 	src/system_MKL25Z4.c	\
 	src/timer_kl25z.c	\

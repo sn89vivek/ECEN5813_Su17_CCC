@@ -18,6 +18,7 @@
 #include <string.h>
 #include "common_ccc.h"
 #include "project3.h"
+#include "board.h"
 #include "logger.h"
 
 #if defined(PLATFORM_HOST)
@@ -25,22 +26,21 @@
 void project3()
   {
   log_item(SYSTEM_INITIALIZED);
+
   log_item(SYSTEM_HALTED);
   }
 
 #elif defined(PLATFORM_BBB)
 
-#include "board.h"
-
 void project3()
   {
   log_item(SYSTEM_INITIALIZED);
+
   log_item(SYSTEM_HALTED);
   }
 
 #elif defined(PLATFORM_MKL)
 
-#include "board.h"
 #include "led_kl25z.h"
 #include "memory_dma.h"
 

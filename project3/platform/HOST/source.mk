@@ -13,6 +13,7 @@
 # @brief This file contains list of source file for platform HOST.
 #------------------------------------------------------------------------------
 SRC = \
+	src/board.c		\
 	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
@@ -22,6 +23,7 @@ SRC = \
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\
+	src/rtc.c		\
 	src/main.c
 
 LIB_FILES = \

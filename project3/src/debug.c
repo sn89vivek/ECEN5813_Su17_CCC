@@ -13,13 +13,14 @@
  * @brief Definitions for debugging related functions.
  */
 
-#include <stdio.h>
+#ifdef VERBOSE
+#if !defined(PLATFORM_MKL)
+
 #include "common_ccc.h"
 #include "debug.h"
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef VERBOSE
 void print_memory(uint8_t *start, uint32_t length)
   {
   if (start != NULL && length > 0) 
@@ -43,4 +44,8 @@ void print_memory(uint8_t *start, uint32_t length)
   (void)fputc(CR, stderr);
   (void)fputc(LF, stderr);
   }
-#endif
+
+/*---------------------------------------------------------------------------*/
+
+#endif /* !PLATFORM_MKL */
+#endif /* VERBOSE */

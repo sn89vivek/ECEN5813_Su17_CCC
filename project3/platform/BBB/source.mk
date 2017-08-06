@@ -23,6 +23,7 @@ SRC = \
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\
+	src/rtc.c		\
 	src/main.c
 
 LIB_FILES = \
