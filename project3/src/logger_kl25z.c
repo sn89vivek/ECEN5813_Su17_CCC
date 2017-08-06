@@ -31,7 +31,7 @@ CB_t *logger_tx;
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
 
-void UART0_IRQHandler();
+void UART0_IRQHandler(void);
 
 /*---------------------------------------------------------------------------*/
 
@@ -191,7 +191,7 @@ void log_item2(const logger_id_t id,
  *
  * @return none
  */
-void UART0_IRQHandler()
+void UART0_IRQHandler(void)
   {
   uint8_t uart_char;
   CB_status status;

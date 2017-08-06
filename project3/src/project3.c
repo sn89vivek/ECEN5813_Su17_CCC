@@ -58,16 +58,12 @@ void project3()
   {
   board_init();
 
+  log_string("Hello World\n");
+
   /* Modulate the Red LED at 50% duty cycle */
   led_modulate();
 
-  /* Enable interrupts at CPU level */
-  __enable_irq();
-
   log_item(SYSTEM_INITIALIZED);
-
-  /* Enable interrupts at CPU level */
-  __enable_irq();
 
   dma_memory_tests();
 

@@ -44,4 +44,7 @@ void board_init(void)
   //spi_configure();
 
   log_item(GPIO_INITIALIZED);
+
+  /* Enable interrupts at CPU level */
+  __enable_irq();
   }

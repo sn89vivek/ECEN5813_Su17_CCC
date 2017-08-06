@@ -87,7 +87,7 @@ void log_init(void);
 void log_data(const uint8_t * const data,
               const size_t length);
 #else
-#define log_data()
+#define log_data(data, length)
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -103,7 +103,7 @@ void log_data(const uint8_t * const data,
 #ifdef VERBOSE
 void log_string(const char8_t * const str);
 #else
-#define log_string()
+#define log_string(str)
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -119,7 +119,7 @@ void log_string(const char8_t * const str);
 #ifdef VERBOSE
 void log_integer(const int32_t value);
 #else
-#define log_integer()
+#define log_integer(value)
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -150,7 +150,7 @@ void log_flush();
 #ifdef VERBOSE
 void log_item(const logger_id_t id);
 #else
-#define log_item()
+#define log_item(id)
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -169,7 +169,7 @@ void log_item2(const logger_id_t id,
                const uint8_t * const data,
                const uint8_t length);
 #else
-#define log_ite2()
+#define log_ite2(id, data, length)
 #endif
 
 /*---------------------------------------------------------------------------*/

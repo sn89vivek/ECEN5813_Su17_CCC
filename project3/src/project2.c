@@ -349,9 +349,6 @@ void project2()
 
   board_init();
 
-  /* Enable interrupts at CPU level */
-  __enable_irq();
-
   put_zstring(CB_tx, "Hello UART\r\n");
   put_zstring(CB_tx, "Does UART-buffer integration work?\r\n");
   initialize_statistics(&sequence_stats);
