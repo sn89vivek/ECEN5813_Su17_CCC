@@ -21,6 +21,15 @@
 #include "rtc.h"
 
 /*---------------------------------------------------------------------------*/
+/* Global variables                                                          */
+
+/** Object: logger_rx: Logger Rx circular buffer */
+CB_t *logger_rx;
+
+/** Object: logger_tx: Logger Tx circular buffer */
+CB_t *logger_tx;
+
+/*---------------------------------------------------------------------------*/
 
 void log_init(void)
   {

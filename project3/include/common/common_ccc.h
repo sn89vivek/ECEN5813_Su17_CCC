@@ -25,6 +25,7 @@
   #include <stdint.h>
   #include <stdlib.h>
   #include <libio.h>
+  #include <ctype.h>
   #include <time.h>
 
   #ifdef CMOCKA_UNIT_TESTS
@@ -40,12 +41,14 @@
   #include <stdint.h>
   #include <stdlib.h>
   #include <libio.h>
+  #include <ctype.h>
   #include <time.h>
 
 #elif defined(PLATFORM_MKL)
 
   #include <stdbool.h>
   #include <stdint.h>
+  #include <ctype.h>
   #include <malloc.h>
   #include "MKL25Z4.h"
   #include "system_MKL25Z4.h"
@@ -54,6 +57,16 @@
 
   #error "Target platform is not supported: #include"
 
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+typedef uint8_t bool_t;
+
+typedef char char8_t;
+
+#if defined(PLATFORM_MKL)
+typedef uint32_t time_t;
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -117,14 +130,6 @@
 
 #ifndef SPACE
 #define SPACE (' ')
-#endif
-
-/*---------------------------------------------------------------------------*/
-
-typedef char char8_t;
-
-#if defined(PLATFORM_MKL)
-typedef uint32_t time_t;
 #endif
 
 /*---------------------------------------------------------------------------*/

@@ -25,6 +25,11 @@
 
 /*---------------------------------------------------------------------------*/
 
+/** Object: board_is_ready: Indicates that the board is ready to be used. */
+bool_t board_is_ready;
+
+/*---------------------------------------------------------------------------*/
+
 void board_init(void)
   {
   log_init();
@@ -50,4 +55,6 @@ void board_init(void)
 
   /* Enable interrupts at CPU level */
   __enable_irq();
+
+  board_is_ready = TRUE;
   }

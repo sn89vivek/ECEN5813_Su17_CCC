@@ -18,6 +18,18 @@
 
 /*---------------------------------------------------------------------------*/
 
+/** Object: rx_metrics_t: Rx metrics from UART */
+typedef struct
+  {
+  uint32_t alpha;      /* Number of alphabetic characters */
+  uint32_t numeric;    /* Number of numeric characters */
+  uint32_t punct;      /* Number of punctuation characters */
+  uint32_t misc;       /* Number of miscellaneous characters */
+  uint32_t total;      /* Number of total characters */
+  } metrics_t;
+
+/*---------------------------------------------------------------------------*/
+
 /**
  * @brief The function initiates... for project3
  *

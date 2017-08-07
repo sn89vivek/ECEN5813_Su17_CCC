@@ -6,7 +6,7 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file console_kl25z.c
+ * @file logger_kl25z.c
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date August 4, 2017
@@ -25,6 +25,9 @@
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
 
+/** Object: logger_rx: Logger Rx circular buffer */
+CB_t *logger_rx;
+
 /** Object: logger_tx: Logger Tx circular buffer */
 CB_t *logger_tx;
 
@@ -38,6 +41,11 @@ void UART0_IRQHandler(void);
 void log_init(void)
   {
   CB_status status;
+
+  /* Create Rx buffer */
+  status = CB_init(&logger_rx, MAX_LOGGER_LEN);
+  if (status != CB_SUCCESS)
+    while (1);
 
   /* Create Tx buffer */
   status = CB_init(&logger_tx, MAX_LOGGER_LEN);
@@ -145,7 +153,7 @@ void log_item(const logger_id_t id)
   logger_item_t item;
 
   item.id = id;
-  item.timestamp = 0;//TODO
+  item.timestamp = 0xDEADBEEF;
   item.length = 0;
 
   (void)LOGQ_add_item(&item);
@@ -154,13 +162,31 @@ void log_item(const logger_id_t id)
 /*---------------------------------------------------------------------------*/
 
 void log_item2(const logger_id_t id,
+               const uint32_t value)
+  {
+  logger_item_t item;
+
+  item.id = id;
+  item.timestamp = 0xDEADBEEF;
+  item.length = 4;
+  item.data[0] = (value & 0xFF000000) >> 24;
+  item.data[1] = (value & 0x00FF0000) >> 16;
+  item.data[2] = (value & 0x0000FF00) >> 8;
+  item.data[3] =  value & 0x000000FF;
+
+  (void)LOGQ_add_item(&item);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_item3(const logger_id_t id,
                const uint8_t * const data,
                const uint8_t length)
   {
   logger_item_t item;
 
   item.id = id;
-  item.timestamp = 0;//TODO
+  item.timestamp = 0xDEADBEEF;
   if (NULL == data)
     {
     item.length = 0;
@@ -193,23 +219,29 @@ void log_item2(const logger_id_t id,
  */
 void UART0_IRQHandler(void)
   {
-  uint8_t uart_char;
-  CB_status status;
-
   /* Tx Queue */
-  if ((UART0->S1 & UART0_S1_TDRE_MASK) && (UART0_TIE_ENABLED()))
+  if (CB_SUCCESS != CB_is_empty(logger_tx) &&
+      (UART0->S1 & UART0_S1_TDRE_MASK) && UART0_TIE_ENABLED())
     {
     /* Check if this is the last character */
     if (1 == CB_count(logger_tx))
       {
       UART0_DISABLE_TIE();
       }
-    status = CB_buffer_remove_item(logger_tx, &uart_char);
-    if (status != CB_SUCCESS)
+    uint8_t uart_char;
+    if (CB_SUCCESS == CB_buffer_remove_item(logger_tx, &uart_char))
       {
-      while (1); /* Block on error */
+      uart_send((const uint8_t *)&uart_char);
       }
-    uart_send((const uint8_t *)&uart_char);
+    }
+
+  /* Rx Queue */
+  if (CB_SUCCESS != CB_is_full(logger_rx) &&
+      (UART0->S1 & UART0_S1_RDRF_MASK))
+    {
+    uint8_t uart_char;
+    uart_receive(&uart_char);
+    (void)CB_buffer_add_item(logger_rx, uart_char);
     }
   }
 

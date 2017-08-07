@@ -59,6 +59,19 @@ typedef struct
 
 /*---------------------------------------------------------------------------*/
 
+#include "circbuf.h"
+#include "logger_q.h"
+
+/*---------------------------------------------------------------------------*/
+
+/** Object: logger_rx: Logger Rx circular buffer */
+extern CB_t *logger_rx;
+
+/** Object: logger_tx: Logger Tx circular buffer */
+extern CB_t *logger_tx;
+
+/*---------------------------------------------------------------------------*/
+
 /**
  * @brief The function log_init() initializes logger.
  *
@@ -159,17 +172,34 @@ void log_item(const logger_id_t id);
  * @brief The function log_item2() takes content to log without blocking.
  *
  * @param  id - Logger id
+ * @param  value - Number value
+ *
+ * @return None
+ */
+#ifdef VERBOSE
+void log_item2(const logger_id_t id,
+               const uint32_t value);
+#else
+#define log_item2(id, value)
+#endif
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief The function log_item3() takes content to log without blocking.
+ *
+ * @param  id - Logger id
  * @param  data - Start of data
  * @param  length - Size of data
  *
  * @return None
  */
 #ifdef VERBOSE
-void log_item2(const logger_id_t id,
+void log_item3(const logger_id_t id,
                const uint8_t * const data,
                const uint8_t length);
 #else
-#define log_ite2(id, data, length)
+#define log_item3(id, data, length)
 #endif
 
 /*---------------------------------------------------------------------------*/

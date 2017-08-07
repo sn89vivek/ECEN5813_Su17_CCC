@@ -18,6 +18,11 @@
 
 /*---------------------------------------------------------------------------*/
 
+/** Object: board_is_ready: Indicates that the board is ready to be used. */
+extern bool_t board_is_ready;
+
+/*---------------------------------------------------------------------------*/
+
 /**
  * @brief This function provides a central location to initialize clocks,
  *        ports and configure devices.

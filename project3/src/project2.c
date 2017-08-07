@@ -15,7 +15,6 @@
 
 #if defined(PROJECT2)
 
-#include <ctype.h>
 #include <string.h>
 #include "common_ccc.h"
 #include "project2.h"
