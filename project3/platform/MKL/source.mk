@@ -23,14 +23,18 @@ SRC = \
 	src/main.c		\
 	src/memory.c		\
 	src/memory_dma.c	\
+	src/nordic.c        \
 	src/project1.c		\
 	src/project2.c		\
 	src/project3.c		\
 	src/rtc_kl25z.c		\
 	src/startup_MKL25Z4.S	\
+	src/spi.c \
 	src/system_MKL25Z4.c	\
 	src/timer_kl25z.c	\
 	src/uart0_kl25z.c
+
+	
 
 LIB_FILES = \
 	src/circbuf.c		\
