@@ -158,7 +158,7 @@ void project3()
   {
   board_init();
 
-  log_string("Hello World\n");
+  log_string("Hello World\r\n");
 
   /* Modulate the Red LED at 50% duty cycle */
   led_modulate();

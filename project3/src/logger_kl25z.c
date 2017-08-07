@@ -20,7 +20,12 @@
 #include "logger_q.h"
 #include "circbuf.h"
 #include "conversion.h"
+#include "board.h"
 #include "uart0_kl25z.h"
+
+/*---------------------------------------------------------------------------*/
+
+#define HEX(i) ((i) <= 9 ? '0' + (i) : 'A' - 10 + (i))
 
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
@@ -49,6 +54,11 @@ void log_init(void)
 
   /* Create Tx buffer */
   status = CB_init(&logger_tx, MAX_LOGGER_LEN);
+  if (status != CB_SUCCESS)
+    while (1);
+
+  /* Create logger_q Tx buffer */
+  status = LOGQ_init(MAX_LOGGER_LEN);
   if (status != CB_SUCCESS)
     while (1);
   }
@@ -82,7 +92,7 @@ void log_data(const uint8_t * const data,
         }
       }
 
-    if (queued > 0)
+    if (board_is_ready && queued > 0)
       {
       UART0_ENABLE_TIE();
       }
@@ -117,7 +127,7 @@ void log_string(const char8_t * const str)
         }
       }
 
-    if (queued > 0)
+    if (board_is_ready && queued > 0)
       {
       UART0_ENABLE_TIE();
       }
@@ -219,12 +229,47 @@ void log_item3(const logger_id_t id,
  */
 void UART0_IRQHandler(void)
   {
-  /* Tx Queue */
+  /* Log item Tx Queue */
+  if (CB_SUCCESS != CB_is_empty(logger_tx) &&
+      LOGQ_SUCCESS != LOGQ_is_empty())
+    {
+    logger_item_t *item;
+    CRITICAL_SECTION_START();
+    item = LOGQ_raw_remove_item();
+    if (item != NULL)
+      {
+      CB_raw_add_item(logger_tx, '^');
+      CB_raw_add_item(logger_tx, HEX((item->id & 0xF0) >> 4));
+      CB_raw_add_item(logger_tx,  HEX(item->id & 0x0F));
+      CB_raw_add_item(logger_tx, ' ');
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0xF0000000) >> 28));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x0F000000) >> 24));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x00F00000) >> 20));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x000F0000) >> 16));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x0000F000) >> 12));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x00000F00) >> 8));
+      CB_raw_add_item(logger_tx, HEX((item->timestamp & 0x000000F0) >> 4));
+      CB_raw_add_item(logger_tx,  HEX(item->timestamp & 0x0000000F));
+      CB_raw_add_item(logger_tx, ' ');
+      CB_raw_add_item(logger_tx, HEX((item->length & 0xF0) >> 4));
+      CB_raw_add_item(logger_tx,  HEX(item->length & 0x0F));
+      for (uint8_t *ptr = item->data, *end = item->data + item->length; ptr < end; ptr++)
+        {
+        CB_raw_add_item(logger_tx, HEX((*ptr & 0xF0) >> 4));
+        CB_raw_add_item(logger_tx,  HEX(*ptr & 0x0F));
+        }
+      CB_raw_add_item(logger_tx, CR);
+      CB_raw_add_item(logger_tx, LF);
+      }
+    CRITICAL_SECTION_END();
+    }
+
+  /* Log Tx Queue */
   if (CB_SUCCESS != CB_is_empty(logger_tx) &&
       (UART0->S1 & UART0_S1_TDRE_MASK) && UART0_TIE_ENABLED())
     {
     /* Check if this is the last character */
-    if (1 == CB_count(logger_tx))
+    if (1 == CB_count(logger_tx) && LOGQ_SUCCESS == LOGQ_is_empty())
       {
       UART0_DISABLE_TIE();
       }
@@ -235,7 +280,7 @@ void UART0_IRQHandler(void)
       }
     }
 
-  /* Rx Queue */
+  /* Log Rx Queue */
   if (CB_SUCCESS != CB_is_full(logger_rx) &&
       (UART0->S1 & UART0_S1_RDRF_MASK))
     {

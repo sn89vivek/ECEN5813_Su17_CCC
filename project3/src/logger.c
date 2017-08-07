@@ -19,6 +19,7 @@
 #include "logger.h"
 #include "conversion.h"
 #include "rtc.h"
+#include "board.h"
 
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */

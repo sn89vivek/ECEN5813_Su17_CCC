@@ -42,6 +42,11 @@ typedef enum
 
 /*---------------------------------------------------------------------------*/
 
+/** Object: logger_q_tx: Logger item-queue Tx circular buffer */
+extern LOGQ_t *logger_q_tx;
+
+/*---------------------------------------------------------------------------*/
+
 /**
  * @brief The function LOGQ_init() allocates Circular buffer.
  *
@@ -76,14 +81,14 @@ LOGQ_status LOGQ_add_item(logger_item_t *item);
 /*---------------------------------------------------------------------------*/
 
 /**
- * @brief The function LOGQ_remove_item() removed a single log item from the
- *        buffer.
+ * @brief The function LOGQ_raw_remove_item() returns pointer to queue head,
+ *        and has no protection!
  *
- * @param  item - Log item removed
+ * @param  None
  *
- * @return Circular buffer status enumeration
+ * @return Pointer to head item
  */
-LOGQ_status LOGQ_remove_item(logger_item_t *item);
+logger_item_t *LOGQ_raw_remove_item(void);
 
 /*---------------------------------------------------------------------------*/
 
@@ -94,7 +99,10 @@ LOGQ_status LOGQ_remove_item(logger_item_t *item);
  *
  * @return Returns success if the Circular buffer is full.
  */
-LOGQ_status LOGQ_is_full(void);
+INLINE LOGQ_status LOGQ_is_full(void)
+  {
+  return (logger_q_tx->buf_size == logger_q_tx->count) ? LOGQ_SUCCESS : LOGQ_LENGTH;
+  }
 
 /*---------------------------------------------------------------------------*/
 
@@ -105,7 +113,10 @@ LOGQ_status LOGQ_is_full(void);
  *
  * @return Returns success if the Circular buffer is empty.
  */
-LOGQ_status LOGQ_is_empty(void);
+INLINE LOGQ_status LOGQ_is_empty(void)
+  {
+  return (0 == logger_q_tx->count) ? LOGQ_SUCCESS : LOGQ_LENGTH;
+  }
 
 /*---------------------------------------------------------------------------*/
 

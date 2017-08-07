@@ -138,4 +138,23 @@ INLINE uint32_t CB_count(CB_t *cb)
 
 /*---------------------------------------------------------------------------*/
 
+/**
+ * @brief The function CB_raw_add_item() adds a single value to the buffer
+ *        with no protection!
+ *
+ * @param  cb - Circular buffer object
+ * @param  data - Value to be added to the buffer
+ *
+ * @return None
+ */
+INLINE void CB_raw_add_item(CB_t *cb, uint8_t data)
+  {
+  /* Add item to end of buffer with wrapping at bounds of memory */
+  *(cb->tail) = data;
+  cb->tail = (cb->tail < cb->buf_end) ? cb->tail + 1 : cb->buf_start;
+  cb->count++;
+  }
+
+/*---------------------------------------------------------------------------*/
+
 #endif /* __CIRCBUF_H__ */

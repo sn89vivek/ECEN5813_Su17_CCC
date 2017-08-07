@@ -19,6 +19,8 @@
 #include "logger.h"
 #include "logger_q.h"
 #include "memory.h"
+#include "board.h"
+#include "uart0_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
@@ -114,6 +116,11 @@ LOGQ_status LOGQ_add_item(logger_item_t *item)
     logger_q_tx->count++;
     CRITICAL_SECTION_END();
 
+    if (board_is_ready)
+      {
+      UART0_ENABLE_TIE();
+      }
+
     status = LOGQ_SUCCESS;
     }
 
@@ -122,72 +129,25 @@ LOGQ_status LOGQ_add_item(logger_item_t *item)
 
 /*---------------------------------------------------------------------------*/
 
-LOGQ_status LOGQ_remove_item(logger_item_t *item)
+logger_item_t *LOGQ_raw_remove_item(void)
   {
-  LOGQ_status status;
+  logger_item_t *item;
 
-  if (NULL == logger_q_tx || NULL == item)
+  if (logger_q_tx->count > 0)
     {
-    status = LOGQ_NULL;
-    }
-  else if (0 == logger_q_tx->count)
-    {
-    status = LOGQ_BUFFER_EMPTY;
-    }
-  else
-    {
+	item = logger_q_tx->head;
+
     /* Remove item from front of buffer with wrapping at bounds of memory */
-    CRITICAL_SECTION_START();
-    for (uint8_t *src = (uint8_t*)logger_q_tx->head,
-         *end = (uint8_t*)logger_q_tx->head + sizeof(logger_item_t),
-         *dst = (uint8_t*)item; src < end; )
-      {
-      *dst++ = *src++;
-      }
     logger_q_tx->head = (logger_q_tx->head < logger_q_tx->buf_end) ?
       logger_q_tx->head + 1 : logger_q_tx->buf_start;
     logger_q_tx->count--;
-    CRITICAL_SECTION_END();
-    status = LOGQ_SUCCESS;
-    }
-
-  return status;
-  }
-
-/*---------------------------------------------------------------------------*/
-
-LOGQ_status LOGQ_is_full(void)
-  {
-  LOGQ_status status;
-
-  if (NULL == logger_q_tx)
-    {
-    status = LOGQ_NULL;
     }
   else
     {
-    status = (logger_q_tx->buf_size == logger_q_tx->count) ? LOGQ_SUCCESS : LOGQ_LENGTH;
+    item = NULL;
     }
 
-  return status;
-  }
-
-/*---------------------------------------------------------------------------*/
-
-LOGQ_status LOGQ_is_empty(void)
-  {
-  LOGQ_status status;
-
-  if (NULL == logger_q_tx)
-    {
-    status = LOGQ_NULL;
-    }
-  else
-    {
-    status = (0 == logger_q_tx->count) ? LOGQ_SUCCESS : LOGQ_LENGTH;
-    }
-
-  return status;
+  return item;
   }
 
 /*---------------------------------------------------------------------------*/
