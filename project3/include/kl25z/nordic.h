@@ -17,7 +17,7 @@
 #define INCLUDES_NORDIC_H_
 
 #include "nordic_reg.h"
-#include "spi.h"
+#include "spi_kl25z.h"
 
 /*---------------------------------------------------------------------------*/
 

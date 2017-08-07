@@ -6,7 +6,7 @@
  * All Rights Reserved. (This work is unpublished)
  *---------------------------------------------------------------------------*/
 /**
- * @file spi.h
+ * @file spi_kl25z.h
  * @author Robert Blazewicz
  * @author Vivek Sankaranarayanan
  * @date August 7th, 2017
@@ -18,7 +18,14 @@
 
 /*---------------------------------------------------------------------------*/
 
-#include "gpio.h"
+/**
+ * @brief The function initializes the SPI gpio
+ *
+ * @param  None
+ *
+ * @return None
+ */
+void GPIO_nrf_init();
 
 /*---------------------------------------------------------------------------*/
 
@@ -29,7 +36,7 @@
  *
  * @return None
  */
-void SPI_init();
+void spi_configure();
 
 /*---------------------------------------------------------------------------*/
 

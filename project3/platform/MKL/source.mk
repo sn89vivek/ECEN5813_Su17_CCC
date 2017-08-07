@@ -17,7 +17,6 @@ SRC = \
 	src/circbuf.c		\
 	src/conversion.c	\
 	src/debug.c		\
-	src/gpio.c \
 	src/led_kl25z.c		\
 	src/logger_kl25z.c	\
 	src/logger_q.c		\
