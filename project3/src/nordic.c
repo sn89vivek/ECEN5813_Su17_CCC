@@ -21,9 +21,9 @@
 
 uint8_t nrf_read_register(uint8_t reg)
   {
-  uint8_t status, data;
+  uint8_t data;
   NRF_CHIP_ENABLE();
-  status = SPI_write_byte(NRF_READ_COMMAND + reg);
+  SPI_write_byte(NRF_READ_COMMAND + reg);
   data = SPI_read_byte();
   NRF_CHIP_DISABLE();
   return data;
@@ -33,10 +33,8 @@ uint8_t nrf_read_register(uint8_t reg)
 
 void nrf_write_register(uint8_t reg, uint8_t value)
   {
-  uint8_t status;
   NRF_CHIP_ENABLE();
-  status = SPI_write_byte(NRF_WRITE_COMMAND + reg);
-  SPI_read_byte(status);
+  SPI_write_byte(NRF_WRITE_COMMAND + reg);
   SPI_write_byte(value);
   NRF_CHIP_DISABLE();
   }
@@ -45,9 +43,8 @@ void nrf_write_register(uint8_t reg, uint8_t value)
 
 void nrf_read_sequence(uint8_t reg, uint8_t *data, uint8_t len)
   {
-  uint8_t status;
   NRF_CHIP_ENABLE();
-  status = SPI_write_byte(NRF_READ_COMMAND + reg);
+  SPI_write_byte(NRF_READ_COMMAND + reg);
   while(len--)
     {
     SPI_read_byte(*data++);
@@ -59,14 +56,11 @@ void nrf_read_sequence(uint8_t reg, uint8_t *data, uint8_t len)
 
 void nrf_write_sequence(uint8_t reg, uint8_t *data, uint8_t len)
   {
-  uint8_t status;
   NRF_CHIP_ENABLE();
-  status = SPI_write_byte(NRF_WRITE_COMMAND + reg);
+  SPI_write_byte(NRF_WRITE_COMMAND + reg);
   while(len--)
     {
-	SPI_write_byte(*data++);
-	/* Dummy read. reg used as dummy variable here */
-    SPI_read_byte(reg);
+	  SPI_write_byte(*data++);
     }
   NRF_CHIP_DISABLE();
   }
@@ -170,15 +164,19 @@ void nordic_test()
   uint8_t status;
   status = nrf_read_status();
   status = nrf_read_config();
-  nrf_write_config(0x55);
+  status = 0x55;
+  nrf_write_config(status);
   status = nrf_read_config();
   status = nrf_read_rf_setup();
-  nrf_write_rf_setup(0x05);
+  status = 0x05;
+  nrf_write_rf_setup(status);
   status = nrf_read_rf_setup();
-  nrf_write_rf_setup(0x0A);
+  status = 0x04;
+  nrf_write_rf_setup(status);
   status = nrf_read_rf_setup();
   status = nrf_read_rf_ch();
-  nrf_write_rf_ch(0x7F);
+  status = 0x7F;
+  nrf_write_rf_ch(status);
   status = nrf_read_rf_ch();
   status = nrf_read_fifo_status();
   }

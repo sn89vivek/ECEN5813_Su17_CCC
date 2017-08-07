@@ -172,7 +172,7 @@ void project3()
 
   metrics_t metrics;
   reset_rx_metrics(&metrics);
-  nordic_test()
+  nordic_test();
   while (1)
     {
     if (TRUE == parse_rx(&metrics))

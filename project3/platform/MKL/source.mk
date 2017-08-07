@@ -29,7 +29,7 @@ SRC = \
 	src/project3.c		\
 	src/rtc_kl25z.c		\
 	src/startup_MKL25Z4.S	\
-	src/spi.c \
+	src/spi_kl25z.c \
 	src/system_MKL25Z4.c	\
 	src/timer_kl25z.c	\
 	src/uart0_kl25z.c
