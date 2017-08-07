@@ -36,7 +36,7 @@ void board_init(void)
   /* Configure device */
   rtc_configure();
 
-  log_id1(GPIO_INITIALIZED);
+  log_item(GPIO_INITIALIZED);
 
   /* Enable interrupts at CPU level */
   //__enable_irq();

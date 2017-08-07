@@ -18,7 +18,6 @@ SRC = \
 	src/conversion.c	\
 	src/debug.c		\
 	src/logger.c		\
-	src/logger_q.c		\
 	src/memory.c		\
 	src/project1.c		\
 	src/project2.c		\

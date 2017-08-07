@@ -89,27 +89,70 @@ void log_flush()
 
 void log_item(const logger_id_t id)
   {
-  (void)fprintf(stderr, "^%02X %08lX 0 \n", id, rtc_now());
+  (void)fprintf(stderr, "^%02X %08lX 00\n", id, rtc_now());
   }
 
 /*---------------------------------------------------------------------------*/
 
 void log_item2(const logger_id_t id,
+               const uint32_t value)
+  {
+  uint8_t length = 4;
+  time_t timestamp = 0xDEADBEEF;
+  (void)fputc('^', stderr);
+  (void)fputc(HEX((id & 0xF0) >> 4), stderr);
+  (void)fputc( HEX(id & 0x0F), stderr);
+  (void)fputc(' ', stderr);
+  (void)fputc(HEX((timestamp & 0xF0000000) >> 28), stderr);
+  (void)fputc(HEX((timestamp & 0x0F000000) >> 24), stderr);
+  (void)fputc(HEX((timestamp & 0x00F00000) >> 20), stderr);
+  (void)fputc(HEX((timestamp & 0x000F0000) >> 16), stderr);
+  (void)fputc(HEX((timestamp & 0x0000F000) >> 12), stderr);
+  (void)fputc(HEX((timestamp & 0x00000F00) >> 8), stderr);
+  (void)fputc(HEX((timestamp & 0x000000F0) >> 4), stderr);
+  (void)fputc( HEX(timestamp & 0x0000000F), stderr);
+  (void)fputc(' ', stderr);
+  (void)fputc(HEX((length & 0xF0) >> 4), stderr);
+  (void)fputc( HEX(length & 0x0F), stderr);
+
+  (void)fputc(HEX((value & 0xF0000000) >> 28), stderr);
+  (void)fputc(HEX((value & 0x0F000000) >> 24), stderr);
+  (void)fputc(HEX((value & 0x00F00000) >> 20), stderr);
+  (void)fputc(HEX((value & 0x000F0000) >> 16), stderr);
+  (void)fputc(HEX((value & 0x0000F000) >> 12), stderr);
+  (void)fputc(HEX((value & 0x00000F00) >> 8), stderr);
+  (void)fputc(HEX((value & 0x000000F0) >> 4), stderr);
+  (void)fputc( HEX(value & 0x0000000F), stderr);
+  (void)fputc(CR, stderr);
+  (void)fputc(LF, stderr);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+void log_item3(const logger_id_t id,
                const uint8_t * const data,
                const uint8_t length)
   {
-  char8_t buffer[16];
-
-  buffer[0] = '\0';
-  (void)my_itoa(length, (uint8_t*)buffer, 10);
-
-  (void)fprintf(stderr, "^%02X %08lX %s ", id, rtc_now(), buffer);
-  if (data != NULL)
+  time_t timestamp = 0xDEADBEEF;
+  (void)fputc('^', stderr);
+  (void)fputc(HEX((id & 0xF0) >> 4), stderr);
+  (void)fputc( HEX(id & 0x0F), stderr);
+  (void)fputc(' ', stderr);
+  (void)fputc(HEX((timestamp & 0xF0000000) >> 28), stderr);
+  (void)fputc(HEX((timestamp & 0x0F000000) >> 24), stderr);
+  (void)fputc(HEX((timestamp & 0x00F00000) >> 20), stderr);
+  (void)fputc(HEX((timestamp & 0x000F0000) >> 16), stderr);
+  (void)fputc(HEX((timestamp & 0x0000F000) >> 12), stderr);
+  (void)fputc(HEX((timestamp & 0x00000F00) >> 8), stderr);
+  (void)fputc(HEX((timestamp & 0x000000F0) >> 4), stderr);
+  (void)fputc( HEX(timestamp & 0x0000000F), stderr);
+  (void)fputc(' ', stderr);
+  (void)fputc(HEX((length & 0xF0) >> 4), stderr);
+  (void)fputc( HEX(length & 0x0F), stderr);
+  for (const uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
     {
-    for (const uint8_t *ptr = data, *end = data + length; ptr < end; ptr++)
-      {
-      (void)fputc(*ptr, stderr);
-      }
+    (void)fputc(HEX((*ptr & 0xF0) >> 4), stderr);
+    (void)fputc( HEX(*ptr & 0x0F), stderr);
     }
   (void)fputc(CR, stderr);
   (void)fputc(LF, stderr);
