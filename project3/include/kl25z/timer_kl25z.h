@@ -59,7 +59,7 @@ void timer_configure();
  * @param None
  * @return None
  */
-__attribute__((always_inline)) __STATIC_INLINE void timer_reset(void)
+INLINE void timer_reset(void)
   {
   SysTick->VAL = 0;
   systick_rollover = 0;
@@ -73,7 +73,7 @@ __attribute__((always_inline)) __STATIC_INLINE void timer_reset(void)
  * @param None
  * @return None
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t timer_ticks(void)
+INLINE uint32_t timer_ticks(void)
   {
   return SysTick_LOAD_RELOAD_Msk - SysTick->VAL;
   }
@@ -86,7 +86,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t timer_ticks(void)
  * @param None
  * @return None
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t timer_rollovers(void)
+INLINE uint32_t timer_rollovers(void)
   {
   return systick_rollover;
   }
@@ -99,7 +99,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t timer_rollovers(void)
  * @param None
  * @return None
  */
-__attribute__((always_inline)) __STATIC_INLINE double timer_elapsed(uint32_t ticks, uint32_t rollovers)
+INLINE double timer_elapsed(uint32_t ticks, uint32_t rollovers)
   {
   return (systick_rollover_rate * rollovers) + (systick_rate * ticks);
   }
