@@ -96,8 +96,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.1498726828" name="rtc.c" rcbsApplicability="disable" resourcePath="src/rtc.c" toolsToInvoke="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101.1940892239">
-						<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101.1940892239" name="Cross ARM GNU C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101"/>
+					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.642690086" name="nordic.c" rcbsApplicability="disable" resourcePath="src/nordic.c" toolsToInvoke="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101.2131466558">
+						<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101.2131466558" name="Cross ARM GNU C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.40213101"/>
 					</fileInfo>
 					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.1484028979" name="Makefile" rcbsApplicability="disable" resourcePath="src/Makefile" toolsToInvoke=""/>
 					<fileInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.539095120.1898036974" name="uart.h" rcbsApplicability="disable" resourcePath="include/kl25z/uart.h" toolsToInvoke=""/>

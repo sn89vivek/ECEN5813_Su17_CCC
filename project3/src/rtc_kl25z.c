@@ -15,17 +15,68 @@
 
 #include "common_ccc.h"
 #include "rtc_kl25z.h"
+#include "logger.h"
+
+/*---------------------------------------------------------------------------*/
+/* Declarations                                                              */
+
+void RTC_Seconds_IRQHandler();
 
 /*---------------------------------------------------------------------------*/
 
 void rtc_board_init(void)
   {
-  //TODO
+  /** Select 32K system oscillator
+   *  - System Options Register 1 (SIM_SOPT1)
+   */
+  SIM->SOPT1 &= ~SIM_SOPT1_OSC32KSEL_MASK;
+
+  /** Setup RTC clock gating
+   *  - System Clock Gating Control Register 6 (SIM_SCGC6)
+   *    Enable RTC access and interrupts
+   */
+  SIM_SCGC6 |= SIM_SCGC6_RTC_MASK;
   }
 
 /*---------------------------------------------------------------------------*/
 
 void rtc_configure()
   {
-  //TODO
+  /** Reset RTC registers
+   *  - RTC Control Register (RTC_CR)
+   */
+  RTC->CR = RTC_CR_SWR_MASK;
+  RTC->CR &= ~RTC_CR_SWR_MASK;
+
+  /** Enable 32.768 kHz oscillator
+   *  - RTC Control Register (RTC_CR)
+   */
+  RTC->CR |= RTC_CR_OSCE(1);
+
+  /** Enable seconds interrupt
+   *  - RTC Interrupt Enable Register (RTC_IER)
+   */
+  RTC->IER |= RTC_IER_TSIE(1);
+
+  /** Enable interrupt RTC_Seconds_IRQHandler
+   *  - Interrupt Set-Enable Register (NVIC_ISER)
+   *    Enable interrupt RTC_Seconds_IRQHandler
+   */
+  NVIC_EnableIRQ(RTC_Seconds_IRQn);
+  NVIC_SetPriority(RTC_Seconds_IRQn, 0);
+  }
+
+/*---------------------------------------------------------------------------*/
+
+/**
+ * @brief RTC Seconds Interrupt handler
+ *
+ * This ISR handles 1s clock processing.
+ *
+ * @param none
+ * @return none
+ */
+void RTC_Seconds_IRQHandler()
+  {
+  log_item(HEARTBEAT);
   }

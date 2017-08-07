@@ -254,8 +254,8 @@ void UART0_IRQHandler(void)
         CB_raw_add_item(logger_tx, HEX((*ptr & 0xF0) >> 4));
         CB_raw_add_item(logger_tx,  HEX(*ptr & 0x0F));
         }
-      CB_raw_add_item(logger_tx, CR);
-      CB_raw_add_item(logger_tx, LF);
+      CB_raw_add_item(logger_tx, '\r');
+      CB_raw_add_item(logger_tx, '\n');
       }
     CRITICAL_SECTION_END();
     }

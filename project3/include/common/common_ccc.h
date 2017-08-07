@@ -125,18 +125,4 @@ typedef uint32_t time_t;
 
 /*---------------------------------------------------------------------------*/
 
-#ifndef CR
-#define CR (0x0D)
-#endif
-
-#ifndef LF
-#define LF (0x0A)
-#endif
-
-#ifndef SPACE
-#define SPACE (' ')
-#endif
-
-/*---------------------------------------------------------------------------*/
-
 #endif /* __COMMON_CCC_H__ */

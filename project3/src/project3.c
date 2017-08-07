@@ -165,14 +165,16 @@ void project3()
 
   log_item(SYSTEM_INITIALIZED);
 
-  log_string("Hello UART\r\n");
-  log_string("Does UART-buffer integration work?\r\n");
-
+  log_string("DMA memory tests...\r\n");
   dma_memory_tests();
 
   metrics_t metrics;
   reset_rx_metrics(&metrics);
+
+  log_string("Nordic test...\r\n");
   nordic_test();
+
+  log_string("Enter data at the console.\r\n");
   while (1)
     {
     if (TRUE == parse_rx(&metrics))

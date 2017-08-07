@@ -46,7 +46,7 @@ void rtc_configure();
  */
 __attribute__((always_inline)) __STATIC_INLINE time_t rtc_now(void)
   {
-  return 0xDEADBEAF;
+  return RTC->TSR;
   }
 
 /*---------------------------------------------------------------------------*/
