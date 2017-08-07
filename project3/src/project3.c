@@ -158,17 +158,18 @@ void project3()
   {
   board_init();
 
-  log_string("Hello World\r\n");
+  log_string("Hello World\n");
 
   /* Modulate the Red LED at 50% duty cycle */
   led_modulate();
 
   log_item(SYSTEM_INITIALIZED);
 
-  dma_memory_tests();
-
   log_string("Hello UART\r\n");
   log_string("Does UART-buffer integration work?\r\n");
+
+  dma_memory_tests();
+
   metrics_t metrics;
   reset_rx_metrics(&metrics);
   while (1)
