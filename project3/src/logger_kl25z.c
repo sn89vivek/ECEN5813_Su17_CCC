@@ -147,7 +147,7 @@ void log_integer(const int32_t value)
 
 /*---------------------------------------------------------------------------*/
 
-void logger_flush()
+void log_flush()
   {
   while (CB_is_empty(logger_tx) != CB_SUCCESS);
   }
@@ -226,7 +226,7 @@ void log_item3(const logger_id_t id,
 void UART0_IRQHandler(void)
   {
   /* Log item Tx Queue */
-  if (CB_SUCCESS != CB_is_empty(logger_tx) &&
+  if (CB_SUCCESS == CB_is_empty(logger_tx) &&
       LOGQ_SUCCESS != LOGQ_is_empty())
     {
     logger_item_t *item;

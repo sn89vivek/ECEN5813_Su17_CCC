@@ -19,6 +19,7 @@
 #include "memory_dma.h"
 #include "logger.h"
 #include "timer_kl25z.h"
+#include "string.h"
 
 /*---------------------------------------------------------------------------*/
 
@@ -27,6 +28,10 @@
 #define DMA_AUTO_ALIGN              (1)
 #define DMA_DEST_INC                (1)
 
+#define TF_SIZE1                    (10)
+#define TF_SIZE2                    (100)
+#define TF_SIZE3                    (1000)
+#define TF_SIZE4                    (5000)
 /*---------------------------------------------------------------------------*/
 
 typedef enum
@@ -144,129 +149,159 @@ void dma_configure()
 void dma_memory_tests()
   {
   uint8_t *sbuf, *dbuf;
-  sbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(4000));
-  dbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(4000));
+  sbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(TF_SIZE4));
+  dbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(TF_SIZE4));
   if((dbuf != NULL) && (sbuf != NULL))
     {
     log_item(PROFILING_STARTED);
 
     /* SET TESTS */
-    /* 1-byte set tests */
+
+    /* TF_SIZE1 set tests */
+
+    /* library */
     timer_reset();
-    dma_transfer_width = 1;
-    memset_dma(sbuf, 10, 0xA5);
-    buf_verify(sbuf, 10, 0xA5);
-    memset_dma(sbuf, 100, 0x5A);
-    buf_verify(sbuf, 100, 0x5A);
-    memset_dma(sbuf, 1000, 0x56);
-    buf_verify(sbuf, 1000, 0x56);
-    memset_dma(sbuf, 4000, 0x65);
-    buf_verify(sbuf, 4000, 0x65);
+    memset(dbuf, 0xAA, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
 
-    /* 2-byte set tests */
+    /* manual */
     timer_reset();
-    dma_transfer_width = 2;
-    memset_dma(dbuf, 10, 0xBE);
-    buf_verify(dbuf, 10, 0xBE);
-    memset_dma(dbuf, 100, 0xAC);
-    buf_verify(dbuf, 100, 0xAC);
-    memset_dma(dbuf, 1000, 0xD0);
-    buf_verify(dbuf, 1000, 0xD0);
-    memset_dma(dbuf, 5000, 0x12);
-    buf_verify(dbuf, 5000, 0x12);
+    my_memset(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
 
-    /* 4-byte set tests */
+    /* dma - 1byte */
+    dma_transfer_width = 1;
     timer_reset();
-    dma_transfer_width = 4;
-    memset_dma(sbuf, 10, 0xA5);
-    buf_verify(sbuf, 10, 0xA5);
-    memset_dma(sbuf, 100, 0x5A);
-    buf_verify(sbuf, 100, 0x5A);
-    memset_dma(sbuf, 1000, 0x56);
-    buf_verify(sbuf, 1000, 0x56);
-    memset_dma(sbuf, 5000, 0x65);
-    buf_verify(sbuf, 5000, 0x65);
+    my_memset(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
 
-    for(uint16_t i = 0; i < 5000; i++)
-      sbuf[i] = i;
-
-    /* MEMCOPY tests */
-    /* No over lap */
-    /* 1-byte transfers */
-    timer_reset();
-    dma_transfer_width = 1;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-
-    /* 2-byte transfers */
-    timer_reset();
+    /* dma - 2byte */
     dma_transfer_width = 2;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-
-    /* 4-byte transfers */
     timer_reset();
+    my_memset(dbuf, TF_SIZE1, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 4byte */
     dma_transfer_width = 4;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-
-    /* With overlap tests (s > d) */
-    /* 1-byte transfers */
     timer_reset();
+    my_memset(dbuf, TF_SIZE1, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* TF_SIZE2 set tests */
+
+    /* library */
+    timer_reset();
+    memset(dbuf, 0xAA, TF_SIZE2);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* manual */
+    timer_reset();
+    my_memset(dbuf, TF_SIZE2, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 1byte */
     dma_transfer_width = 1;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf+8, dbuf, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP1);
-
-    /* 2-byte transfers */
     timer_reset();
+    my_memset(dbuf, TF_SIZE2, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 2byte */
     dma_transfer_width = 2;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf+8, dbuf, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP1);
+  timer_reset();
+  my_memset(dbuf, TF_SIZE2, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
 
-    /* 4-byte transfers */
-    timer_reset();
-    dma_transfer_width = 4;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf+8, dbuf, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP1);
+  /* dma - 4byte */
+  dma_transfer_width = 4;
+  timer_reset();
+  my_memset(dbuf, TF_SIZE2, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
 
-    /* With overlap tests (s < d) */
-    /* 1-byte transfers */
+
+    /* TF_SIZE3 set tests */
+
+    /* library */
     timer_reset();
+    memset(dbuf, 0xAA, TF_SIZE3);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* manual */
+    timer_reset();
+    my_memset(dbuf, TF_SIZE3, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 1byte */
     dma_transfer_width = 1;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf, dbuf+8, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP2);
-
-    /* 2-byte transfers */
     timer_reset();
+    my_memset(dbuf, TF_SIZE3, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 2byte */
     dma_transfer_width = 2;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf, dbuf+8, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP2);
+  timer_reset();
+  my_memset(dbuf, TF_SIZE3, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
 
-    /* 4-byte transfers */
+  /* dma - 4byte */
+  dma_transfer_width = 4;
+  timer_reset();
+  my_memset(dbuf, TF_SIZE3, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
+
+    /* TF_SIZE4 set tests */
+
+    /* library */
     timer_reset();
-    dma_transfer_width = 4;
-    memset_dma(dbuf, 5000, 0);
-    memmove_dma(sbuf, dbuf, 5000);
-    memmove_dma(dbuf, dbuf+8, 10);
-    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_OVERLAP2);
+    memset(dbuf, 0xAA, TF_SIZE4);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* manual */
+    timer_reset();
+    my_memset(dbuf, TF_SIZE4, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 1byte */
+    dma_transfer_width = 1;
+    timer_reset();
+    my_memset(dbuf, TF_SIZE4, 0xAA);
+    log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    log_flush();
+
+    /* dma - 2byte */
+    dma_transfer_width = 2;
+  timer_reset();
+  my_memset(dbuf, TF_SIZE4, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
+
+  /* dma - 4byte */
+  dma_transfer_width = 4;
+  timer_reset();
+  my_memset(dbuf, TF_SIZE4, 0xAA);
+  log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+  log_flush();
+
     }
+
   log_item(PROFILING_COMPLETED);
+  log_flush();
   free_words((uint32_t *)sbuf);
   free_words((uint32_t *)dbuf);
   }
@@ -326,13 +361,13 @@ void buf_verify(uint8_t *buf, uint32_t length, uint8_t val)
  */
 void log_profiling_result(const uint32_t ticks, const uint8_t transfer_width, const mem_test_t mem_test)
   {
-//  uint8_t data[6];
-//  data[0] = (ticks & 0xFF000000) >> 24;
-//  data[1] = (ticks & 0x00FF0000) >> 16;
-//  data[2] = (ticks & 0x0000FF00) >> 8;
-//  data[3] =  ticks & 0x000000FF;
-//  data[4] = transfer_width;
-//  data[5] = mem_test;
-  //log_item3(PROFILING_RESULT, (const uint8_t * const)&data, sizeof(data));
-  log_item2(PROFILING_RESULT, ticks);
+  uint8_t data[6];
+  data[0] = (ticks & 0xFF000000) >> 24;
+  data[1] = (ticks & 0x00FF0000) >> 16;
+  data[2] = (ticks & 0x0000FF00) >> 8;
+  data[3] =  ticks & 0x000000FF;
+  data[4] = transfer_width;
+  data[5] = mem_test;
+  log_item3(PROFILING_RESULT, (const uint8_t * const)&data, sizeof(data));
+//  log_item2(PROFILING_RESULT, ticks);
   }
