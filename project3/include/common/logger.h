@@ -19,7 +19,7 @@
 /*---------------------------------------------------------------------------*/
 
 #define MAX_LOGGER_LEN    (0x100)
-#define MAX_LOGGER_Q_LEN  (0x100)
+#define MAX_LOGGER_Q_LEN  (0x20)
 
 #define LOGGER_ITEM_DATA_LEN  (8)
 

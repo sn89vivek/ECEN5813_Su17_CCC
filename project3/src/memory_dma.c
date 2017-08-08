@@ -144,8 +144,8 @@ void dma_configure()
 void dma_memory_tests()
   {
   uint8_t *sbuf, *dbuf;
-  sbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(5000));
-  dbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(5000));
+  sbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(4000));
+  dbuf = (uint8_t *)reserve_words(LENGTH_IN_WORDS(4000));
   if((dbuf != NULL) && (sbuf != NULL))
     {
     log_item(PROFILING_STARTED);
@@ -160,8 +160,8 @@ void dma_memory_tests()
     buf_verify(sbuf, 100, 0x5A);
     memset_dma(sbuf, 1000, 0x56);
     buf_verify(sbuf, 1000, 0x56);
-    memset_dma(sbuf, 5000, 0x65);
-    buf_verify(sbuf, 5000, 0x65);
+    memset_dma(sbuf, 4000, 0x65);
+    buf_verify(sbuf, 4000, 0x65);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
 
     /* 2-byte set tests */
@@ -326,19 +326,13 @@ void buf_verify(uint8_t *buf, uint32_t length, uint8_t val)
  */
 void log_profiling_result(const uint32_t ticks, const uint8_t transfer_width, const mem_test_t mem_test)
   {
-  typedef union
-    {
-    uint8_t data[6];
-    struct
-      {
-      uint32_t ticks : 32;
-      uint8_t transfer_width : 8;
-      mem_test_t mem_test : 8;
-      };
-    } profile_item;
-  profile_item item;
-  item.ticks = ticks;
-  item.transfer_width = transfer_width;
-  item.mem_test = mem_test;
-  log_item3(PROFILING_RESULT, (const uint8_t * const)&item, sizeof(item));
+//  uint8_t data[6];
+//  data[0] = (ticks & 0xFF000000) >> 24;
+//  data[1] = (ticks & 0x00FF0000) >> 16;
+//  data[2] = (ticks & 0x0000FF00) >> 8;
+//  data[3] =  ticks & 0x000000FF;
+//  data[4] = transfer_width;
+//  data[5] = mem_test;
+  //log_item3(PROFILING_RESULT, (const uint8_t * const)&data, sizeof(data));
+  log_item2(PROFILING_RESULT, ticks);
   }
