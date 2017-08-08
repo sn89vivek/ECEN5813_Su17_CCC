@@ -21,6 +21,8 @@
 #include "board.h"
 #include "logger.h"
 
+#define ESCAPE_CHARACTER  (0x1B)
+
 #if defined(PLATFORM_HOST)
 
 void project3()
@@ -47,6 +49,7 @@ void project3()
 /*---------------------------------------------------------------------------*/
 /* Global variables                                                          */
 
+bool_t loop_flag;
 
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
@@ -74,7 +77,17 @@ bool_t parse_rx(metrics_t *metrics)
     {
     uint8_t next_char;
     if (CB_SUCCESS == CB_buffer_remove_item(logger_rx, &next_char))
-      result = update_metrics(metrics, next_char);
+      {
+      if (ESCAPE_CHARACTER == next_char)
+        {
+        loop_flag = FALSE;
+        result = TRUE;
+        }
+      else
+        {
+        result = update_metrics(metrics, next_char);
+        }
+      }
     }
   return result;
   }
@@ -175,7 +188,7 @@ void project3()
   nordic_test();
 
   log_string("Enter data at the console.\r\n");
-  while (1)
+  while (TRUE == loop_flag)
     {
     if (TRUE == parse_rx(&metrics))
       log_rx_metrics(&metrics);
