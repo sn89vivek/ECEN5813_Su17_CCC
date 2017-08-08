@@ -32,6 +32,8 @@ CB_t *logger_rx;
 /** Object: logger_tx: Logger Tx circular buffer */
 CB_t *logger_tx;
 
+extern uint32_t timestamp;
+
 /*---------------------------------------------------------------------------*/
 /* Declarations                                                              */
 
@@ -159,7 +161,7 @@ void log_item(const logger_id_t id)
   logger_item_t item;
 
   item.id = id;
-  item.timestamp = 0xDEADBEEF;
+  item.timestamp = timestamp;
   item.length = 0;
 
   (void)LOGQ_add_item(&item);
@@ -173,7 +175,7 @@ void log_item2(const logger_id_t id,
   logger_item_t item;
 
   item.id = id;
-  item.timestamp = 0xDEADBEEF;
+  item.timestamp = timestamp;
   item.length = 4;
   item.data[0] = (value & 0xFF000000) >> 24;
   item.data[1] = (value & 0x00FF0000) >> 16;
@@ -192,7 +194,7 @@ void log_item3(const logger_id_t id,
   logger_item_t item;
 
   item.id = id;
-  item.timestamp = 0xDEADBEEF;
+  item.timestamp = timestamp;
   if (NULL == data)
     {
     item.length = 0;

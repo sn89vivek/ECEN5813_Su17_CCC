@@ -154,169 +154,218 @@ void dma_memory_tests()
   if((dbuf != NULL) && (sbuf != NULL))
     {
     log_item(PROFILING_STARTED);
+    log_flush();
 
     /* SET TESTS */
 
     /* TF_SIZE1 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memset(dbuf, 0xAA, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memset(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memset_optimized(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 4byte */
     dma_transfer_width = 4;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE1, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* TF_SIZE2 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memset(dbuf, 0xAA, TF_SIZE2);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memset(dbuf, TF_SIZE2, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memset_optimized(dbuf, TF_SIZE2, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE2, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE2, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE2, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
 
     /* TF_SIZE3 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memset(dbuf, 0xAA, TF_SIZE3);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memset(dbuf, TF_SIZE3, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memset_optimized(dbuf, TF_SIZE3, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE3, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE3, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE3, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
     /* TF_SIZE4 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memset(dbuf, 0xAA, TF_SIZE4);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memset(dbuf, TF_SIZE4, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memset_optimized(dbuf, TF_SIZE4, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memset_dma(dbuf, TF_SIZE4, 0xAA);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE4, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memset_dma(dbuf, TF_SIZE4, 0xAA);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMSET);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
 
     /* MOVE TESTS */
@@ -324,163 +373,211 @@ void dma_memory_tests()
     /* TF_SIZE1 move tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memmove(dbuf, sbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memmove(sbuf, dbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memmove_optimized(sbuf, dbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 4byte */
     dma_transfer_width = 4;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE1);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* TF_SIZE2 move tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memmove(dbuf, sbuf, TF_SIZE2);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memmove(sbuf, dbuf, TF_SIZE2);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memmove_optimized(sbuf, dbuf, TF_SIZE2);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE2);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE2);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE2);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
 
     /* TF_SIZE3 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memmove(dbuf, sbuf, TF_SIZE3);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memmove(sbuf, dbuf, TF_SIZE3);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memmove_optimized(sbuf, dbuf, TF_SIZE3);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE3);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE3);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE3);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
     /* TF_SIZE4 set tests */
 
     /* library */
+    __disable_irq();
     timer_reset();
     memmove(dbuf, sbuf, TF_SIZE4);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* manual */
+    __disable_irq();
     timer_reset();
     my_memmove(sbuf, dbuf, TF_SIZE4);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
+    __disable_irq();
     timer_reset();
     my_memmove_optimized(sbuf, dbuf, TF_SIZE4);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 1byte */
     dma_transfer_width = 1;
+    __disable_irq();
     timer_reset();
     memmove_dma(sbuf, dbuf, TF_SIZE4);
     log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
+    __enable_irq();
     log_flush();
 
     /* dma - 2byte */
     dma_transfer_width = 2;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE4);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
 
   /* dma - 4byte */
   dma_transfer_width = 4;
-  timer_reset();
+    __disable_irq();
+    timer_reset();
   memmove_dma(sbuf, dbuf, TF_SIZE4);
   log_profiling_result(timer_ticks(), dma_transfer_width, TEST_MEMCOPY_NOOVERLAP);
-  log_flush();
+    __enable_irq();
+    log_flush();
     }
 
   log_item(PROFILING_COMPLETED);

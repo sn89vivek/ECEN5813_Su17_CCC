@@ -21,6 +21,7 @@
 /* Declarations                                                              */
 
 void RTC_Seconds_IRQHandler();
+uint32_t timestamp = 0;
 
 /*---------------------------------------------------------------------------*/
 
@@ -53,10 +54,21 @@ void rtc_configure()
    */
   RTC->CR |= RTC_CR_OSCE(1);
 
+  /* delay for oscilattor to settle */
+  for(uint32_t i = 50000; i != 0; i--) {}
+
   /** Enable seconds interrupt
    *  - RTC Interrupt Enable Register (RTC_IER)
    */
   RTC->IER |= RTC_IER_TSIE(1);
+
+  /* Write to TSR register to clear TIF flag */
+  RTC->TSR = 0;
+
+  /* Enable RTC
+   * - Write 1 to TCE bit of SR
+   */
+  RTC->SR = RTC_SR_TCE_MASK;
 
   /** Enable interrupt RTC_Seconds_IRQHandler
    *  - Interrupt Set-Enable Register (NVIC_ISER)
@@ -78,5 +90,6 @@ void rtc_configure()
  */
 void RTC_Seconds_IRQHandler()
   {
+  timestamp = RTC->TSR;
   log_item(HEARTBEAT);
   }
