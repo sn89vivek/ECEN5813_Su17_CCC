@@ -42,6 +42,21 @@
 uint8_t * my_memmove(uint8_t *src, uint8_t *dst, size_t length);
 
 /**
+ * @brief Optimized memmove (level -O3)
+ *
+ * @note This function does not handles overlap of src and dst. Will exit copy
+ *       if src and dst overlap.
+ *
+ * @param  src - Source address
+ * @param  dst - Destination address
+ * @param  length - Number of bytes to copy
+ *
+ * @return NULL value indicates error condition
+ * @return Pointer to the destination on success
+ */
+uint8_t *my_memmove_optimized(uint8_t *src, uint8_t *dst, size_t length)  __attribute__ ((optimize(3)));
+
+/**
  * @brief The function my_memcpy() takes two byte pointers (one source and
  *        one destination) and a length of bytes to copy from the source
  *        location to the destination.
@@ -69,6 +84,18 @@ uint8_t * my_memcpy(uint8_t *src, uint8_t *dst, size_t length);
  * @return Pointer to source
  */
 uint8_t * my_memset(uint8_t *src, size_t length, uint8_t value);
+
+/**
+ * @brief  Optimized memset (level O3)
+ *
+ * @param  src - Source address of set operation
+ * @param  length - Number of bytes to set
+ * @param  value - Value to set the memory to
+ *
+ * @return NULL value indicates error condition
+ * @return Pointer to source
+ */
+uint8_t * my_memset_optimized(uint8_t *src, size_t length, uint8_t value)  __attribute__ ((optimize(3)));
 
 /**
  * @brief The function my_memzero() takes a pointer to a memory location, a
